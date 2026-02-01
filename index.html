@@ -312,15 +312,16 @@
             font-size: 16px;
         }
         
-        /* Toggle Switch */
+        /* Toggle Switch - Updated with maroon red and white background */
         .toggle-container {
             display: flex;
-            background: rgba(255, 255, 255, 0.2);
+            background: white; /* White background */
             border-radius: 50px;
             padding: 5px;
             margin: 25px auto 0;
             width: 80%;
             position: relative;
+            border: 2px solid #ddd; /* Added border for visibility */
         }
         
         .toggle-option {
@@ -333,7 +334,7 @@
             transition: all 0.3s ease;
             z-index: 1;
             position: relative;
-            color: white;
+            color: #87103F; /* Maroon red text color */
         }
         
         .toggle-slider {
@@ -342,14 +343,14 @@
             left: 5px;
             width: calc(50% - 5px);
             height: calc(100% - 10px);
-            background: white;
+            background: #87103F; /* Maroon red background */
             border-radius: 50px;
             transition: transform 0.3s ease;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 2px 8px rgba(135, 16, 63, 0.2);
         }
         
         .active-toggle {
-            color: #87103F;
+            color: white; /* White text for active option */
         }
         
         /* Forms */
