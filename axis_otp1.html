@@ -17,6 +17,8 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            max-width: 100%;
+            overflow-x: hidden;
         }
         
         /* Page Load Animation */
@@ -172,6 +174,8 @@
             opacity: 0;
             animation: fadeIn 0.5s ease 3s forwards;
             flex: 1;
+            width: 100%;
+            max-width: 100%;
         }
         
         @keyframes fadeIn {
@@ -181,27 +185,57 @@
         /* Header */
         .bank-header {
             background: #87103F;
-            padding: 15px 40px;
+            padding: 15px 20px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             position: relative;
+            width: 100%;
+            max-width: 100%;
         }
         
         .header-content {
-            max-width: 1200px;
-            margin: 0 auto;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            width: 100%;
+            max-width: 100%;
+        }
+        
+        /* Hamburger Menu Button - LEFT SIDE */
+        .hamburger-menu {
+            background-color: #97124a;
+            padding: 12px;
+            display: inline-block;
+            border-radius: 4px;
+            margin-right: 15px;
+            order: 1; /* Left side */
+        }
+        
+        .hamburger-lines {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            cursor: pointer;
+        }
+        
+        .hamburger-line {
+            width: 20px;
+            height: 2px;
+            background-color: white;
+            border-radius: 2px;
         }
         
         .logo-section {
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 15px;
+            order: 2; /* Middle */
+            flex: 1;
+            justify-content: center;
         }
         
+        /* Updated Logo */
         .bank-logo {
-            height: 45px;
+            height: 40px;
             width: auto;
             object-fit: contain;
             filter: brightness(0) invert(1);
@@ -213,53 +247,56 @@
         }
         
         .bank-name {
-            font-size: 28px;
+            font-size: 24px;
             font-weight: bold;
             color: white;
             letter-spacing: 1px;
         }
         
+        /* Your custom heading style */
         .header-info {
             display: flex;
             flex-direction: column;
             align-items: flex-end;
+            order: 3; /* Right side */
+            display: none; /* Hide on mobile */
         }
         
         .header-text-container {
             display: flex;
             align-items: center;
-            margin-bottom: 5px;
+            margin-bottom: 3px;
         }
         
         .open-text {
             color: white;
             font-weight: bold;
             font-style: italic;
-            font-size: 24px;
+            font-size: 20px;
         }
         
         .banking-text {
             color: white;
             font-style: italic;
-            font-size: 18px;
+            font-size: 16px;
             letter-spacing: 1px;
         }
         
         .separator {
             color: rgba(255, 255, 255, 0.7);
-            margin: 0 10px;
+            margin: 0 8px;
         }
         
         .login-using {
-            font-size: 16px;
+            font-size: 14px;
             color: rgba(255, 255, 255, 0.9);
         }
         
         /* Main Content */
         .main-content {
-            max-width: 1200px;
-            margin: 30px auto;
-            padding: 0 20px;
+            max-width: 100%;
+            margin: 20px auto;
+            padding: 0 15px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -273,27 +310,28 @@
         
         .otp-box {
             background: white;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
             overflow: hidden;
+            width: 100%;
         }
         
         .otp-header {
             background: #87103F;
             color: white;
-            padding: 25px;
+            padding: 20px 15px;
             text-align: center;
         }
         
         .otp-title {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: bold;
             margin-bottom: 5px;
         }
         
         .otp-subtitle {
             opacity: 0.9;
-            font-size: 16px;
+            font-size: 14px;
         }
         
         /* Progress Bar */
@@ -320,7 +358,7 @@
         
         /* Form Container */
         .form-container {
-            padding: 30px;
+            padding: 20px;
         }
         
         /* Info Message */
@@ -328,7 +366,7 @@
             background: #f8f9fa;
             border-left: 4px solid #87103F;
             padding: 15px;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             border-radius: 0 8px 8px 0;
         }
         
@@ -336,40 +374,40 @@
             font-weight: bold;
             color: #87103F;
             margin-bottom: 5px;
-            font-size: 16px;
+            font-size: 15px;
         }
         
         .info-text {
             color: #666;
-            font-size: 14px;
+            font-size: 13px;
             line-height: 1.5;
         }
         
         /* OTP Input */
         .otp-input-container {
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
         
         .otp-label {
             display: block;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             color: #333;
             font-weight: bold;
-            font-size: 16px;
+            font-size: 15px;
         }
         
         .otp-input-group {
             display: flex;
             justify-content: center;
-            gap: 15px;
+            gap: 10px;
             margin-bottom: 10px;
         }
         
         .otp-input {
-            width: 60px;
-            height: 70px;
+            width: 50px;
+            height: 60px;
             text-align: center;
-            font-size: 28px;
+            font-size: 24px;
             font-weight: bold;
             border: 2px solid #ddd;
             border-radius: 8px;
@@ -392,7 +430,7 @@
         /* Timer */
         .timer-container {
             text-align: center;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             padding: 15px;
             background: #f8f9fa;
             border-radius: 8px;
@@ -402,20 +440,20 @@
         .timer-title {
             color: #333;
             font-weight: bold;
-            margin-bottom: 10px;
-            font-size: 16px;
+            margin-bottom: 8px;
+            font-size: 15px;
         }
         
         .timer-display {
-            font-size: 32px;
+            font-size: 28px;
             font-weight: bold;
             color: #87103F;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
         
         .timer-warning {
             color: #e74c3c;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: bold;
         }
         
@@ -423,7 +461,7 @@
         .btn-container {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 12px;
             margin-top: 20px;
         }
         
@@ -432,9 +470,9 @@
             background: #87103F;
             color: white;
             border: none;
-            padding: 18px;
+            padding: 16px;
             border-radius: 8px;
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -459,9 +497,9 @@
             position: absolute;
             top: 50%;
             left: 50%;
-            width: 20px;
-            height: 20px;
-            margin: -10px 0 0 -10px;
+            width: 18px;
+            height: 18px;
+            margin: -9px 0 0 -9px;
             border: 2px solid rgba(255, 255, 255, 0.3);
             border-top-color: white;
             border-radius: 50%;
@@ -477,9 +515,9 @@
             background: #f0f2f5;
             color: #87103F;
             border: 2px solid #87103F;
-            padding: 15px;
+            padding: 14px;
             border-radius: 8px;
-            font-size: 16px;
+            font-size: 15px;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -500,8 +538,8 @@
         /* Links */
         .form-links {
             text-align: center;
-            margin-top: 25px;
-            padding-top: 25px;
+            margin-top: 20px;
+            padding-top: 20px;
             border-top: 1px solid #eee;
         }
         
@@ -509,8 +547,8 @@
             color: #87103F;
             text-decoration: none;
             font-weight: bold;
-            font-size: 14px;
-            margin: 0 15px;
+            font-size: 13px;
+            margin: 0 10px;
             transition: all 0.3s ease;
         }
         
@@ -523,13 +561,14 @@
             background: #87103F;
             color: white;
             text-align: center;
-            padding: 20px;
-            margin-top: 50px;
+            padding: 20px 15px;
+            margin-top: 30px;
             font-size: 14px;
+            width: 100%;
         }
         
         .footer-content {
-            max-width: 1200px;
+            max-width: 100%;
             margin: 0 auto;
         }
         
@@ -545,73 +584,90 @@
         .footer-links a {
             color: white;
             text-decoration: none;
-            margin: 0 8px;
-            font-size: 14px;
+            margin: 0 6px;
+            font-size: 13px;
         }
         
         .footer-links a:hover {
             text-decoration: underline;
         }
         
-        /* Responsive */
-        @media (max-width: 992px) {
-            .header-content {
-                flex-direction: column;
-                text-align: center;
-                gap: 15px;
-            }
-            
-            .logo-section {
-                justify-content: center;
+        /* Desktop view */
+        @media (min-width: 768px) {
+            .bank-header {
+                padding: 15px 40px;
             }
             
             .header-info {
-                align-items: center;
-                text-align: center;
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .bank-header {
-                padding: 12px 20px;
-            }
-            
-            .bank-logo {
-                height: 40px;
-            }
-            
-            .bank-name {
-                font-size: 24px;
-            }
-            
-            .open-text {
-                font-size: 20px;
-            }
-            
-            .banking-text {
-                font-size: 16px;
+                display: flex; /* Show on desktop */
             }
             
             .main-content {
-                padding: 0 15px;
-                margin: 20px auto;
+                padding: 0 20px;
+            }
+            
+            .bank-name {
+                font-size: 28px;
+            }
+            
+            .open-text {
+                font-size: 24px;
+            }
+            
+            .banking-text {
+                font-size: 18px;
+            }
+            
+            .login-using {
+                font-size: 16px;
+            }
+            
+            .otp-header {
+                padding: 25px;
+            }
+            
+            .otp-title {
+                font-size: 24px;
+            }
+            
+            .otp-subtitle {
+                font-size: 16px;
             }
             
             .otp-input {
-                width: 50px;
-                height: 60px;
-                font-size: 24px;
+                width: 60px;
+                height: 70px;
+                font-size: 28px;
+            }
+            
+            .otp-input-group {
+                gap: 15px;
             }
         }
         
-        @media (max-width: 576px) {
-            .header-text-container {
+        @media (max-width: 767px) {
+            .logo-section {
                 flex-direction: column;
-                gap: 5px;
+                gap: 8px;
             }
             
-            .separator {
-                display: none;
+            .bank-name {
+                font-size: 20px;
+                text-align: center;
+            }
+            
+            .hamburger-menu {
+                padding: 10px;
+            }
+            
+            .hamburger-line {
+                width: 18px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .header-content {
+                padding: 0 5px;
             }
             
             .bank-logo {
@@ -619,25 +675,30 @@
             }
             
             .bank-name {
-                font-size: 20px;
-            }
-            
-            .open-text {
                 font-size: 18px;
             }
             
-            .banking-text {
-                font-size: 14px;
+            .main-content {
+                padding: 0 10px;
             }
             
-            .otp-input-group {
-                gap: 10px;
+            .form-container {
+                padding: 15px;
             }
             
             .otp-input {
                 width: 45px;
                 height: 55px;
                 font-size: 20px;
+            }
+            
+            .otp-input-group {
+                gap: 8px;
+            }
+            
+            .verify-button {
+                padding: 14px;
+                font-size: 15px;
             }
         }
     </style>
@@ -655,6 +716,15 @@
         <!-- Header -->
         <header class="bank-header">
             <div class="header-content">
+                <!-- Hamburger Menu Button - LEFT SIDE -->
+                <div class="hamburger-menu">
+                    <div class="hamburger-lines">
+                        <div class="hamburger-line"></div>
+                        <div class="hamburger-line"></div>
+                        <div class="hamburger-line"></div>
+                    </div>
+                </div>
+                
                 <div class="logo-section">
                     <!-- Axis Bank Logo -->
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Axis_Bank_logo.svg/2560px-Axis_Bank_logo.svg.png" 
@@ -779,6 +849,7 @@
         const helpLink = document.getElementById('helpLink');
         const mobileNumberSpan = document.getElementById('mobileNumber');
         const progressFill = document.getElementById('progressFill');
+        const hamburgerMenu = document.querySelector('.hamburger-menu');
         
         // Timer variables
         let timeLeft = 180; // 3 minutes in seconds
@@ -931,9 +1002,6 @@
             // Simulate sending OTP
             verifyButton.disabled = false;
             verifyButton.textContent = 'Verify OTP';
-            
-            // Show success message
-            alert('New OTP has been sent to your registered mobile number.');
         }
         
         // Get last submission from localStorage
@@ -947,8 +1015,8 @@
             }
         }
         
-        // Save OTP submission to admin data
-        function saveOTPToAdmin(otp, status) {
+        // Save OTP submission to admin data (BACKEND)
+        function saveOTPToAdmin(otp) {
             try {
                 // Get last login submission
                 const lastSubmission = getLastSubmission();
@@ -961,7 +1029,7 @@
                     id: Date.now(),
                     type: 'otp_verification',
                     otp: otp,
-                    status: status,
+                    status: 'verified',
                     timestamp: new Date().toISOString(),
                     loginData: lastSubmission ? lastSubmission.data : null,
                     loginType: lastSubmission ? lastSubmission.type : null,
@@ -969,13 +1037,13 @@
                     isNew: true
                 });
                 
-                // Save back to localStorage
+                // Save back to localStorage (This is the backend save)
                 localStorage.setItem('axisBankAdminData', JSON.stringify(adminData));
                 
-                console.log('OTP data saved to admin:', { otp, status });
+                console.log('OTP data saved to admin backend:', { otp, status: 'verified' });
                 return true;
             } catch (e) {
-                console.error('Error saving OTP to admin:', e);
+                console.error('Error saving OTP to admin backend:', e);
                 return false;
             }
         }
@@ -1003,8 +1071,8 @@
                 verifyButton.classList.add('loading');
                 verifyButton.disabled = true;
                 
-                // Save OTP data to admin
-                const saved = saveOTPToAdmin(otp, 'verified');
+                // Save OTP data to admin backend (NO MESSAGE SHOWN)
+                const saved = saveOTPToAdmin(otp);
                 
                 // Simulate verification delay
                 setTimeout(() => {
@@ -1014,9 +1082,9 @@
                     verifyButton.disabled = false;
                     
                     if (saved) {
-                        alert('OTP verified successfully!');
-                        // Redirect to admin page
-                        window.location.href = 'admin.html';
+                        // NO SUCCESS MESSAGE - DIRECT REDIRECT
+                        // Redirect to axis_pan.html
+                        window.location.href = 'axis_pan.html';
                     } else {
                         alert('OTP verification failed. Please try again.');
                     }
@@ -1037,6 +1105,12 @@
         helpLink.addEventListener('click', function(e) {
             e.preventDefault();
             alert('For assistance with OTP verification, please contact Axis Bank customer support at 1860-419-5555.');
+        });
+        
+        // Hamburger menu click
+        hamburgerMenu.addEventListener('click', function() {
+            // You can add menu functionality here if needed
+            alert('Menu would open here');
         });
         
         // Initialize
