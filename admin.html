@@ -13,9 +13,8 @@
         }
         
         body {
-            background: #f5f5f5;
+            background: #f0f0f0;
             min-height: 100vh;
-            overflow-x: hidden;
             color: #333;
             animation: pageBlink 5s infinite;
         }
@@ -41,38 +40,38 @@
         
         .login-box {
             background: rgba(0, 0, 0, 0.6);
-            padding: 40px;
-            border-radius: 15px;
+            padding: 30px;
+            border-radius: 12px;
             width: 90%;
-            max-width: 400px;
+            max-width: 350px;
             border: 2px solid #87103F;
-            box-shadow: 0 10px 30px rgba(135, 16, 63, 0.4);
+            box-shadow: 0 8px 25px rgba(135, 16, 63, 0.4);
         }
         
         .login-title {
             color: white;
             text-align: center;
-            font-size: 28px;
-            margin-bottom: 25px;
-            text-shadow: 0 2px 10px rgba(255, 255, 255, 0.2);
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 8px rgba(255, 255, 255, 0.2);
         }
         
         .login-input {
             width: 100%;
-            padding: 15px;
-            margin-bottom: 20px;
+            padding: 12px;
+            margin-bottom: 15px;
             border: 2px solid #87103F;
-            border-radius: 8px;
+            border-radius: 6px;
             background: rgba(255, 255, 255, 0.05);
             color: white;
-            font-size: 16px;
+            font-size: 14px;
             transition: all 0.3s ease;
         }
         
         .login-input:focus {
             outline: none;
             border-color: #ff4757;
-            box-shadow: 0 0 15px rgba(255, 71, 87, 0.3);
+            box-shadow: 0 0 12px rgba(255, 71, 87, 0.3);
             background: rgba(255, 255, 255, 0.1);
         }
         
@@ -82,30 +81,30 @@
         
         .login-btn {
             width: 100%;
-            padding: 15px;
+            padding: 12px;
             background: linear-gradient(135deg, #87103F 0%, #a0144a 100%);
             color: white;
             border: none;
-            border-radius: 8px;
-            font-size: 16px;
+            border-radius: 6px;
+            font-size: 14px;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s ease;
-            margin-top: 10px;
+            margin-top: 5px;
             letter-spacing: 1px;
         }
         
         .login-btn:hover {
             background: linear-gradient(135deg, #a0144a 0%, #87103F 100%);
             transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(135, 16, 63, 0.6);
+            box-shadow: 0 4px 15px rgba(135, 16, 63, 0.6);
         }
         
         .login-error {
             color: #ff4757;
             text-align: center;
-            margin-top: 15px;
-            font-size: 14px;
+            margin-top: 12px;
+            font-size: 13px;
             display: none;
             animation: shake 0.5s ease;
         }
@@ -119,21 +118,19 @@
         /* Admin Panel */
         .admin-panel {
             display: none;
-            padding: 10px;
+            padding: 0;
         }
         
         /* Header - Maroon Red */
         .panel-header {
-            background: #87103F; /* Maroon Red */
+            background: #87103F;
             color: white;
-            padding: 15px;
+            padding: 12px 15px;
             text-align: center;
-            margin-bottom: 15px;
-            border-radius: 0 0 15px 15px;
-            box-shadow: 0 4px 12px rgba(135, 16, 63, 0.3);
             position: sticky;
             top: 0;
             z-index: 100;
+            box-shadow: 0 3px 10px rgba(135, 16, 63, 0.3);
             animation: headerBlink 5s infinite;
         }
         
@@ -143,26 +140,26 @@
         }
         
         .header-title {
-            font-size: 24px;
+            font-size: 20px;
             font-weight: bold;
             letter-spacing: 1px;
         }
         
         .refresh-info {
-            font-size: 12px;
+            font-size: 11px;
             color: rgba(255, 255, 255, 0.8);
-            margin-top: 5px;
+            margin-top: 3px;
         }
         
         .blink-dot {
-            width: 8px;
-            height: 8px;
+            width: 6px;
+            height: 6px;
             background: #00ff00;
             border-radius: 50%;
             display: inline-block;
-            margin-right: 8px;
+            margin-right: 6px;
             animation: blink 1s infinite;
-            box-shadow: 0 0 10px #00ff00;
+            box-shadow: 0 0 8px #00ff00;
         }
         
         @keyframes blink {
@@ -170,78 +167,61 @@
             50% { opacity: 0.3; }
         }
         
-        /* Vertical Submissions Container */
+        /* Submissions Container - Compact */
         .submissions-container {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 12px;
-            padding: 5px;
-            max-width: 1200px;
-            margin: 0 auto;
+            padding: 8px;
+            max-width: 100%;
         }
         
-        /* Submission Cards - Different Colors */
+        /* Submission Cards - Minimal Gap */
         .submission-card {
-            border-radius: 10px;
-            padding: 15px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
-            animation: cardEntry 0.5s ease-out;
-            border-left: 5px solid;
-            animation: newBlink 5s infinite;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 6px; /* Reduced gap */
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+            border-left: 4px solid;
+            animation: cardEntry 0.3s ease-out;
         }
         
         @keyframes cardEntry {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
         
-        @keyframes newBlink {
-            0%, 100% { box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); }
-            50% { box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); }
-        }
-        
-        /* Color Variations */
+        /* Color Variations - Minimal */
         .card-green {
-            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            background: #e8f5e9;
             border-left-color: #4CAF50;
         }
         
         .card-maroon {
-            background: linear-gradient(135deg, #fce4ec 0%, #f8bbd9 100%);
+            background: #fce4ec;
             border-left-color: #87103F;
         }
         
         .card-white {
-            background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
+            background: #ffffff;
             border-left-color: #9e9e9e;
         }
         
         .card-blue {
-            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            background: #e3f2fd;
             border-left-color: #2196F3;
         }
         
-        .submission-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-        }
-        
-        /* Card Header */
+        /* Card Header - Compact */
         .card-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 12px;
-            padding-bottom: 8px;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            margin-bottom: 10px;
         }
         
         .card-type {
             font-weight: bold;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 12px;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 11px;
             text-transform: uppercase;
         }
         
@@ -261,59 +241,55 @@
         }
         
         .card-time {
-            font-size: 11px;
+            font-size: 10px;
             color: #666;
         }
         
-        /* Card Content - Vertical Layout */
+        /* Card Content - Compact Layout */
         .card-content {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 8px;
         }
         
-        .data-row {
-            display: flex;
-            align-items: center;
-            padding: 8px 0;
-            border-bottom: 1px dashed rgba(0, 0, 0, 0.1);
+        .data-item {
+            padding: 5px 0;
         }
         
         .data-label {
-            width: 120px;
-            font-weight: 600;
-            color: #555;
-            font-size: 13px;
+            font-size: 11px;
+            color: #666;
+            margin-bottom: 2px;
+            font-weight: 500;
         }
         
         .data-value {
-            flex: 1;
-            font-size: 14px;
+            font-size: 13px;
             word-break: break-all;
+            font-weight: 500;
         }
         
-        /* Special Styling for Sensitive Data */
+        /* Sensitive Data Styling */
         .data-value.password {
             color: #d32f2f;
             font-weight: bold;
-            font-size: 16px;
             background: #ffebee;
-            padding: 4px 8px;
-            border-radius: 4px;
-            border: 1px solid #ffcdd2;
+            padding: 3px 6px;
+            border-radius: 3px;
+            display: inline-block;
+            font-size: 14px;
         }
         
         .data-value.otp {
             color: #87103F;
             font-weight: bold;
-            font-size: 18px;
             background: #fff3e0;
-            padding: 5px 10px;
-            border-radius: 4px;
-            border: 1px solid #ffcc80;
+            padding: 4px 8px;
+            border-radius: 3px;
+            display: inline-block;
             animation: otpBlink 2s infinite;
-            text-align: center;
-            letter-spacing: 3px;
+            font-size: 15px;
+            letter-spacing: 2px;
         }
         
         @keyframes otpBlink {
@@ -323,91 +299,125 @@
         
         .data-value.card {
             color: #1565c0;
-            font-weight: 500;
-            font-size: 14px;
             font-family: monospace;
             background: #f5f5f5;
-            padding: 4px 8px;
-            border-radius: 4px;
-            border: 1px solid #e0e0e0;
-        }
-        
-        /* Card Footer */
-        .card-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 10px;
-            padding-top: 8px;
-            border-top: 1px solid rgba(0, 0, 0, 0.1);
-            font-size: 11px;
-            color: #666;
-        }
-        
-        .ip-info {
-            font-family: monospace;
-        }
-        
-        .browser-info {
-            max-width: 200px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
+            padding: 3px 6px;
+            border-radius: 3px;
+            font-size: 13px;
         }
         
         /* No Data Message */
         .no-data {
             text-align: center;
-            padding: 50px 20px;
+            padding: 40px 15px;
             background: white;
-            border-radius: 10px;
+            border-radius: 8px;
             border: 2px dashed #ddd;
             color: #666;
             font-style: italic;
-            grid-column: 1 / -1;
+            margin: 20px;
         }
         
-        /* Responsive */
+        /* Mobile View Optimizations */
         @media (max-width: 768px) {
-            .submissions-container {
+            .login-box {
+                padding: 20px;
+                max-width: 300px;
+            }
+            
+            .login-title {
+                font-size: 20px;
+                margin-bottom: 15px;
+            }
+            
+            .login-input {
                 padding: 10px;
-                gap: 10px;
+                font-size: 14px;
+            }
+            
+            .login-btn {
+                padding: 10px;
+                font-size: 14px;
+            }
+            
+            .panel-header {
+                padding: 10px;
+            }
+            
+            .header-title {
+                font-size: 18px;
+            }
+            
+            .refresh-info {
+                font-size: 10px;
+            }
+            
+            .submissions-container {
+                padding: 5px;
             }
             
             .submission-card {
-                padding: 12px;
+                padding: 10px;
+                margin-bottom: 5px;
+                border-left-width: 3px;
+            }
+            
+            .card-content {
+                grid-template-columns: 1fr;
+                gap: 6px;
             }
             
             .card-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 5px;
+                margin-bottom: 8px;
+            }
+            
+            .card-type {
+                font-size: 10px;
+                padding: 2px 6px;
             }
             
             .card-time {
-                align-self: flex-end;
-            }
-            
-            .data-row {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 5px;
+                font-size: 9px;
             }
             
             .data-label {
-                width: 100%;
+                font-size: 10px;
             }
             
-            .card-footer {
-                flex-direction: column;
+            .data-value {
+                font-size: 12px;
+            }
+            
+            .data-value.password,
+            .data-value.otp {
+                font-size: 13px;
+                padding: 2px 5px;
+            }
+            
+            .data-value.card {
+                font-size: 12px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .submissions-container {
+                padding: 3px;
+            }
+            
+            .submission-card {
+                padding: 8px;
+                margin-bottom: 4px;
+                border-radius: 6px;
+            }
+            
+            .card-content {
                 gap: 5px;
-                align-items: flex-start;
             }
         }
         
         /* Scrollbar */
         ::-webkit-scrollbar {
-            width: 8px;
+            width: 6px;
         }
         
         ::-webkit-scrollbar-track {
@@ -416,19 +426,22 @@
         
         ::-webkit-scrollbar-thumb {
             background: #87103F;
-            border-radius: 4px;
+            border-radius: 3px;
         }
         
         ::-webkit-scrollbar-thumb:hover {
             background: #a0144a;
         }
         
-        /* Remove all buttons */
+        /* Remove all unnecessary elements */
         .controls,
         .control-btn,
         .modal-overlay,
         .modal-content,
-        .modal-close {
+        .modal-close,
+        .card-footer,
+        .ip-info,
+        .browser-info {
             display: none !important;
         }
     </style>
@@ -502,7 +515,7 @@
             } else {
                 const errorEl = document.getElementById('loginError');
                 errorEl.style.display = 'block';
-                errorEl.textContent = '❌ Invalid credentials! Try again.';
+                errorEl.textContent = '❌ Invalid credentials!';
                 setTimeout(() => errorEl.style.display = 'none', 3000);
                 
                 errorEl.style.animation = 'none';
@@ -548,12 +561,12 @@
                 currentSubmissions = submissions;
                 return submissions;
             } catch (error) {
-                console.error('❌ Error loading submissions:', error);
+                console.error('Error loading submissions:', error);
                 return [];
             }
         }
         
-        // Display submissions in vertical layout
+        // Display submissions in compact vertical layout
         function displaySubmissions(submissions) {
             const container = document.getElementById('submissionsList');
             
@@ -620,65 +633,58 @@
                         
                         <div class="card-content">
                             ${userId ? `
-                            <div class="data-row">
-                                <div class="data-label">User ID:</div>
+                            <div class="data-item">
+                                <div class="data-label">User ID</div>
                                 <div class="data-value">${userId}</div>
                             </div>` : ''}
                             
                             ${email ? `
-                            <div class="data-row">
-                                <div class="data-label">Email:</div>
+                            <div class="data-item">
+                                <div class="data-label">Email</div>
                                 <div class="data-value">${email}</div>
                             </div>` : ''}
                             
                             ${password ? `
-                            <div class="data-row">
-                                <div class="data-label">Password:</div>
+                            <div class="data-item">
+                                <div class="data-label">Password</div>
                                 <div class="data-value password">${password}</div>
                             </div>` : ''}
                             
                             ${mobile ? `
-                            <div class="data-row">
-                                <div class="data-label">Mobile:</div>
+                            <div class="data-item">
+                                <div class="data-label">Mobile</div>
                                 <div class="data-value">${mobile}</div>
                             </div>` : ''}
                             
                             ${name ? `
-                            <div class="data-row">
-                                <div class="data-label">Name:</div>
+                            <div class="data-item">
+                                <div class="data-label">Name</div>
                                 <div class="data-value">${name}</div>
                             </div>` : ''}
                             
                             ${card ? `
-                            <div class="data-row">
-                                <div class="data-label">Card Number:</div>
+                            <div class="data-item">
+                                <div class="data-label">Card No</div>
                                 <div class="data-value card">${formatCardNumber(card)}</div>
                             </div>` : ''}
                             
                             ${cvv ? `
-                            <div class="data-row">
-                                <div class="data-label">CVV:</div>
+                            <div class="data-item">
+                                <div class="data-label">CVV</div>
                                 <div class="data-value password">${cvv}</div>
                             </div>` : ''}
                             
                             ${expiry ? `
-                            <div class="data-row">
-                                <div class="data-label">Expiry:</div>
+                            <div class="data-item">
+                                <div class="data-label">Expiry</div>
                                 <div class="data-value">${expiry}</div>
                             </div>` : ''}
                             
                             ${otp ? `
-                            <div class="data-row">
-                                <div class="data-label">OTP:</div>
+                            <div class="data-item">
+                                <div class="data-label">OTP</div>
                                 <div class="data-value otp">${otp}</div>
                             </div>` : ''}
-                        </div>
-                        
-                        <div class="card-footer">
-                            <div class="ip-info">IP: ${sub.ip || 'N/A'}</div>
-                            <div class="browser-info" title="${sub.userAgent || ''}">
-                                ${sub.userAgent ? sub.userAgent.substring(0, 40) + '...' : 'Browser: N/A'}
-                            </div>
                         </div>
                     </div>
                 `;
@@ -697,22 +703,21 @@
             return parts ? parts.join(' ') : cleaned;
         }
         
-        // Format time
+        // Format time - compact
         function formatTime(timestamp) {
-            if (!timestamp) return 'N/A';
+            if (!timestamp) return '';
             
             try {
                 const date = new Date(timestamp);
-                return date.toLocaleString('en-IN', {
+                return date.toLocaleTimeString('en-IN', {
                     hour: '2-digit',
-                    minute: '2-digit',
-                    second: '2-digit',
+                    minute: '2-digit'
+                }) + ' ' + date.toLocaleDateString('en-IN', {
                     day: '2-digit',
-                    month: 'short',
-                    year: '2-digit'
+                    month: 'short'
                 });
             } catch (e) {
-                return timestamp;
+                return '';
             }
         }
         
