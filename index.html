@@ -530,19 +530,34 @@
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
         }
         
-        /* Footer */
+        /* Footer - Background image added */
         .main-footer {
-            background: #87103F;
+            background: url('https://ibb.co/mV0C8VGK') center/cover no-repeat;
             color: white;
             text-align: center;
             padding: 30px 20px;
             margin-top: 50px;
             box-shadow: 0 -4px 12px rgba(135, 16, 63, 0.3);
+            /* Adding a dark overlay for better text readability */
+            position: relative;
+        }
+        
+        .main-footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5); /* Dark overlay */
+            z-index: 1;
         }
         
         .footer-content {
             max-width: 1200px;
             margin: 0 auto;
+            position: relative;
+            z-index: 2;
         }
         
         .footer-text {
@@ -576,7 +591,7 @@
         
         .copyright {
             font-size: 14px;
-            opacity: 0.8;
+            opacity: 0.9;
             margin-top: 20px;
             padding-top: 20px;
             border-top: 1px solid rgba(255, 255, 255, 0.2);
@@ -691,9 +706,9 @@
         <header class="bank-header">
             <div class="header-content">
                 <div class="logo-section">
-                    <!-- Axis Bank Logo from URL -->
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Axis_Bank_logo.svg/2560px-Axis_Bank_logo.svg.png" 
-                         alt="Axis Bank Logo" 
+                    <!-- YOUR HEADER LOGO -->
+                    <img src="https://ibb.co/MyKRr8sJ" 
+                         alt="Your Logo" 
                          class="bank-logo">
                     <div class="bank-title">
                         <div class="bank-name">AXIS BANK</div>
@@ -1137,4 +1152,4 @@
         });
     </script>
 </body>
-                                        </html>
+</html>
