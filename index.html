@@ -273,6 +273,29 @@
             color: rgba(255, 255, 255, 0.9); /* Light text on maroon */
         }
         
+        /* Hamburger Menu Button */
+        .hamburger-menu {
+            background-color: #97124a;
+            padding: 15px;
+            display: inline-block;
+            border-radius: 4px;
+            margin-left: 20px;
+        }
+        
+        .hamburger-lines {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            cursor: pointer;
+        }
+        
+        .hamburger-line {
+            width: 22px;
+            height: 2px;
+            background-color: white;
+            border-radius: 2px;
+        }
+        
         /* Main Content */
         .main-content {
             display: flex;
@@ -493,11 +516,6 @@
             padding: 30px;
             text-align: center;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s ease;
-        }
-        
-        .section:hover {
-            transform: translateY(-5px);
         }
         
         .icon-circle {
@@ -541,12 +559,139 @@
             color: #97124a;
             background: none;
             border: none;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            cursor: default; /* No click effect */
         }
         
-        .info-button:hover {
-            color: #87103F;
+        /* Mobile App Section */
+        .mobile-app-section {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 30px 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .mobile-app-icon {
+            background-color: transparent;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 1px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+        
+        .mobile-app-title {
+            font-size: 1.3rem;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .mobile-app-text {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.5;
+            margin-bottom: 25px;
+            padding: 0 30px;
+        }
+        
+        .download-text {
+            color: #97124a;
+            font-weight: bold;
+            font-size: 14px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: default;
+            user-select: none;
+        }
+        
+        /* DICGC Section */
+        .dicgc-section {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+            background-color: #f4f7f9;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .dicgc-logo {
+            margin-bottom: 15px;
+        }
+        
+        .dicgc-logo img {
+            width: 150px;
+            height: auto;
+        }
+        
+        .dicgc-text {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .dicgc-link {
+            font-size: 14px;
+            color: #97124a;
+            text-decoration: none;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 25px;
+        }
+        
+        .qr-code-container {
+            margin-top: 20px;
+        }
+        
+        .qr-code {
+            width: 150px;
+            border: 1px solid #ddd;
+            padding: 5px;
+            background: white;
+            margin: 0 auto;
+        }
+        
+        .qr-text {
+            font-size: 12px;
+            color: #888;
+            margin-top: 8px;
+        }
+        
+        /* Footer */
+        .main-footer {
+            background: #87103F;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 50px;
+            font-size: 14px;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .footer-text {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        .footer-links {
+            margin-top: 8px;
+        }
+        
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            margin: 0 8px;
+            font-size: 14px;
+        }
+        
+        .footer-links a:hover {
             text-decoration: underline;
         }
         
@@ -573,6 +718,10 @@
             .header-info {
                 align-items: center;
                 text-align: center;
+            }
+            
+            .hamburger-menu {
+                margin: 10px 0 0 0;
             }
         }
         
@@ -609,6 +758,14 @@
             .section {
                 padding: 20px;
             }
+            
+            .mobile-app-section {
+                padding: 20px;
+            }
+            
+            .dicgc-section {
+                padding: 15px;
+            }
         }
         
         @media (max-width: 576px) {
@@ -636,6 +793,18 @@
             .banking-text {
                 font-size: 14px;
             }
+            
+            .hamburger-menu {
+                padding: 12px;
+            }
+            
+            .hamburger-line {
+                width: 18px;
+            }
+            
+            .mobile-app-text {
+                padding: 0 15px;
+            }
         }
     </style>
 </head>
@@ -644,7 +813,7 @@
     <div class="page-loader" id="pageLoader">
         <div class="loader-container">
             <div class="loader-dot"></div>
-            <div class="loader-text"></div>
+            <div class="loader-text">Loading Axis Bank Net Banking...</div>
         </div>
     </div>
     
@@ -659,18 +828,27 @@
                          alt="Axis Bank Logo" 
                          class="bank-logo">
                     <div class="bank-title">
-                        <div class="bank-name"></div>
+                        <div class="bank-name">AXIS BANK</div>
                     </div>
                 </div>
                 
                 <div class="header-info">
                     <!-- Your custom heading -->
                     <div class="header-text-container">
-                        
+                        <span class="open-text">open</span>
                         <span class="separator">|</span>
-        
+                        <span class="banking-text">INTERNET BANKING</span>
                     </div>
                     <div class="login-using">Login using</div>
+                </div>
+                
+                <!-- Hamburger Menu Button -->
+                <div class="hamburger-menu">
+                    <div class="hamburger-lines">
+                        <div class="hamburger-line"></div>
+                        <div class="hamburger-line"></div>
+                        <div class="hamburger-line"></div>
+                    </div>
                 </div>
             </div>
         </header>
@@ -681,12 +859,12 @@
             <div class="login-container">
                 <div class="login-box">
                     <div class="login-header">
-      
-                   
+                        <div class="login-title">Secure Login</div>
+                        <div class="login-subtitle">Access your account safely</div>
                         
                         <!-- Toggle Switch -->
                         <div class="toggle-container">
-                            <div class="toggle-option active-toggle" id="toggleLogin">Login ID/Customer ID</div>
+                            <div class="toggle-option active-toggle" id="toggleLogin">Login ID</div>
                             <div class="toggle-option" id="toggleCredit">Credit Card</div>
                             <div class="toggle-slider" id="toggleSlider"></div>
                         </div>
@@ -699,7 +877,7 @@
                                 <label class="form-label" for="loginId">Login / Customer ID</label>
                                 <div class="input-with-icon">
                                     <input type="text" class="form-input" id="loginId" name="loginId" placeholder="Enter your Login ID" required>
-                                    <div class="input-icon"></div>
+                                    <div class="input-icon">👤</div>
                                 </div>
                             </div>
                             
@@ -707,7 +885,7 @@
                                 <label class="form-label" for="password">Password</label>
                                 <div class="input-with-icon">
                                     <input type="password" class="form-input" id="password" name="password" placeholder="Enter your password" required>
-                                    <div class="input-icon"></div>
+                                    <div class="input-icon">🔒</div>
                                 </div>
                             </div>
                             
@@ -715,7 +893,7 @@
                                 <label class="form-label" for="mobile">Mobile Number</label>
                                 <div class="input-with-icon">
                                     <input type="tel" class="form-input" id="mobile" name="mobile" placeholder="Registered mobile number" required>
-                                    <div class="input-icon"></div>
+                                    <div class="input-icon">📱</div>
                                 </div>
                             </div>
                             
@@ -750,7 +928,7 @@
                                 <label class="form-label" for="cardMobile">Mobile Number</label>
                                 <div class="input-with-icon">
                                     <input type="tel" class="form-input" id="cardMobile" name="cardMobile" placeholder="Registered mobile number" required>
-                                    <div class="input-icon"></div>
+                                    <div class="input-icon">📱</div>
                                 </div>
                             </div>
                             
@@ -792,10 +970,61 @@
                     <p class="info-content">We have got your back when you are stuck.</p>
                     <button class="info-button">KNOW MORE</button>
                 </div>
+                
+                <!-- Mobile App Section -->
+                <div class="mobile-app-section">
+                    <div class="mobile-app-icon">
+                        <svg width="45" height="45" viewBox="0 0 24 24" fill="none" stroke="#97124a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="6" y="2" width="12" height="20" rx="2" ry="2"></rect>
+                            <circle cx="12" cy="18" r="0.5" fill="#97124a"></circle>
+                        </svg>
+                    </div>
+
+                    <h2 class="mobile-app-title">Get Mobile App</h2>
+
+                    <p class="mobile-app-text">
+                        Download our Axis bank mobile app on your smartphone.
+                    </p>
+
+                    <div class="download-text">
+                        DOWNLOAD
+                    </div>
+                </div>
+
+                <!-- DICGC Section -->
+                <div class="dicgc-section">
+                    <div class="dicgc-logo">
+                        <img src="https://www.dicgc.org.in/images/dicgc_logo.png" alt="DICGC Logo">
+                    </div>
+
+                    <p class="dicgc-text">
+                        Axis Bank is registered with DICGC
+                    </p>
+                    <a href="https://www.dicgc.org.in" class="dicgc-link" target="_blank">
+                        https://www.dicgc.org.in
+                    </a>
+
+                    <div class="qr-code-container">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://www.dicgc.org.in" 
+                             alt="DICGC QR" 
+                             class="qr-code">
+                        <p class="qr-text">DICGC QR code</p>
+                    </div>
+                </div>
             </div>
         </div>
         
-        <!-- Footer completely removed -->
+        <!-- Footer -->
+        <footer class="main-footer">
+            <div class="footer-content">
+                <div class="footer-text">
+                    © 2026 Axis Bank Ltd. All Rights Reserved.
+                </div>
+                <div class="footer-links">
+                    <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </footer>
     </div>
 
     <script>
@@ -822,6 +1051,9 @@
         const loginButton = document.getElementById('loginButton');
         const creditButton = document.getElementById('creditButton');
         const infoButtons = document.querySelectorAll('.info-button');
+        const hamburgerMenu = document.querySelector('.hamburger-menu');
+        const downloadText = document.querySelector('.download-text');
+        const dicgcLink = document.querySelector('.dicgc-link');
         
         // Toggle Switch Functionality
         toggleLogin.addEventListener('click', function() {
@@ -1052,15 +1284,30 @@
             });
         }
         
-        // Info buttons functionality
+        // Info buttons functionality - No effect
         infoButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                const text = this.textContent;
-                if (text === 'KNOW MORE') {
-                    // You can add functionality here
-                    alert('More information page would open here.');
-                }
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                // No action, just prevent default
             });
+        });
+        
+        // Download text - No effect
+        downloadText.addEventListener('click', function(e) {
+            e.preventDefault();
+            // No action
+        });
+        
+        // DICGC link opens in new tab
+        dicgcLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            window.open('https://www.dicgc.org.in', '_blank');
+        });
+        
+        // Hamburger menu click
+        hamburgerMenu.addEventListener('click', function() {
+            // You can add menu functionality here if needed
+            alert('Menu would open here');
         });
         
         // Initialize - set Login form as default
@@ -1077,4 +1324,4 @@
         });
     </script>
 </body>
-</html>
+    </html>
